@@ -1,0 +1,80 @@
+Конфигурация Log4j:
+Теперь давайте более детальней разберем строку формирования шаблона:
+
+log4j.appender.file.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+Значения:
+
+%d{yyyy-MM-dd HH:mm:ss} — выводит дату в формате 2014-01-14 23:55:57
+
+%-5p — выводит уровень лога (ERROR, DEBUG, INFO …), цифра 5 означает что всегда использовать 5 символов  остальное дополнится пробелами, а минус (-), то что позиционирование по левой стороне.
+
+%c{1} — категория, в скобках указывается сколько уровней выдавать. Так как у нас 1 уровень то писаться будет только имя класса.
+
+%L — номер строки в которой произошёл вызов записи в лог.
+
+%m — сообщение, которое передали в лог.
+
+%n — переход на новую строку.
+======================
+public class TestDateJava8 {
+
+    public static void main(String[] args) {
+        LocalDate localDate1 = LocalDate.of(1990, 10, 05);
+        LocalDate localDate2 = LocalDate.now();
+        localDate1.get(ChronoField.DAY_OF_MONTH);
+
+        System.out.println(localDate1);
+        System.out.println(localDate2);
+        System.out.println(localDate1.get(ChronoField.DAY_OF_MONTH));
+
+        LocalDateTime today = LocalDateTime.now();
+        System.out.println("Получаем текущее время : " + today);
+        //our pattern
+        System.out.println(today.format(DateTimeFormatter.ofPattern("d MMMM uuuu H-m-s")));
+
+
+        LocalDate date = LocalDate.now();
+        // стандартный формат даты
+        System.out.println("стандартный формат даты для LocalDate : " + date);
+        // приименяем свой формат даты
+        System.out.println(date.format(DateTimeFormatter.ofPattern("d MMMM uuuu")));
+
+    }
+}
+======================
+public class TestJava7 {
+
+    public static void main(String[] args) {
+        // JodaTime -> Java 8
+        Date date = new Date();
+        System.out.println("date.getTime() " + date.getTime());
+        System.out.println("date " + date);
+
+
+
+        String format = String.format(
+                "year %1$ty, month %1$tm, day %1$td, time %1$tH:%1$tM", date);
+        System.out.println(format);
+        System.out.println("====================");
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date1 = simpleDateFormat.parse("1990-7-12");
+            System.out.println("date1 " + date1);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println("====================");
+        Calendar calendar = new GregorianCalendar(1990, 11, 12);
+
+        Date fromCalendar = calendar.getTime();
+
+        System.out.println("fromCalendar " + fromCalendar);
+        System.out.println("fromCalendar.getTime() " + fromCalendar.getTime());
+        int month = calendar.get(Calendar.MONTH);
+
+        calendar.setTime(date);
+    }
+}
+======================

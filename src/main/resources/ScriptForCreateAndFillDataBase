@@ -1,0 +1,91 @@
+CREATE database InternetShop;
+
+
+CREATE TABLE userType (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  userTypeName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
+);
+
+INSERT INTO userType(userTypeName) VAlUES ('client');
+INSERT INTO userType(userTypeName) VAlUES ('admin');
+
+
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  userName VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
+  userPassword VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
+  userType INT(11) NOT NULL,
+  FOREIGN KEY(userType) REFERENCES userType(id)
+);
+
+INSERT INTO users(userName, userPassword, userType) VAlUES ('Vasa', '2222', 1);
+INSERT INTO users(userName, userPassword, userType) VAlUES ('Jack', '7777', 2);
+
+
+CREATE TABLE orderStatus (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  orderStatusName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
+);
+
+INSERT INTO orderStatus(orderStatusName) VAlUES ('NEW');
+INSERT INTO orderStatus(orderStatusName) VAlUES ('DONE');
+INSERT INTO orderStatus(orderStatusName) VAlUES ('CANCELED');
+
+
+CREATE TABLE orders (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  orderDateAndTime DATETIME NOT NULL,
+  summaryPrice DECIMAL(7,2) NOT NULL,
+  user_id INT(11) NOT NULL,
+  orderStatus INT(11) NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(orderStatus) REFERENCES orderStatus(id)
+);
+
+
+
+CREATE TABLE itemStatus (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  itemStatusName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
+);
+
+INSERT INTO itemStatus(itemStatusName) VAlUES ('PRESENT');
+INSERT INTO itemStatus(itemStatusName) VAlUES ('NOT_PRESENT');
+
+
+CREATE TABLE itemCategory (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  itemCategoryName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
+);
+
+INSERT INTO itemCategory(itemCategoryName) VAlUES ('Category1');
+INSERT INTO itemCategory(itemCategoryName) VAlUES ('Category2');
+
+
+CREATE TABLE items (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  itemName VARCHAR (43) CHARACTER SET 'utf8' NOT NULL,
+  itemDescription VARCHAR (122) CHARACTER SET 'utf8' NOT NULL,
+  itemPrice DECIMAL(7,2) NOT NULL,
+  itemCategory INT(11) NOT NULL,
+  itemStatus INT(11) NOT NULL,
+  FOREIGN KEY(itemCategory) REFERENCES itemCategory(id),
+  FOREIGN KEY(itemStatus) REFERENCES itemStatus(id)
+);
+
+
+CREATE TABLE order_item (
+  order_id INT(11) NOT NULL,
+  item_id INT(11) NOT NULL
+);
+
+
+
+
+
+
+
+
+
+
+
