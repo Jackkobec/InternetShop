@@ -1,36 +1,30 @@
-CREATE database internet_shop;
-
-
-CREATE TABLE userType (
+CREATE TABLE user_type (
   id INT PRIMARY KEY AUTO_INCREMENT,
   userTypeName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
 );
 
-INSERT INTO userType(userTypeName) VAlUES ('client');
-INSERT INTO userType(userTypeName) VAlUES ('admin');
-
+INSERT INTO user_type(userTypeName) VAlUES ('client');
+INSERT INTO user_type(userTypeName) VAlUES ('admin');
 
 CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   userName VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
   userPassword VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
   userType INT(11) NOT NULL,
-  FOREIGN KEY(userType) REFERENCES userType(id)
+  FOREIGN KEY(userType) REFERENCES user_type(id)
 );
 
 INSERT INTO users(userName, userPassword, userType) VAlUES ('Vasa', '2222', 1);
 INSERT INTO users(userName, userPassword, userType) VAlUES ('Jack', '7777', 2);
 
-
-CREATE TABLE orderStatus (
+CREATE TABLE order_status (
   id INT PRIMARY KEY AUTO_INCREMENT,
   orderStatusName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
 );
 
-INSERT INTO orderStatus(orderStatusName) VAlUES ('NEW');
-INSERT INTO orderStatus(orderStatusName) VAlUES ('DONE');
-INSERT INTO orderStatus(orderStatusName) VAlUES ('CANCELED');
-
+INSERT INTO order_status(orderStatusName) VAlUES ('NEW');
+INSERT INTO order_status(orderStatusName) VAlUES ('DONE');
+INSERT INTO order_status(orderStatusName) VAlUES ('CANCELED');
 
 CREATE TABLE orders (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,28 +33,24 @@ CREATE TABLE orders (
   user_id INT(11) NOT NULL,
   orderStatus INT(11) NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(orderStatus) REFERENCES orderStatus(id)
+  FOREIGN KEY(orderStatus) REFERENCES order_status(id)
 );
 
-
-
-CREATE TABLE itemStatus (
+CREATE TABLE item_status (
   id INT PRIMARY KEY AUTO_INCREMENT,
   itemStatusName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
 );
 
-INSERT INTO itemStatus(itemStatusName) VAlUES ('PRESENT');
-INSERT INTO itemStatus(itemStatusName) VAlUES ('NOT_PRESENT');
+INSERT INTO item_status(itemStatusName) VAlUES ('PRESENT');
+INSERT INTO item_status(itemStatusName) VAlUES ('NOT_PRESENT');
 
-
-CREATE TABLE itemCategory (
+CREATE TABLE item_category (
   id INT PRIMARY KEY AUTO_INCREMENT,
   itemCategoryName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
 );
 
-INSERT INTO itemCategory(itemCategoryName) VAlUES ('Category1');
-INSERT INTO itemCategory(itemCategoryName) VAlUES ('Category2');
-
+INSERT INTO item_category(itemCategoryName) VAlUES ('Category1');
+INSERT INTO item_category(itemCategoryName) VAlUES ('Category2');
 
 CREATE TABLE items (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -69,23 +59,11 @@ CREATE TABLE items (
   itemPrice DECIMAL(7,2) NOT NULL,
   itemCategory INT(11) NOT NULL,
   itemStatus INT(11) NOT NULL,
-  FOREIGN KEY(itemCategory) REFERENCES itemCategory(id),
-  FOREIGN KEY(itemStatus) REFERENCES itemStatus(id)
+  FOREIGN KEY(itemCategory) REFERENCES item_category(id),
+  FOREIGN KEY(itemStatus) REFERENCES item_status(id)
 );
-
 
 CREATE TABLE order_item (
   order_id INT(11) NOT NULL,
   item_id INT(11) NOT NULL
 );
-
-
-
-
-
-
-
-
-
-
-

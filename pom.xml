@@ -44,6 +44,12 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>8.0.15</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -60,12 +66,12 @@
         </plugins>
     </build>
 
-    <developers>
-        <developer>
-            Author Evginiy Kobec (Jack)
-            Skype  skypejs77
-            Email  jackkobec@gmail.com
-        </developer>
-    </developers>
+    <!--<developers>-->
+        <!--<developer>-->
+            <!--Author Evginiy Kobec (Jack)-->
+            <!--Skype  skypejs77-->
+            <!--Email  jackkobec@gmail.com-->
+        <!--</developer>-->
+    <!--</developers>-->
 
 </project>
