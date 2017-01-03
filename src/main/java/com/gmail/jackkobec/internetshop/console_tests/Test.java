@@ -36,7 +36,7 @@ public class Test {
 //                properties.getProperty("jdbc.password"));
         //File file = ResourcesUtil.getResourceFile("DataBaseScriptForAutoFilling.sql");
         File file = new File("src/main/resources/DataBaseScriptForAutoFilling.sql");
-        //new FillDb(connectionManager).executeSqlFile(file);
+        //new DataBaseUtils(connectionManager).executeSqlFile(file);
 
         executeSqlFile(file);
     }

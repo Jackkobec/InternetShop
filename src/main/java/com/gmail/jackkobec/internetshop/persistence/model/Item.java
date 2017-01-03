@@ -1,4 +1,4 @@
-package com.gmail.jackkobec.internetshop.model;
+package com.gmail.jackkobec.internetshop.persistence.model;
 
 import java.math.BigDecimal;
 

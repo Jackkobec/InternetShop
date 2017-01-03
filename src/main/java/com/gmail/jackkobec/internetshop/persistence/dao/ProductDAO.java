@@ -1,6 +1,6 @@
-package com.gmail.jackkobec.internetshop.dao;
+package com.gmail.jackkobec.internetshop.persistence.dao;
 
-import com.gmail.jackkobec.internetshop.model.Product;
+import com.gmail.jackkobec.internetshop.persistence.model.Product;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 

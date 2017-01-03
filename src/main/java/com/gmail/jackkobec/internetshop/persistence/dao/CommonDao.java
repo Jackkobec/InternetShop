@@ -1,4 +1,4 @@
-package com.gmail.jackkobec.internetshop.dao;
+package com.gmail.jackkobec.internetshop.persistence.dao;
 
 import java.util.List;
 

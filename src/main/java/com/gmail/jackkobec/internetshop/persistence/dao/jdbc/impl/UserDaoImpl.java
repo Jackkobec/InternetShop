@@ -1,8 +1,10 @@
-package com.gmail.jackkobec.internetshop.dao.impl;
+package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 
-import com.gmail.jackkobec.internetshop.dao.UserDao;
-import com.gmail.jackkobec.internetshop.model.User;
+import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
+import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
+import com.gmail.jackkobec.internetshop.persistence.model.User;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -10,10 +12,18 @@ import java.util.List;
  */
 public class UserDaoImpl implements UserDao {
 
+    private ConnectionManager connectionManager;
+    private Connection connection;
+
+    private UserDaoImpl(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
+
     @Override
     public boolean addNewEntity(User entity) {
         return false;
     }
+
 
     @Override
     public boolean updateEntityInfo(User entity) {

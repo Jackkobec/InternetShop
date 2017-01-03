@@ -6,16 +6,17 @@ CREATE TABLE user_type (
 INSERT INTO user_type(userTypeName) VAlUES ('client');
 INSERT INTO user_type(userTypeName) VAlUES ('admin');
 
-CREATE TABLE users (
+CREATE TABLE user (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  userName VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
-  userPassword VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
+  name VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
+  password VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
+  userLanguage VARCHAR (12) CHARACTER SET 'utf8',
   userType INT(11) NOT NULL,
   FOREIGN KEY(userType) REFERENCES user_type(id)
 );
 
-INSERT INTO users(userName, userPassword, userType) VAlUES ('Vasa', '2222', 1);
-INSERT INTO users(userName, userPassword, userType) VAlUES ('Jack', '7777', 2);
+INSERT INTO user(name, password, userType) VAlUES ('Vasa', '2222', 1);
+INSERT INTO user(name, password, userType) VAlUES ('Jack', '7777', 2);
 
 CREATE TABLE order_status (
   id INT PRIMARY KEY AUTO_INCREMENT,

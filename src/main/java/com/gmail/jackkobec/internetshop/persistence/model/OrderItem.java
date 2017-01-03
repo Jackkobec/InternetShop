@@ -1,4 +1,4 @@
-package com.gmail.jackkobec.internetshop.model;
+package com.gmail.jackkobec.internetshop.persistence.model;
 
 /**
  * Created by Jack on 27.12.2016.

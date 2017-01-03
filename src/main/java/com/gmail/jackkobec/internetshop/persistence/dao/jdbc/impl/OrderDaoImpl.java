@@ -1,7 +1,7 @@
-package com.gmail.jackkobec.internetshop.dao.impl;
+package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 
-import com.gmail.jackkobec.internetshop.dao.OrderDao;
-import com.gmail.jackkobec.internetshop.model.Order;
+import com.gmail.jackkobec.internetshop.persistence.dao.OrderDao;
+import com.gmail.jackkobec.internetshop.persistence.model.Order;
 
 import java.util.List;
 
