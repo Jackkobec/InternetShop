@@ -4,13 +4,32 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+    <filter>
+        <!--EncodingFilter для кириллицы-->
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class><!--пусть к EncodingFilter-->
+            com.gmail.jackkobec.internetshop.filters.EncodingFilter
+        </filter-class>
+        <!--настройка фильтра-->
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <!--мапинг для EncodingFilter-->
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!--Мапинг для использования на страницах при импорте и ссылках на ресурсы относительного пути,
     обрабатывается сервлетом по умолчанию Томката, без мапинга относительный путь не будет видеть. Пример:
      Bootstrap
     <link type="text/css" href="view.components/css/bootstrap.min.css" rel="stylesheet">-->
     <servlet-mapping>
         <servlet-name>default</servlet-name><!--Tomcat default servlet name-->
-        <url-pattern>/view.components/*</url-pattern><!--view.components my folder with bootstrap and other caa/js components for view -->
+        <url-pattern>/view.components/*
+        </url-pattern><!--view.components my folder with bootstrap and other caa/js components for view -->
     </servlet-mapping>
 
     <resource-ref>

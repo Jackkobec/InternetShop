@@ -26,11 +26,11 @@ public class UserInfoCommand implements ICommand {
         Integer idForFind = Integer.valueOf(request.getParameter("id"));//берем с формы
 
         ConnectionManager connectionManager = ConnectionManager.getConnectionManagerFromJNDI();
-        User finded = new UserDaoImpl(connectionManager).getOneByID(idForFind);
+        //User finded = new UserDaoImpl(connectionManager).getOneByID(idForFind);
 
-        request.setAttribute("user", finded);
+        //request.setAttribute("user", finded);
         page = "/WEB-INF/pages/user-info.jsp";
-        System.out.println(finded);
+        //System.out.println(finded);
         LOGGER.info("UserInfoCommand");
         return page;
     }

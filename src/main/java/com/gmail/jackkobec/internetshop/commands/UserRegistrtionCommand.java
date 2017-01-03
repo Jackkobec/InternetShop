@@ -1,11 +1,12 @@
 package com.gmail.jackkobec.internetshop.commands;
 
-import model.ConnectionManager;
-import model.User;
-import model.UserDao;
-import servlet.PageManager;
-import validation.LoginFormValidation;
-import validation.Validator;
+
+
+import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
+import com.gmail.jackkobec.internetshop.persistence.model.User;
+import com.gmail.jackkobec.internetshop.servlet.PageManager;
+import com.gmail.jackkobec.internetshop.validation.LoginFormValidation;
+import com.gmail.jackkobec.internetshop.validation.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class UserRegistrtionCommand implements ICommand {
 
     Validator validator = new LoginFormValidation();
     ConnectionManager connectionManager = ConnectionManager.getConnectionManagerFromJNDI();
-    UserDao userDao = new UserDao(connectionManager);
+    //UserDao userDao = new UserDao(connectionManager);
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,13 +54,13 @@ public class UserRegistrtionCommand implements ICommand {
                     .getPage(PageManager.REGISTRATION_PAGE);
             return page;
         }
-        User forAdd = new User(login, pass);
+       // User forAdd = new User(login, pass);
 
-        if(userDao.addNewEntity(forAdd)){
-            request.getSession().setAttribute("registred", true);
-            request.setAttribute("info", "Registration successfully. Please sign in.");
-            page = "/index.jsp";
-        }
+//        if(userDao.addNewEntity(forAdd)){
+//            request.getSession().setAttribute("registred", true);
+//            request.setAttribute("info", "Registration successfully. Please sign in.");
+//            page = "/index.jsp";
+//        }
 
         return page;
     }
