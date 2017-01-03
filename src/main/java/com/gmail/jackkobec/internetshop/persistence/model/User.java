@@ -6,18 +6,19 @@ package com.gmail.jackkobec.internetshop.persistence.model;
 public class User {
 
     private Integer id;
-    private String userName;
-    private String userPassword;
+    private String name;
+    private String password;
+    private String language;
 
     private UserType userType;
 
     public User() {
     }
 
-    public User(Integer id, String userName, String userPassword, UserType userType) {
-        this.id = id;
-        this.userName = userName;
-        this.userPassword = userPassword;
+    public User(String name, String password, String language, UserType userType) {
+        this.name = name;
+        this.password = password;
+        this.language = language;
         this.userType = userType;
     }
 
@@ -29,20 +30,28 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public UserType getUserType() {
@@ -61,8 +70,9 @@ public class User {
         User user = (User) o;
 
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
-        if (userPassword != null ? !userPassword.equals(user.userPassword) : user.userPassword != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (language != null ? !language.equals(user.language) : user.language != null) return false;
         return userType == user.userType;
 
     }
@@ -70,8 +80,9 @@ public class User {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (language != null ? language.hashCode() : 0);
         result = 31 * result + (userType != null ? userType.hashCode() : 0);
         return result;
     }
@@ -80,8 +91,9 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", language='" + language + '\'' +
                 ", userType=" + userType +
                 '}';
     }

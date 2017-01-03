@@ -1,4 +1,4 @@
-package com.gmail.jackkobec.internetshop.servlet;
+package com.gmail.jackkobec.internetshop.controller;
 
 
 

@@ -1,4 +1,4 @@
-package com.gmail.jackkobec.internetshop.servlet;
+package com.gmail.jackkobec.internetshop.controller;
 
 
 
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p>Application servlet for processing requests.
+ * <p>Application controller for processing requests.
  * Created by Jack on 28.12.2016.
  */
 @WebServlet(urlPatterns = {"/Controller"})

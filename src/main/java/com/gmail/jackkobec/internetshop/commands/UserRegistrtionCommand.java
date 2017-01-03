@@ -3,8 +3,7 @@ package com.gmail.jackkobec.internetshop.commands;
 
 
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
-import com.gmail.jackkobec.internetshop.persistence.model.User;
-import com.gmail.jackkobec.internetshop.servlet.PageManager;
+import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.validation.LoginFormValidation;
 import com.gmail.jackkobec.internetshop.validation.Validator;
 

@@ -27,7 +27,7 @@
      Bootstrap
     <link type="text/css" href="view.components/css/bootstrap.min.css" rel="stylesheet">-->
     <servlet-mapping>
-        <servlet-name>default</servlet-name><!--Tomcat default servlet name-->
+        <servlet-name>default</servlet-name><!--Tomcat default controller name-->
         <url-pattern>/view.components/*
         </url-pattern><!--view.components my folder with bootstrap and other caa/js components for view -->
     </servlet-mapping>

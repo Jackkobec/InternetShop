@@ -1,6 +1,6 @@
 package com.gmail.jackkobec.internetshop.commands;
 
-import com.gmail.jackkobec.internetshop.servlet.PageManager;
+import com.gmail.jackkobec.internetshop.controller.PageManager;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -24,7 +24,7 @@ public class NoCommand implements ICommand {
      *
      * @param request
      * @param response
-     * @return page for forward in the servlet.
+     * @return page for forward in the controller.
      * @throws ServletException
      * @throws IOException
      */

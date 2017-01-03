@@ -1,4 +1,4 @@
-package com.gmail.jackkobec.internetshop.servlet;
+package com.gmail.jackkobec.internetshop.controller;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
