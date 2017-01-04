@@ -21,6 +21,7 @@ public class ControllerHelper {
      * Init map with all possible commands.
      */
     private ControllerHelper() {
+        commands.put("userlogin", new UserLoginCommand());
         commands.put("register", new RegisterCommand());
         commands.put("find", new UserInfoCommand());
         commands.put("userregistration", new UserRegistrtionCommand());

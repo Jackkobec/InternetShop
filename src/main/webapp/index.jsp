@@ -1,55 +1,102 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Jack
+  Date: 02.01.2017
+  Time: 21:52
+  To change this template use File | Settings | File Templates.
+--%>
 
-<%@ include file="WEB-INF/pages/include.jsp"%>
-<html>
+<%@ include file="WEB-INF/pages/include.jsp" %>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <style>
-        body {
-            background: #333; /* Цвет фона */
-            color: #fc0; /* Цвет текста */
-        }
-    </style>
-    <title>Main</title>
+    <jsp:include page="WEB-INF/pages/bootstrap-meta.jsp"/>
+    <title>Login Form</title>
 
+    <!-- Добавляем свой стиль -->
+    <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="header">
+<div class="container">
 
-    <ul>
-        <li><a href="Controller?command=register">Register</a></li>
-    </ul>
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form role="form" action="Controller?command=userlogin" method="post">
+                <fieldset>
+                    <h2>Please Sign In</h2>
+                    <hr class="colorgraph">
+                    <div class="form-group has-feedback ${emailValidationFeedback}">
+                        <!-- default <div class="form-group"> -->
+                        <input type="email" name="email" id="email" class="form-control input-lg"
+                               placeholder="Email Address"
+                               value="<%=(request.getParameter("email")!=null)?request.getParameter("email"):""%>"><%--заполнение формы из request--%>
+                        <%--<span class="glyphicon glyphicon-ok form-control-feedback"></span><!-- test icon  -->--%>
+                        <span class="glyphicon ${emailGlyphiconType} form-control-feedback"></span><!-- test icon  -->
+                    </div>
+                    <div class="form-group has-feedback ${passwordValidationFeedback}">
+                        <input type="password" name="password" id="password" class="form-control input-lg"
+                               placeholder="Password"
+                               value="<%=(request.getParameter("password")!=null)?request.getParameter("password"):""%>"><%--заполнение формы из request--%>
+                        <span class="glyphicon ${passwordGlyphiconType} form-control-feedback"></span>
+                        <!-- test icon  -->
+                    </div>
 
-    <c:if test="${!inSystem}">
-        <form action="login" method="post">
-            <ul>
-                <li>Input name:
-                    <input name="name" type="text"placeholder="Enter your name"
-                           value="<%=(request.getParameter("name")!=null)?request.getParameter("name"):""%>"><%--заполнение формы из request--%>
-                </li>
-                <li>Input pass:
-                    <input name="pass" type="password"placeholder="Enter your password"
-                           value="<%=(request.getParameter("pass")!=null)?request.getParameter("pass"):""%>"><%--заполнение формы из request--%>
-                </li>
-                <li>Submit:
-                    <input type="submit">
-                </li>
-            </ul>
-        </form>
-    </c:if>
-    <c:if test="${inSystem}">
-        <ul>
-            <li>Hello ${currentUaer}</li>
-        </ul>
-    </c:if>
-    <c:if test="${registred}">
-        <ul>
-            <h2>${info}</h2>
-        </ul>
-    </c:if>
+                    <div class="form-group"> <!-- тест выпадающего списка -->
+                        <label for="filter">Select language</label>
+                        <select class="form-control" id="filter" name="filter">
+                            <option value="0" selected>English</option>
+                            <option value="1">Russian</option>
+                            <%--<option value="2">Most popular</option>--%>
+                            <%--<option value="3">Top rated</option>--%>
+                            <%--<option value="4">Most commented</option>--%>
+                        </select>
+                    </div> <!-- /тест выпадающего списка -->
+
+
+                    <span class="button-checkbox">
+					<button type="button" class="btn" data-color="info">Remember Me</button>
+                    <input type="checkbox" name="remember_me" id="remember_me" checked="checked" class="hidden">
+					<a href="" class="btn btn-link pull-right">Forgot Password?</a>
+				</span>
+                    <hr class="colorgraph">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <%--<input type="submit" class="btn btn-lg btn-success btn-block" value="Sign In"><!-- default  -->--%>
+                            <input type="submit" class="btn btn-lg btn-success btn-block ${notification}"
+                                   value="Sign In">
+                        </div>
+
+                        <%--<div class="notification notification-error logged-out"><!-- notification test-->--%>
+                        <div class="notification notification-error notification-from-command"><!-- notification test-->
+                            ${notificationMessage}
+                        </div>
+                        <div class="notification notification-error logged-oute">
+                            You logged out successfully!
+                        </div><!-- /notification test-->
+
+
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <a href="Controller?command=register" class="btn btn-lg btn-primary btn-block">Register</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 
 </div>
 
 
-
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="view.components/js/bootstrap.min.js"></script>
+<!-- Добавляем свой скрипт -->
+<script src="view.components/js/forlogin.js"></script>
+<!-- Добавляем свой скрипт -->
+<script src="view.components/js/fornotifications.js"></script>
 </body>
 </html>

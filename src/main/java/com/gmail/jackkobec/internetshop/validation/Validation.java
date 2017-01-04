@@ -1,13 +1,13 @@
 package com.gmail.jackkobec.internetshop.validation;
 
 /**
- * Validator
+ * Validation interface.
  *
  * @author Jack
  * @email jackkobec@gmail.com
  * @skype skypejs77
  */
-public interface Validator {
+public interface Validation {
 
     boolean loginValidator(String login);
 

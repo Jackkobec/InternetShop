@@ -17,6 +17,7 @@ public class PageManager {
 
     private static final String PAGES_RESOURCE_BUNDLE = "pages";
 
+    public static final String INDEX_PAGE = "INDEX_PAGE";
     public static final String REGISTRATION_PAGE = "REGISTRATION_PAGE";
     public static final String ERROR_PAGE = "ERROR_PAGE";
 

@@ -1,11 +1,10 @@
 package com.gmail.jackkobec.internetshop.commands;
 
 
-
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.controller.PageManager;
-import com.gmail.jackkobec.internetshop.validation.LoginFormValidation;
-import com.gmail.jackkobec.internetshop.validation.Validator;
+import com.gmail.jackkobec.internetshop.validation.InputDataValidation;
+import com.gmail.jackkobec.internetshop.validation.Validation;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import java.io.IOException;
  */
 public class UserRegistrtionCommand implements ICommand {
 
-    Validator validator = new LoginFormValidation();
+    Validation validation = InputDataValidation.getInputDataValidation();
     ConnectionManager connectionManager = ConnectionManager.getConnectionManagerFromJNDI();
     //UserDao userDao = new UserDao(connectionManager);
 
@@ -29,6 +28,7 @@ public class UserRegistrtionCommand implements ICommand {
         String login = request.getParameter("name");
         String pass = request.getParameter("pass");
 
+
         if (login.isEmpty() || pass.isEmpty()) {
             request.getSession().setAttribute("validation", false);
             request.setAttribute("validationMessage", "Login or Password is empty!");
@@ -38,7 +38,7 @@ public class UserRegistrtionCommand implements ICommand {
             return page;
         }
 
-        if (!validator.loginValidator(login)) {
+        if (!validation.loginValidator(login)) {
             request.getSession().setAttribute("validation", false);
             request.setAttribute("validationMessage", "Incorrect Login.Use chars A-Za-z0-9_ , length 3-15");
             page = PageManager.getPageManager()
@@ -46,19 +46,19 @@ public class UserRegistrtionCommand implements ICommand {
             return page;
         }
 
-        if (!validator.passwordValidator(pass)) {
+        if (!validation.passwordValidator(pass)) {
             request.getSession().setAttribute("validation", false);
             request.setAttribute("validationMessage", "Incorrect Password.Use chars A-Za-z0-9_ , length 3-15");
             page = PageManager.getPageManager()
                     .getPage(PageManager.REGISTRATION_PAGE);
             return page;
         }
-       // User forAdd = new User(login, pass);
+        // User forAdd = new User(login, pass);
 
 //        if(userDao.addNewEntity(forAdd)){
 //            request.getSession().setAttribute("registred", true);
 //            request.setAttribute("info", "Registration successfully. Please sign in.");
-//            page = "/index.jsp";
+//            page = "/index_old.jsp";
 //        }
 
         return page;
