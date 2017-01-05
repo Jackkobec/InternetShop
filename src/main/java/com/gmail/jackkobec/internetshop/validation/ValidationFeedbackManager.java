@@ -65,17 +65,29 @@ public class ValidationFeedbackManager {
         switch (feedbackFor) {
 
             case "EMAIL_AND_PASSWORD_IS_EMPTY":
-                request.setAttribute(NOTIFICATION_MESSAGE, "Email and password is empty!");
+                request.setAttribute(NOTIFICATION_MESSAGE, "validation.email_and_password_is_empty");
                 break;
             case "EMAIL_OR_PASSWORD_IS_EMPTY":
-                request.setAttribute(NOTIFICATION_MESSAGE, "Email or password is empty!");
+                request.setAttribute(NOTIFICATION_MESSAGE, "validation.email_or_password_is_empty");
                 break;
             case "ONLY_EMAIL":
-                request.setAttribute(NOTIFICATION_MESSAGE, "Email is incorrect! Enter correct email like a jack@gmail.com");
+                request.setAttribute(NOTIFICATION_MESSAGE, "validation.incorrect_email");
                 break;
             case "ONLY_PASSWORD":
-                request.setAttribute(NOTIFICATION_MESSAGE, "Password is incorrect! Use chars A-Za-z0-9_ length 3-15");
+                request.setAttribute(NOTIFICATION_MESSAGE, "validation.incorrect_password");
                 break;
         }
     }
 }
+ /*case "EMAIL_AND_PASSWORD_IS_EMPTY":
+         request.setAttribute(NOTIFICATION_MESSAGE, "Email and password is empty!");
+         break;
+         case "EMAIL_OR_PASSWORD_IS_EMPTY":
+         request.setAttribute(NOTIFICATION_MESSAGE, "Email or password is empty!");
+         break;
+         case "ONLY_EMAIL":
+         request.setAttribute(NOTIFICATION_MESSAGE, "Email is incorrect! Enter correct email like a jack@gmail.com");
+         break;
+         case "ONLY_PASSWORD":
+         request.setAttribute(NOTIFICATION_MESSAGE, "Password is incorrect! Use chars A-Za-z0-9_ length 3-15");
+         break;*/

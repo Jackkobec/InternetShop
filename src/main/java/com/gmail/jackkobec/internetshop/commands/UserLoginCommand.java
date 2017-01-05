@@ -8,6 +8,7 @@ import com.gmail.jackkobec.internetshop.validation.Validation;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -17,7 +18,7 @@ public class UserLoginCommand implements ICommand {
 
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
-    private static final String FILTER = "filter";
+    private static final String LANGUAGE_SELECTION = "language_selection";
     private static final String CHECKBOX = "remember_me";
 
     private Validation validation = InputDataValidation.getInputDataValidation();
@@ -30,8 +31,17 @@ public class UserLoginCommand implements ICommand {
 
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
-        String filter = request.getParameter(FILTER);
+        String languageSelection = request.getParameter(LANGUAGE_SELECTION);
         String checkbox = request.getParameter(CHECKBOX);
+
+        System.out.println(languageSelection);
+        String local = (Integer.parseInt(languageSelection)) == 1 ? "ru_RU" : "en_EN";
+
+//        HttpSession session = request.getSession(true);
+//        session.setAttribute("selectedLocale", local);
+
+
+        request.setAttribute("selectedLocale", local);
 
         boolean isEmailValid = validation.emailValidator(email);
         boolean isPasswordValid = validation.passwordValidator(password);

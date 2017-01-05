@@ -17,6 +17,11 @@
         </init-param>
     </filter>
     <!--мапинг для EncodingFilter-->
+    <!--Можно делать и анотацей:
+    @WebFilter(urlPatterns = "/*", initParams = {
+        @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding param")
+})
+-->
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
