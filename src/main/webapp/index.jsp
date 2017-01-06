@@ -12,7 +12,11 @@
 
 <fmt:setLocale value="${selectedLocale}" scope="session"/>
 <fmt:setBundle basename="language" var="rb"/>
-
+<%-- or
+"ru_RU" means: language_ru_RU.properties
+"en_EN" means: language_en_EN.properties
+In the Java: request.setAttribute("selectedLocale", "en_EN");
+--%>
 <!DOCTYPE html>
 <head>
     <jsp:include page="WEB-INF/pages/bootstrap-meta.jsp"/>
@@ -51,7 +55,8 @@
                     <div class="form-group"> <!-- тест выпадающего списка -->
                         <label for="filter"><fmt:message key="login.form.language_selector" bundle="${rb}"/></label>
                         <select class="form-control" id="filter" name="language_selection">
-                            <option value="0" selected><fmt:message key="login.form.language.english" bundle="${rb}"/></option>
+                            <option value="0" selected><fmt:message key="login.form.language.english"
+                                                                    bundle="${rb}"/></option>
                             <option value="1"><fmt:message key="login.form.language.russian" bundle="${rb}"/></option>
                             <%--<option value="2">Most popular</option>--%>
                             <%--<option value="3">Top rated</option>--%>
@@ -61,9 +66,11 @@
 
 
                     <span class="button-checkbox">
-					<button type="button" class="btn" data-color="info"><fmt:message key="login.form.remember_me" bundle="${rb}"/></button>
+					<button type="button" class="btn" data-color="info"><fmt:message key="login.form.remember_me"
+                                                                                     bundle="${rb}"/></button>
                     <input type="checkbox" name="remember_me" id="remember_me" checked="checked" class="hidden">
-					<a href="" class="btn btn-link pull-right"><fmt:message key="login.form.forgot_password" bundle="${rb}"/></a>
+					<a href="" class="btn btn-link pull-right"><fmt:message key="login.form.forgot_password"
+                                                                            bundle="${rb}"/></a>
 				</span>
                     <hr class="colorgraph">
                     <div class="row">

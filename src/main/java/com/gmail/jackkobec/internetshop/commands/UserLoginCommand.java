@@ -2,19 +2,21 @@ package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.validation.InputDataValidation;
-import com.gmail.jackkobec.internetshop.validation.ValidationFeedbackManager;
 import com.gmail.jackkobec.internetshop.validation.Validation;
+import com.gmail.jackkobec.internetshop.validation.ValidationFeedbackManager;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
  * Created by Jack on 04.01.2017.
  */
 public class UserLoginCommand implements ICommand {
+    public static final Logger LOGGER = LogManager.getLogger(UserLoginCommand.class);
 
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
@@ -27,7 +29,8 @@ public class UserLoginCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = PageManager.getPageManager().getPage(PageManager.INDEX_PAGE);
+        String page = null;
+        String loginPage = PageManager.getPageManager().getPage(PageManager.INDEX_PAGE);
 
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
@@ -43,42 +46,49 @@ public class UserLoginCommand implements ICommand {
 
         request.setAttribute("selectedLocale", local);
 
+        if (preValidation(request, email, password)) return loginPage;
+
+
+        return null;
+    }
+
+    private boolean preValidation(HttpServletRequest request, String email, String password) {
+
         boolean isEmailValid = validation.emailValidator(email);
         boolean isPasswordValid = validation.passwordValidator(password);
 
         if (email.isEmpty() && password.isEmpty()) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
                     validationFeedbackManager.EMAIL_AND_PASSWORD_IS_EMPTY);
 
-            return page;
+            return true;
         }
 
         if (email.isEmpty() || password.isEmpty()) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
                     validationFeedbackManager.EMAIL_OR_PASSWORD_IS_EMPTY);
 
-            return page;
+            return true;
         }
 
         if (!isEmailValid) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
                     validationFeedbackManager.ONLY_EMAIL);
 
-            return page;
+            return true;
         }
 
         if (!isPasswordValid) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
                     validationFeedbackManager.ONLY_PASSWORD);
 
-            return page;
+            return true;
         }
 
-
-        return null;
+        return false;
     }
 }

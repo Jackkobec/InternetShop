@@ -1,5 +1,6 @@
 CREATE database internet_shop;
 
+USE internet_shop;
 
 CREATE TABLE userType (
   id INT PRIMARY KEY AUTO_INCREMENT,
