@@ -40,7 +40,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                 <div class="form-group has-feedback ${emailValidationFeedback}">
                     <input type="email" name="email" id="email" class="form-control input-lg"
-                           placeholder="Email Address" tabindex="4">
+                           placeholder="Email Address" tabindex="4"
+                           value="<%=(request.getParameter("email")!=null)?request.getParameter("email"):""%>"><%--заполнение формы из request--%>
                     <span class="glyphicon ${emailGlyphiconType} form-control-feedback"></span><!-- test icon  -->
                 </div>
 
@@ -48,7 +49,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group has-feedback ${passwordValidationFeedback}">
                             <input type="password" name="password" id="password" class="form-control input-lg"
-                                   placeholder="Password" tabindex="5">
+                                   placeholder="Password" tabindex="5"
+                                   value="<%=(request.getParameter("password")!=null)?request.getParameter("password"):""%>"><%--заполнение формы из request--%>
                             <span class="glyphicon ${passwordGlyphiconType} form-control-feedback"></span>
                             <!-- test icon  -->
                         </div>
@@ -56,7 +58,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group has-feedback ${confirmationPasswordValidationFeedback}">
                             <input type="password" name="password_confirmation" id="password_confirmation"
-                                   class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+                                   class="form-control input-lg" placeholder="Confirm Password" tabindex="6"
+                                   value="<%=(request.getParameter("password_confirmation")!=null)?request.getParameter("password_confirmation"):""%>"><%--заполнение формы из request--%>
                             <span class="glyphicon ${confirmationPasswordGlyphiconType} form-control-feedback"></span>
                             <!-- test icon  -->
                         </div>

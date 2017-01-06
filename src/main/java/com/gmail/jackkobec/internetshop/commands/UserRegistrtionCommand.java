@@ -49,9 +49,12 @@ public class UserRegistrtionCommand implements ICommand {
         boolean isEmailValid = validation.emailValidator(email);
         boolean isPasswordValid = validation.passwordValidator(password);
 
+        boolean isPasswordEqualsConfirmationPassword  = password.equals(passwordConfirmation);
+        System.out.println(isPasswordEqualsConfirmationPassword);
+
         if (email.isEmpty() && password.isEmpty()) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, !isPasswordEqualsConfirmationPassword,
                     validationFeedbackManager.EMAIL_AND_PASSWORD_IS_EMPTY);
 
             return true;
@@ -59,7 +62,9 @@ public class UserRegistrtionCommand implements ICommand {
 
         if (email.isEmpty() || password.isEmpty()) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
+            if((!email.isEmpty()) && password.isEmpty()) isPasswordEqualsConfirmationPassword = !isPasswordEqualsConfirmationPassword;
+
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
                     validationFeedbackManager.EMAIL_OR_PASSWORD_IS_EMPTY);
 
             return true;
@@ -67,7 +72,7 @@ public class UserRegistrtionCommand implements ICommand {
 
         if (!isEmailValid) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
                     validationFeedbackManager.ONLY_EMAIL);
 
             return true;
@@ -75,19 +80,20 @@ public class UserRegistrtionCommand implements ICommand {
 
         if (!isPasswordValid) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
                     validationFeedbackManager.ONLY_PASSWORD);
 
             return true;
         }
 
-        if (!(password.equals(passwordConfirmation))) {
+        if (!isPasswordEqualsConfirmationPassword) {
 
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, true,
+            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
                     validationFeedbackManager.PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD);
 
             return true;
         }
+
         return false;
     }
 }
