@@ -20,7 +20,6 @@ import java.io.IOException;
 public class UserRegistrtionCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(UserRegistrtionCommand.class);
 
-    private Validation validation = InputDataValidation.getInputDataValidation();
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
     ConnectionManager connectionManager = ConnectionManager.getConnectionManagerFromJNDI();
@@ -39,61 +38,9 @@ public class UserRegistrtionCommand implements ICommand {
         //optional
         String name = request.getParameter("name");
 
-        if (preValidation(request, email, password, passwordConfirmation)) return registrationPage;
+        if (validationFeedbackManager.preValidation(request, email, password, passwordConfirmation)) return registrationPage;
 
         return page;
     }
 
-    private boolean preValidation(HttpServletRequest request, String email, String password, String passwordConfirmation) {
-
-        boolean isEmailValid = validation.emailValidator(email);
-        boolean isPasswordValid = validation.passwordValidator(password);
-
-        boolean isPasswordEqualsConfirmationPassword  = password.equals(passwordConfirmation);
-        System.out.println(isPasswordEqualsConfirmationPassword);
-
-        if (email.isEmpty() && password.isEmpty()) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, !isPasswordEqualsConfirmationPassword,
-                    validationFeedbackManager.EMAIL_AND_PASSWORD_IS_EMPTY);
-
-            return true;
-        }
-
-        if (email.isEmpty() || password.isEmpty()) {
-
-            if((!email.isEmpty()) && password.isEmpty()) isPasswordEqualsConfirmationPassword = !isPasswordEqualsConfirmationPassword;
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
-                    validationFeedbackManager.EMAIL_OR_PASSWORD_IS_EMPTY);
-
-            return true;
-        }
-
-        if (!isEmailValid) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
-                    validationFeedbackManager.ONLY_EMAIL);
-
-            return true;
-        }
-
-        if (!isPasswordValid) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
-                    validationFeedbackManager.ONLY_PASSWORD);
-
-            return true;
-        }
-
-        if (!isPasswordEqualsConfirmationPassword) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
-                    validationFeedbackManager.PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD);
-
-            return true;
-        }
-
-        return false;
-    }
 }

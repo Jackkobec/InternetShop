@@ -23,7 +23,6 @@ public class UserLoginCommand implements ICommand {
     private static final String LANGUAGE_SELECTION = "language_selection";
     private static final String CHECKBOX = "remember_me";
 
-    private Validation validation = InputDataValidation.getInputDataValidation();
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
     @Override
@@ -43,52 +42,10 @@ public class UserLoginCommand implements ICommand {
 //        HttpSession session = request.getSession(true);
 //        session.setAttribute("selectedLocale", local);
 
-
         request.setAttribute("selectedLocale", local);
 
-        if (preValidation(request, email, password)) return loginPage;
+        if (validationFeedbackManager.preValidation(request, email, password, null)) return loginPage;
 
-
-        return null;
-    }
-
-    private boolean preValidation(HttpServletRequest request, String email, String password) {
-
-        boolean isEmailValid = validation.emailValidator(email);
-        boolean isPasswordValid = validation.passwordValidator(password);
-
-        if (email.isEmpty() && password.isEmpty()) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
-                    validationFeedbackManager.EMAIL_AND_PASSWORD_IS_EMPTY);
-
-            return true;
-        }
-
-        if (email.isEmpty() || password.isEmpty()) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
-                    validationFeedbackManager.EMAIL_OR_PASSWORD_IS_EMPTY);
-
-            return true;
-        }
-
-        if (!isEmailValid) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
-                    validationFeedbackManager.ONLY_EMAIL);
-
-            return true;
-        }
-
-        if (!isPasswordValid) {
-
-            validationFeedbackManager.createFeedBack(request, isEmailValid, isPasswordValid, false,
-                    validationFeedbackManager.ONLY_PASSWORD);
-
-            return true;
-        }
-
-        return false;
+        return "/basepage.jsp";
     }
 }

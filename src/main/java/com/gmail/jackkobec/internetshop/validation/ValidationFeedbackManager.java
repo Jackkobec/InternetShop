@@ -1,5 +1,7 @@
 package com.gmail.jackkobec.internetshop.validation;
 
+import com.gmail.jackkobec.internetshop.commands.UserRegistrtionCommand;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ValidationFeedbackManager {
 
     private static ValidationFeedbackManager validationFeedbackManager;
+    private Validation validation = InputDataValidation.getInputDataValidation();
 
     //has-success or has-error"
     private static final String EMAIL_VALIDATION_FEEDBACK = "emailValidationFeedback";
@@ -96,6 +99,64 @@ public class ValidationFeedbackManager {
                 request.setAttribute(NOTIFICATION_MESSAGE, "validation.password_not_equals_confirmation_password");
                 break;
         }
+    }
+
+    public boolean preValidation(HttpServletRequest request, String email, String password, String passwordConfirmation) {
+
+        boolean isEmailValid = validation.emailValidator(email);
+        boolean isPasswordValid = validation.passwordValidator(password);
+        boolean isPasswordEqualsConfirmationPassword = password.equals(passwordConfirmation);
+
+
+        if (passwordConfirmation == null) {
+            isPasswordEqualsConfirmationPassword = true;
+        }
+
+
+        if (email.isEmpty() && password.isEmpty()) {
+
+            createFeedBack(request, isEmailValid, isPasswordValid, !isPasswordEqualsConfirmationPassword,
+                    EMAIL_AND_PASSWORD_IS_EMPTY);
+
+            return true;
+        }
+
+        if (email.isEmpty() || password.isEmpty()) {
+
+            if ((!email.isEmpty()) && password.isEmpty())
+                isPasswordEqualsConfirmationPassword = !isPasswordEqualsConfirmationPassword;
+
+            createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
+                    EMAIL_OR_PASSWORD_IS_EMPTY);
+
+            return true;
+        }
+
+        if (!isEmailValid) {
+
+            createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
+                    ONLY_EMAIL);
+
+            return true;
+        }
+
+        if (!isPasswordValid) {
+
+            createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
+                    ONLY_PASSWORD);
+
+            return true;
+        }
+
+        if (!isPasswordEqualsConfirmationPassword) {
+
+            createFeedBack(request, isEmailValid, isPasswordValid, isPasswordEqualsConfirmationPassword,
+                    PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD);
+
+            return true;
+        }
+
+        return false;
     }
 }
  /*case "EMAIL_AND_PASSWORD_IS_EMPTY":

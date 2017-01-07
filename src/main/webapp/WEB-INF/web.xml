@@ -37,6 +37,11 @@
         </url-pattern><!--view.components my folder with bootstrap and other caa/js components for view -->
     </servlet-mapping>
 
+    <!--Start page-->
+    <welcome-file-list>
+        <welcome-file>basepage.jsp</welcome-file>
+    </welcome-file-list>
+
     <resource-ref>
         <!--just description-->
         <description>DB Connection to mySql</description>
