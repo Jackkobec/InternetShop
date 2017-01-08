@@ -1,6 +1,8 @@
 package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
+import com.gmail.jackkobec.internetshop.persistence.model.User;
+import com.gmail.jackkobec.internetshop.service.ClientService;
 import com.gmail.jackkobec.internetshop.validation.InputDataValidation;
 import com.gmail.jackkobec.internetshop.validation.Validation;
 import com.gmail.jackkobec.internetshop.validation.ValidationFeedbackManager;
@@ -8,6 +10,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -46,6 +50,22 @@ public class UserLoginCommand implements ICommand {
 
         if (validationFeedbackManager.preValidation(request, email, password, null)) return loginPage;
 
-        return "/basepage.jsp";
+
+
+        ClientService clientService = new ClientService();
+        User tryLogin = new User(email, password);
+
+        User finded = clientService.findByEmailAndPassword(email, password);
+
+        if (finded.getEmail() != null && finded.getPassword() != null) {
+            request.getSession().setAttribute("logined", finded);
+
+            Cookie cookie = new Cookie("userEmail", finded.getEmail());
+            cookie.setMaxAge(3600);
+            response.addCookie(cookie);
+            return "/basepage.jsp";
+        } else {
+            return loginPage;
+        }
     }
 }

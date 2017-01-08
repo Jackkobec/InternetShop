@@ -3,6 +3,9 @@ package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
+import com.gmail.jackkobec.internetshop.persistence.model.User;
+import com.gmail.jackkobec.internetshop.service.ClientService;
+import com.gmail.jackkobec.internetshop.service.LanguageService;
 import com.gmail.jackkobec.internetshop.validation.InputDataValidation;
 import com.gmail.jackkobec.internetshop.validation.Validation;
 import com.gmail.jackkobec.internetshop.validation.ValidationFeedbackManager;
@@ -20,6 +23,7 @@ import java.io.IOException;
 public class UserRegistrtionCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(UserRegistrtionCommand.class);
 
+    private static final String LANGUAGE_SELECTION = "language_selection";
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
     ConnectionManager connectionManager = ConnectionManager.getConnectionManagerFromJNDI();
@@ -28,8 +32,9 @@ public class UserRegistrtionCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = null;
+        //String page = null;
         String registrationPage = PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
+        String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
         //mandatory
         String email = request.getParameter("email");
@@ -37,10 +42,30 @@ public class UserRegistrtionCommand implements ICommand {
         String passwordConfirmation = request.getParameter("password_confirmation");
         //optional
         String name = request.getParameter("name");
+        String language = new LanguageService()
+                .getLanguageBySelect(Integer.parseInt(request.getParameter(LANGUAGE_SELECTION)));
 
-        if (validationFeedbackManager.preValidation(request, email, password, passwordConfirmation)) return registrationPage;
+        if (validationFeedbackManager.preValidation(request, email, password, passwordConfirmation))
+            return registrationPage;
 
-        return page;
+
+        ClientService clientService = new ClientService();
+        User forRegister = new User(email, password, name, language);
+
+        User finded = clientService.findByEmail(email);
+
+        if (finded.getEmail() != null) {
+
+            return registrationPage;
+        } else {
+        request.getSession().setAttribute("logined", forRegister);
+            return (clientService.userRegistrer(forRegister))
+                    ? "/basepage.jsp"
+                    : errorPage;
+
+        }
+
+
     }
 
 }

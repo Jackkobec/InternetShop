@@ -1,6 +1,6 @@
 CREATE TABLE user_type (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  userTypeName VARCHAR (22) CHARACTER SET 'utf8'
+  userTypeName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
 );
 
 INSERT INTO user_type(userTypeName) VAlUES ('client');
@@ -11,8 +11,8 @@ CREATE TABLE user (
   email VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
   password VARCHAR (35) CHARACTER SET 'utf8' NOT NULL,
   name VARCHAR (35) CHARACTER SET 'utf8',
-  language VARCHAR (12) CHARACTER SET 'utf8' DEFAULT 'en_EN',
-  userType INT(11) NOT NULL DEFAULT 1,
+  language VARCHAR (12) CHARACTER SET 'utf8' DEFAULT 'EN',
+  userType INT(11) NOT NULL DEFAULT '0',
   FOREIGN KEY(userType) REFERENCES user_type(id)
 );
 

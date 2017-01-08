@@ -6,4 +6,8 @@ import com.gmail.jackkobec.internetshop.persistence.model.User;
  * Created by Jack on 28.12.2016.
  */
 public interface UserDao extends CommonDao<User, Integer> {
+
+    User findByEmail(String email);
+
+    User findByEmailAndPassword(String email, String password);
 }

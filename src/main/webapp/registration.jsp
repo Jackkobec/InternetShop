@@ -71,6 +71,18 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                            placeholder="Name" tabindex="3">
                 </div>
 
+                <div class="form-group"> <!-- тест выпадающего списка -->
+                    <label for="filter"><fmt:message key="login.form.language_selector" bundle="${rb}"/></label>
+                    <select class="form-control" id="filter" name="language_selection">
+                        <option value="0" selected><fmt:message key="login.form.language.english"
+                                                                bundle="${rb}"/></option>
+                        <option value="1"><fmt:message key="login.form.language.russian" bundle="${rb}"/></option>
+                        <%--<option value="2">Most popular</option>--%>
+                        <%--<option value="3">Top rated</option>--%>
+                        <%--<option value="4">Most commented</option>--%>
+                    </select>
+                </div> <!-- /тест выпадающего списка -->
+
                 <div class="row">
                     <div class="col-xs-4 col-sm-3 col-md-3">
 					<span class="button-checkbox">
@@ -89,7 +101,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <hr class="colorgraph">
                 <div class="row">
                     <div class="col-xs-12 col-md-6"><input type="submit" value="Register"
-                                                           class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                                                           class="btn btn-primary btn-block btn-lg ${notification}" tabindex="7"></div>
+
+                    <%--<div class="notification notification-error logged-out"><!-- notification test-->--%>
+                    <div class="notification notification-error notification-from-command"><!-- notification test-->
+                        <fmt:message key="${notificationMessage}" bundle="${rb}"/>
+                    </div>
+                    <div class="notification notification-error logged-oute">
+                        You logged out successfully!
+                    </div><!-- /notification test-->
+
                     <div class="col-xs-12 col-md-6"><a href="#" class="btn btn-success btn-block btn-lg">Sign In</a>
                     </div>
                 </div>
@@ -143,5 +164,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <script src="view.components/js/bootstrap.min.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="view.components/js/forregistration.js"></script>
+<!-- Добавляем свой скрипт -->
+<script src="view.components/js/fornotifications.js"></script>
 </body>
 </html>

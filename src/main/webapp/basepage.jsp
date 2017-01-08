@@ -12,13 +12,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <!DOCTYPE html>
 <head>
     <jsp:include page="WEB-INF/pages/bootstrap-meta.jsp"/>
-    <title>Main</title>
+    <title>Internet Shop main page.</title>
 
     <!-- Добавляем свой стиль -->
     <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
 
     <style>
-        .colorspan {
+        .mycolorspan {
             background-color: #ffe; /* Цвет фона */
             color: #930; /* Цвет текста */
         }
@@ -50,7 +50,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="row"><a href="#"></span>User</a></div>
                 </li>
                 <li>
-                    <div class="row"><span class="glyphicon glyphicon-shopping-cart colorspan"></div>
+                    <div class="row"><span class="glyphicon glyphicon-shopping-cart mycolorspan"></div>
                     <div class="row"><a href="#"></span>Cart</a></div>
                 </li>
             </ul>

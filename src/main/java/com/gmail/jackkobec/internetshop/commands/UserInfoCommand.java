@@ -2,9 +2,6 @@ package com.gmail.jackkobec.internetshop.commands;
 
 
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
-import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
-import com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl.UserDaoImpl;
-import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -26,7 +23,7 @@ public class UserInfoCommand implements ICommand {
         Integer idForFind = Integer.valueOf(request.getParameter("id"));//берем с формы
 
         ConnectionManager connectionManager = ConnectionManager.getConnectionManagerFromJNDI();
-        //User finded = new UserDaoImpl(connectionManager).getOneByID(idForFind);
+        //User finded = new UserDaoJdbcImpl(connectionManager).getOneByID(idForFind);
 
         //request.setAttribute("user", finded);
         page = "/WEB-INF/pages/user-info.jsp";

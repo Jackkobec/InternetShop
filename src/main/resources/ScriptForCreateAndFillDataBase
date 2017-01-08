@@ -22,6 +22,7 @@ CREATE TABLE users (
 INSERT INTO users(userName, userPassword, userType) VAlUES ('Vasa', '2222', 1);
 INSERT INTO users(userName, userPassword, userType) VAlUES ('Jack', '7777', 2);
 
+INSERT INTO user(email, password, userType) VAlUES ('jack@gmail.com', '7777', 2);
 
 CREATE TABLE orderStatus (
   id INT PRIMARY KEY AUTO_INCREMENT,

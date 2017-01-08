@@ -1,7 +1,5 @@
 package com.gmail.jackkobec.internetshop.validation;
 
-import com.gmail.jackkobec.internetshop.commands.UserRegistrtionCommand;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -71,13 +69,12 @@ public class ValidationFeedbackManager {
         request.setAttribute(PASSWORD_GLYPHICON_TYPE, isPasswordValid
                 ? "glyphicon-ok" : "glyphicon-remove");
 
-        // if (isPasswordNotEqualsConfirmationPassword) {
 
         request.setAttribute(CONFIRMATION_PASSWORD_VALIDATION_FEEDBACK, isPasswordNotEqualsConfirmationPassword
                 ? "has-success" : "has-error");
         request.setAttribute(CONFIRMATION_PASSWORD_GLYPHICON_TYPE, isPasswordNotEqualsConfirmationPassword
                 ? "glyphicon-ok" : "glyphicon-remove");
-        // }
+
 
         request.setAttribute(NOTIFICATION_CLASS, "my-notification");
 
@@ -159,37 +156,3 @@ public class ValidationFeedbackManager {
         return false;
     }
 }
- /*case "EMAIL_AND_PASSWORD_IS_EMPTY":
-         request.setAttribute(NOTIFICATION_MESSAGE, "Email and password is empty!");
-         break;
-         case "EMAIL_OR_PASSWORD_IS_EMPTY":
-         request.setAttribute(NOTIFICATION_MESSAGE, "Email or password is empty!");
-         break;
-         case "ONLY_EMAIL":
-         request.setAttribute(NOTIFICATION_MESSAGE, "Email is incorrect! Enter correct email like a jack@gmail.com");
-         break;
-         case "ONLY_PASSWORD":
-         request.setAttribute(NOTIFICATION_MESSAGE, "Password is incorrect! Use chars A-Za-z0-9_ length 3-15");
-         break;*/
-
-//    public void createFeedBack(HttpServletRequest request, boolean isEmailValid, boolean isPasswordValid,
-//                               boolean isPasswordNotEqualsConfirmationPassword, String feedbackFor) {
-//
-//        request.setAttribute(EMAIL_VALIDATION_FEEDBACK, isEmailValid
-//                ? "has-success" : "has-error");
-//        request.setAttribute(EMAIL_GLYPHICON_TYPE, isEmailValid
-//                ? "glyphicon-ok" : "glyphicon-remove");
-//
-//
-//        request.setAttribute(PASSWORD_VALIDATION_FEEDBACK, isPasswordValid
-//                ? "has-success" : "has-error");
-//        request.setAttribute(PASSWORD_GLYPHICON_TYPE, isPasswordValid
-//                ? "glyphicon-ok" : "glyphicon-remove");
-//
-//        if (isPasswordNotEqualsConfirmationPassword) {
-//
-//            request.setAttribute(CONFIRMATION_PASSWORD_VALIDATION_FEEDBACK,isPasswordNotEqualsConfirmationPassword
-//                    ? "has-error" : "has-success");
-//            request.setAttribute(CONFIRMATION_PASSWORD_GLYPHICON_TYPE, isPasswordNotEqualsConfirmationPassword
-//                    ?"glyphicon-remove" : "glyphicon-ok");
-//        }
