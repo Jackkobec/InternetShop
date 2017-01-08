@@ -81,7 +81,20 @@ public class User {
         return userType;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setUserType(Integer userType) {
+
+        switch (userType) {
+            case 1:
+                this.userType = UserType.CLIENT;
+                break;
+            case 2:
+                this.userType = UserType.ADMIN;
+                break;
+            case 3:
+                this.userType = UserType.BANNED;
+                break;
+        }
     }
+
+
 }

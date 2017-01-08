@@ -3,6 +3,7 @@ package com.gmail.jackkobec.internetshop.commands;
 import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.service.ClientService;
+import com.gmail.jackkobec.internetshop.service.LanguageService;
 import com.gmail.jackkobec.internetshop.validation.InputDataValidation;
 import com.gmail.jackkobec.internetshop.validation.Validation;
 import com.gmail.jackkobec.internetshop.validation.ValidationFeedbackManager;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -41,30 +43,32 @@ public class UserLoginCommand implements ICommand {
         String checkbox = request.getParameter(CHECKBOX);
 
         System.out.println(languageSelection);
-        String local = (Integer.parseInt(languageSelection)) == 1 ? "ru_RU" : "en_EN";
-
-//        HttpSession session = request.getSession(true);
-//        session.setAttribute("selectedLocale", local);
+        String local = new LanguageService().getLanguageBySelect(Integer.parseInt(languageSelection));
 
         request.setAttribute("selectedLocale", local);
 
         if (validationFeedbackManager.preValidation(request, email, password, null)) return loginPage;
 
 
-
         ClientService clientService = new ClientService();
-        User tryLogin = new User(email, password);
-
         User finded = clientService.findByEmailAndPassword(email, password);
 
         if (finded.getEmail() != null && finded.getPassword() != null) {
-            request.getSession().setAttribute("logined", finded);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("currentUserInSystem", finded);
+            session.setAttribute("selectedLocale", local);
 
             Cookie cookie = new Cookie("userEmail", finded.getEmail());
             cookie.setMaxAge(3600);
             response.addCookie(cookie);
+
             return "/basepage.jsp";
+
         } else {
+            validationFeedbackManager
+                    .createFeedBack(request, true, true, true, validationFeedbackManager.USER_NOT_FOUND_OR_INCORRECT_DATA);
+
             return loginPage;
         }
     }

@@ -5,6 +5,7 @@ CREATE TABLE user_type (
 
 INSERT INTO user_type(userTypeName) VAlUES ('client');
 INSERT INTO user_type(userTypeName) VAlUES ('admin');
+INSERT INTO user_type(userTypeName) VAlUES ('banned');
 
 CREATE TABLE user (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -18,6 +19,7 @@ CREATE TABLE user (
 
 INSERT INTO user(email, password, userType) VAlUES ('vasa@gmail.com', '2222', 1);
 INSERT INTO user(email, password, userType) VAlUES ('jack@gmail.com', '7777', 2);
+INSERT INTO user(email, password, userType) VAlUES ('qq@gmail.com', '2222', 3);
 
 CREATE TABLE order_status (
   id INT PRIMARY KEY AUTO_INCREMENT,

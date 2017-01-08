@@ -34,6 +34,9 @@ public class ValidationFeedbackManager {
 
     public final String PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD = "PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD";
 
+    public final String USER_NOT_FOUND_OR_INCORRECT_DATA = "USER_NOT_FOUND_OR_INCORRECT_DATA";
+
+
     private ValidationFeedbackManager() {
     }
 
@@ -94,6 +97,9 @@ public class ValidationFeedbackManager {
                 break;
             case "PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD":
                 request.setAttribute(NOTIFICATION_MESSAGE, "validation.password_not_equals_confirmation_password");
+                break;
+            case "USER_NOT_FOUND_OR_INCORRECT_DATA":
+                request.setAttribute(NOTIFICATION_MESSAGE, "validation.user_not_found_or_incorrect_data");
                 break;
         }
     }

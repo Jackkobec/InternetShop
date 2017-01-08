@@ -1,7 +1,5 @@
 package com.gmail.jackkobec.internetshop.service;
 
-import sun.dc.pr.PRError;
-
 /**
  * Created by Jack on 07.01.2017.
  */

@@ -9,9 +9,4 @@ public enum UserType {
 
     UserType() {
     }
-
-    @Override
-    public String toString() {
-        return "UserType{}";
-    }
 }

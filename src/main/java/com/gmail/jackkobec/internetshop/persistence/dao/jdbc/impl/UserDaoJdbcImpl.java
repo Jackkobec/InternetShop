@@ -108,6 +108,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 user.setPassword(resultSet.getString("password"));
                 user.setName(resultSet.getString("name"));
                 user.setLanguage(resultSet.getString("language"));
+                user.setUserType(resultSet.getInt("userType"));
             }
             System.out.println(user);
             return user;
