@@ -25,6 +25,7 @@ public class ControllerHelper {
         commands.put("register", new RegisterCommand());
         commands.put("find", new UserInfoCommand());
         commands.put("userregistration", new UserRegistrtionCommand());
+        commands.put("userlogout", new UserLogOutCommand());
 
     }
 

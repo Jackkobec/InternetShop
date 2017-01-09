@@ -166,6 +166,37 @@
     margin-left: 1px;
 
 }
+/*li2*/
+.header li2{
+    width: 170px;
+    height: 85px;
+    /*background-color: rgba(52, 73, 94,1.0);*/
+    padding: 20px 0 0 0px;
+    text-align: center;
+    float: right;
+    list-style: none;
+    margin-left: 1px ;
+
+}
+
+.header li2 a {
+    font-family: cursive;
+    font-size: 18px;
+    text-decoration: underline;
+    color: rgb(0, 0, 0);
+}
+
+.header li2 a:hover {
+    font-size: 12px;
+    text-decoration: none;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
+    color: ghostwhite;
+}
+/*/li2*/
 
 .header li a {
     font-family: cursive;
@@ -212,6 +243,17 @@
 }
 
 /*/Fixed header elements*/
+
+/*Colorspan for fixed header elements*/
+.mycolorspan {
+    background-color: #ffe; /* Цвет фона */
+    color: #000; /* Цвет текста */
+}
+.mycolorspan-red {
+    background-color: #ffe; /* Цвет фона */
+    color: #930; /* Цвет текста */
+}
+/*/Colorspan for fixed header elements*/
 
 /*Menu*/
 /*body {*/
@@ -469,6 +511,8 @@
 /* Remove the jumbotron's default bottom margin */
 .jumbotron {
     margin-bottom: 0;
+    color: #f2f2f2;
+    font-size: 102px;
 }
 
 /* Add a gray background color and some padding to the footer */

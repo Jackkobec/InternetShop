@@ -1,4 +1,9 @@
-<%@ include file="WEB-INF/pages/include.jsp" %>
+<%@ include file="include.jsp" %>
+<%--
+<%@ include file="include.jsp" %>
+Директива включения используется в том случае, когда файл редко изменяется.
+Это самый оперативный механизм. Если ваш контейнер не умеет автоматически воспроизводить изменения,
+вы можете заставить его это делать, удалив файл класса главной страницы.--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -11,29 +16,42 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 --%>
 <!DOCTYPE html>
 <head>
-    <jsp:include page="WEB-INF/pages/bootstrap-meta.jsp"/>
+    <jsp:include page="bootstrap-meta.jsp"/>
+    <%--
+<jsp:include page="bootstrap-meta.jsp"/>
+Действие включения используется только в случаях очень частого обновления содержания и тогда,
+когда определить страницу для включения можно не раньше, чем выполнится запрос к главной странице.--%>
     <title>Internet Shop main page.</title>
 
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
+    <link type="text/css" href="../../view.components/css/styles.css" rel="stylesheet">
+
 
     <style>
-        .mycolorspan {
-            background-color: #ffe; /* Цвет фона */
-            color: #930; /* Цвет текста */
+        html { height: 100%; }
+        .my-div {
+            margin: 0; /* Убираем отступы */
+            /*height: 43%;*/
+            height: 57%;
+            width: 100%; /* Высота страницы */
+            background: url(http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg); /* Параметры фона */
+            background-size: auto; /* Фон занимает всю доступную площадь */
         }
     </style>
 </head>
 
 <body>
+
+<%--Test image--%>
+<%--<div align="center">3<img src="http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg" width="100%" height="100%"></div>--%>
+<%--/Test image--%>
 <%--Image--%>
 <div class="jumbotron">
-    <div class="container text-center">
-        <h1>Online Store</h1>
-        <p>Mission, Vission & Values</p>
+    <div class="container text-left my-div">
+        <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
     </div>
 </div>
-
 <%--/Image--%>
 
 <%--Fixed header elements--%>
@@ -42,13 +60,21 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         <div class="header">
             <ul>
                 <li>
-                    <div class="row"><span class="glyphicon glyphicon-dashboard"></div>
-                    <div class="row"><a href="#"></span>Dashboard</a></div>
+                    <div class="row"><span class="glyphicon glyphicon-off mycolorspan-red"></div>
+                    <div class="row"><a href="Controller?command=userlogout"></span>LogOut</a></div>
                 </li>
-                <li>
-                    <div class="row"><span class="glyphicon glyphicon-user"></div>
-                    <div class="row"><a href="#"></span>User</a></div>
-                </li>
+                <li2>
+                    <div class="row"><span class="glyphicon glyphicon-user mycolorspan"></div>
+                    <div class="row"><a href="#"></span>Hello!<br>${sessionScope.currentUserInSystem.email}</a></div>
+                </li2>
+                <%--<li>--%>
+                <%--<div class="row"><span class="glyphicon glyphicon-dashboard"></div>--%>
+                <%--<div class="row"><a href="#"></span>Dashboard</a></div>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                <%--<div class="row"><span class="glyphicon glyphicon-user"></div>--%>
+                <%--<div class="row"><a href="#"></span>User</a></div>--%>
+                <%--</li>--%>
                 <li>
                     <div class="row"><span class="glyphicon glyphicon-shopping-cart mycolorspan"></div>
                     <div class="row"><a href="#"></span>Cart</a></div>
@@ -73,7 +99,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <div class="panel panel-danger">
                 <div class="panel-heading">BLACK FRIDAY DEAL</div>
                 <a href="Controller?command=register">
-                    <div class="panel-body"><img src="view.components/images/uV4ABsIur2s.png?text=IMAGE"
+                    <div class="panel-body"><img src="../../view.components/images/uV4ABsIur2s.png?text=IMAGE"
                                                  class="img-responsive" style="width:100%" alt="Image"></div>
                 </a>
                 <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
@@ -92,32 +118,32 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <%--<br>--%>
 
 <%--<div class="container">--%>
-    <%--<div class="row">--%>
-        <%--<div class="col-sm-4">--%>
-            <%--<div class="panel panel-primary">--%>
-                <%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-                <%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-                                             <%--style="width:100%" alt="Image"></div>--%>
-                <%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <%--<div class="col-sm-4">--%>
-            <%--<div class="panel panel-primary">--%>
-                <%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-                <%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-                                             <%--style="width:100%" alt="Image"></div>--%>
-                <%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <%--<div class="col-sm-4">--%>
-            <%--<div class="panel panel-primary">--%>
-                <%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-                <%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-                                             <%--style="width:100%" alt="Image"></div>--%>
-                <%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
+<%--<div class="row">--%>
+<%--<div class="col-sm-4">--%>
+<%--<div class="panel panel-primary">--%>
+<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
+<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
+<%--style="width:100%" alt="Image"></div>--%>
+<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="col-sm-4">--%>
+<%--<div class="panel panel-primary">--%>
+<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
+<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
+<%--style="width:100%" alt="Image"></div>--%>
+<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="col-sm-4">--%>
+<%--<div class="panel panel-primary">--%>
+<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
+<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
+<%--style="width:100%" alt="Image"></div>--%>
+<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
 <%--</div>--%>
 <%--<br><br>--%>
 <%--/Categories--%>
@@ -164,7 +190,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                     <div class="item">
                         <div class="col-xs-12 col-sm-6 col-md-2">
-                            <a href="#"><img src="view.components/images/uV4ABsIur2s.png"
+                            <a href="#"><img src="../../view.components/images/uV4ABsIur2s.png"
                                              class="img-responsive center-block"></a>
                             <span class="badge">10%</span>
                             <h4 class="text-center">PANTALONE TERI 2</h4>
@@ -220,12 +246,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="view.components/js/bootstrap.min.js"></script>
+<script src="../../view.components/js/bootstrap.min.js"></script>
 <!-- Добавляем свой скрипт -->
-<script src="view.components/js/formain_fixed_header_elements.js"></script>
+<script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
-<script src="view.components/js/for_slider_products.js"></script>
+<script src="../../view.components/js/for_slider_products.js"></script>
 
-<jsp:include page="WEB-INF/pages/footer.jsp"/>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

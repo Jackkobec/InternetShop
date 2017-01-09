@@ -9,9 +9,4 @@ public enum OrderStatus {
 
     OrderStatus() {
     }
-
-    @Override
-    public String toString() {
-        return "OrderStatus{}";
-    }
 }

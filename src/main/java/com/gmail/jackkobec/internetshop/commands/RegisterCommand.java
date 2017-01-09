@@ -1,5 +1,6 @@
 package com.gmail.jackkobec.internetshop.commands;
 
+import com.gmail.jackkobec.internetshop.controller.PageManager;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -21,12 +22,8 @@ public class RegisterCommand implements ICommand {
         System.out.println("remember_me " + request.getParameter("remember_me"));
         System.out.println("filter " + request.getParameter("filter"));
 
-        String page = null;
-        /*page = PageManager.getPageManager()
-                .getPage(PageManager.REGISTRATION_PAGE);*/
-        //page = "/WEB-INF/pages/register.jsp";
-        page = "/registration.jsp";
+//        page = PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
         LOGGER.info("RegisterCommand");
-        return page;
+        return PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
     }
 }

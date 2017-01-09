@@ -5,7 +5,7 @@
   Time: 23:18
   To change this template use File | Settings | File Templates.
 --%>
-<%@ include file="WEB-INF/pages/include.jsp" %>
+<%@ include file="include.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${selectedLocale}" scope="session"/>
@@ -20,11 +20,11 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <%--<html lang="en">--%>
 <head>
     <%----%>
-    <jsp:include page="WEB-INF/pages/bootstrap-meta.jsp"/>
+    <jsp:include page="bootstrap-meta.jsp"/>
     <title>Registration Form</title>
 
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
+    <link type="text/css" href="../../view.components/css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -157,14 +157,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     </div><!-- /.modal -->
 </div>
 
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="view.components/js/bootstrap.min.js"></script>
+<script src="../../view.components/js/bootstrap.min.js"></script>
 <!-- Добавляем свой скрипт -->
-<script src="view.components/js/forregistration.js"></script>
+<script src="../../view.components/js/forregistration.js"></script>
 <!-- Добавляем свой скрипт -->
-<script src="view.components/js/fornotifications.js"></script>
+<script src="../../view.components/js/fornotifications.js"></script>
 </body>
 </html>

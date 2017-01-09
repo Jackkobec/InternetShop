@@ -5,13 +5,15 @@ package com.gmail.jackkobec.internetshop.persistence.model;
  */
 public enum ItemCategory {
 
-    CATEGORY1, CATEGORY2;
+    CATEGORY1("For Protection"), CATEGORY2("For Respect");
+    private final String categoryName;
 
-    ItemCategory() {
+
+    ItemCategory(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    @Override
-    public String toString() {
-        return "ItemCategory{}";
+    public String getCategoryName() {
+        return categoryName;
     }
 }

@@ -1,7 +1,6 @@
 package com.gmail.jackkobec.internetshop.controller;
 
 
-
 import com.gmail.jackkobec.internetshop.commands.ICommand;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -56,6 +55,8 @@ public class Controller extends HttpServlet {
         }
 
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
+
+//        response.sendRedirect("/index_old.jsp");
         requestDispatcher.forward(request, response);
     }
 

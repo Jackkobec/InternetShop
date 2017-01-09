@@ -5,8 +5,14 @@ package com.gmail.jackkobec.internetshop.persistence.model;
  */
 public enum UserType {
 
-    CLIENT, ADMIN, BANNED;
+    CLIENT(1), ADMIN(2), BANNED(3);
+    private final Integer userTypeId;
 
-    UserType() {
+    UserType(Integer userTypeId) {
+        this.userTypeId = userTypeId;
+    }
+
+    public Integer getUserTypeId() {
+        return userTypeId;
     }
 }

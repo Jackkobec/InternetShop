@@ -35,6 +35,7 @@ public class ValidationFeedbackManager {
     public final String PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD = "PASSWORDS_NOT_EQUALS_CONFIRM_PASSWORD";
 
     public final String USER_NOT_FOUND_OR_INCORRECT_DATA = "USER_NOT_FOUND_OR_INCORRECT_DATA";
+    public final String USER_IS_BANNED = "USER_IS_BANNED";
 
 
     private ValidationFeedbackManager() {
@@ -100,6 +101,9 @@ public class ValidationFeedbackManager {
                 break;
             case "USER_NOT_FOUND_OR_INCORRECT_DATA":
                 request.setAttribute(NOTIFICATION_MESSAGE, "validation.user_not_found_or_incorrect_data");
+                break;
+            case "USER_IS_BANNED":
+                request.setAttribute(NOTIFICATION_MESSAGE, "validation.user_is_banned");
                 break;
         }
     }

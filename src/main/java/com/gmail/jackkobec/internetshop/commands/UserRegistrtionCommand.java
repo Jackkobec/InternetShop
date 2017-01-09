@@ -5,6 +5,7 @@ import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.service.ClientService;
+import com.gmail.jackkobec.internetshop.service.IClientService;
 import com.gmail.jackkobec.internetshop.service.LanguageService;
 import com.gmail.jackkobec.internetshop.validation.InputDataValidation;
 import com.gmail.jackkobec.internetshop.validation.Validation;
@@ -49,18 +50,18 @@ public class UserRegistrtionCommand implements ICommand {
             return registrationPage;
 
 
-        ClientService clientService = new ClientService();
+        IClientService iClientService = new ClientService();
         User forRegister = new User(email, password, name, language);
 
-        User finded = clientService.findByEmail(email);
+        User finded = iClientService.findByEmail(email);
 
         if (finded.getEmail() != null) {
 
             return registrationPage;
         } else {
-        request.getSession().setAttribute("logined", forRegister);
-            return (clientService.userRegistrer(forRegister))
-                    ? "/basepage.jsp"
+        request.getSession().setAttribute("currentUserInSystem", forRegister);
+            return (iClientService.userRegistrer(forRegister))
+                    ? PageManager.getPageManager().getPage(PageManager.MAIN_PAGE)
                     : errorPage;
 
         }
