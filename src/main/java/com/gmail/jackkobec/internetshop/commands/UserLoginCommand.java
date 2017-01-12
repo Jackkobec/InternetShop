@@ -35,24 +35,22 @@ public class UserLoginCommand implements ICommand {
 
         String loginPage = PageManager.getPageManager().getPage(PageManager.INDEX_PAGE);
 
-        String email = request.getParameter(EMAIL);
-        String password = request.getParameter(PASSWORD);
-        String languageSelection = request.getParameter(LANGUAGE_SELECTION);
-        String checkbox = request.getParameter(CHECKBOX);
+        final String email = request.getParameter(EMAIL);
+        final String password = request.getParameter(PASSWORD);
+        final String languageSelection = request.getParameter(LANGUAGE_SELECTION);
+        final String checkbox = request.getParameter(CHECKBOX);
 
         System.out.println(languageSelection);
-        String selectedLanguage = new LanguageService().getLanguageBySelect(Integer.parseInt(languageSelection));
+        final String selectedLanguage = new LanguageService().getLanguageBySelect(Integer.parseInt(languageSelection));
 
         request.setAttribute("selectedLocale", selectedLanguage);
 
         if (validationFeedbackManager.preValidation(request, email, password, null)) return loginPage;
 
-
         IClientService iClientService = new ClientService();
         User finded = iClientService.findByEmailAndPassword(email, password);
-        boolean isFindedInTheBlockList = finded.getUserType().equals(UserType.BANNED);
 
-        if (finded.getEmail() != null && finded.getPassword() != null && (!isFindedInTheBlockList)) {
+        if (finded.getEmail() != null && finded.getPassword() != null && !(isUserInTheBlockList(finded))) {
 
             finded.setLanguage(selectedLanguage);
 
@@ -67,11 +65,16 @@ public class UserLoginCommand implements ICommand {
             return PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
 
         } else {
-            validationFeedbackManager.createFeedBack(request, true, true, true, (!isFindedInTheBlockList)
-                            ? validationFeedbackManager.USER_NOT_FOUND_OR_INCORRECT_DATA
-                            : validationFeedbackManager.USER_IS_BANNED);
+            validationFeedbackManager.createFeedBack(request, true, true, true, (!isUserInTheBlockList(finded))
+                    ? validationFeedbackManager.USER_NOT_FOUND_OR_INCORRECT_DATA
+                    : validationFeedbackManager.USER_IS_BANNED);
 
             return loginPage;
         }
+    }
+
+    private boolean isUserInTheBlockList(User user) {
+
+        return user.getUserType() != null && user.getUserType().equals(UserType.BANNED);
     }
 }

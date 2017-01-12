@@ -24,49 +24,47 @@ import java.io.IOException;
 public class UserRegistrtionCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(UserRegistrtionCommand.class);
 
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
+    private static final String PASSWORD_CONFIRMATION = "password_confirmation";
+    private static final String NAME = "name";
     private static final String LANGUAGE_SELECTION = "language_selection";
-    private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
-    ConnectionManager connectionManager = ConnectionManager.getConnectionManagerFromJNDI();
-    //UserDao userDao = new UserDao(connectionManager);
+    private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //String page = null;
         String registrationPage = PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
         //mandatory
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String passwordConfirmation = request.getParameter("password_confirmation");
+        final String email = request.getParameter(EMAIL);
+        final String password = request.getParameter(PASSWORD);
+        final String passwordConfirmation = request.getParameter(PASSWORD_CONFIRMATION);
         //optional
-        String name = request.getParameter("name");
-        String language = new LanguageService()
+        final String name = request.getParameter(NAME);
+        final String language = new LanguageService()
                 .getLanguageBySelect(Integer.parseInt(request.getParameter(LANGUAGE_SELECTION)));
 
         if (validationFeedbackManager.preValidation(request, email, password, passwordConfirmation))
             return registrationPage;
 
-
         IClientService iClientService = new ClientService();
         User forRegister = new User(email, password, name, language);
-
         User finded = iClientService.findByEmail(email);
 
         if (finded.getEmail() != null) {
 
+            validationFeedbackManager.createFeedBack(request, true, true, true, validationFeedbackManager.USER_WITH_THIS_EMAIL_ALREADY_EXIST);
             return registrationPage;
         } else {
-        request.getSession().setAttribute("currentUserInSystem", forRegister);
+            request.getSession().setAttribute("currentUserInSystem", forRegister);
+
             return (iClientService.userRegistrer(forRegister))
                     ? PageManager.getPageManager().getPage(PageManager.MAIN_PAGE)
                     : errorPage;
 
         }
-
-
     }
-
 }

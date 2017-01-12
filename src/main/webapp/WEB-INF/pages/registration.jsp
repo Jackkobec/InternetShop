@@ -111,7 +111,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         You logged out successfully!
                     </div><!-- /notification test-->
 
-                    <div class="col-xs-12 col-md-6"><a href="#" class="btn btn-success btn-block btn-lg">Sign In</a>
+                    <div class="col-xs-12 col-md-6"><a href="/" class="btn btn-success btn-block btn-lg">Sign In</a>
                     </div>
                 </div>
             </form>

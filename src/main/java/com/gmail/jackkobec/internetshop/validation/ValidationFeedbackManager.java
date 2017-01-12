@@ -37,6 +37,8 @@ public class ValidationFeedbackManager {
     public final String USER_NOT_FOUND_OR_INCORRECT_DATA = "USER_NOT_FOUND_OR_INCORRECT_DATA";
     public final String USER_IS_BANNED = "USER_IS_BANNED";
 
+    public final String USER_WITH_THIS_EMAIL_ALREADY_EXIST = "USER_WITH_THIS_EMAIL_ALREADY_EXIST";
+
 
     private ValidationFeedbackManager() {
     }
@@ -105,10 +107,14 @@ public class ValidationFeedbackManager {
             case "USER_IS_BANNED":
                 request.setAttribute(NOTIFICATION_MESSAGE, "validation.user_is_banned");
                 break;
+            case "USER_WITH_THIS_EMAIL_ALREADY_EXIST":
+                request.setAttribute(NOTIFICATION_MESSAGE, "validation.user_with_this_email_already_exist");
+                break;
         }
     }
 
-    public boolean preValidation(HttpServletRequest request, String email, String password, String passwordConfirmation) {
+    public boolean preValidation(HttpServletRequest request, final String email, final String password,
+                                 final String passwordConfirmation) {
 
         boolean isEmailValid = validation.emailValidator(email);
         boolean isPasswordValid = validation.passwordValidator(password);

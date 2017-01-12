@@ -41,6 +41,7 @@ public class PageManager {
      */
     public static PageManager getPageManager() {
         //worked with init in the constructor
+        LOGGER.info("getPageManager");
         return (pageManager == null)
                 ? pageManager = new PageManager()
                 : pageManager;
