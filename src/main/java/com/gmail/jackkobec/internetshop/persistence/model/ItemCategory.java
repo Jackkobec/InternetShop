@@ -5,7 +5,7 @@ package com.gmail.jackkobec.internetshop.persistence.model;
  */
 public enum ItemCategory {
 
-    CATEGORY1("For Protection"), CATEGORY2("For Respect");
+    FOR_SELF_DEFENSE("FOR SELF-DEFENSE"), FOR_RESPECT("FOR RESPECT"), ULTIMATE_SOLUTIONS("ULTIMATE SOLUTIONS");
     private final String categoryName;
 
 

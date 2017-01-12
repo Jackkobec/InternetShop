@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Jack
+  Date: 12.01.2017
+  Time: 8:33
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ include file="include.jsp" %>
 <%--
 <%@ include file="include.jsp" %>
@@ -21,30 +28,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <jsp:include page="bootstrap-meta.jsp"/>
 Действие включения используется только в случаях очень частого обновления содержания и тогда,
 когда определить страницу для включения можно не раньше, чем выполнится запрос к главной странице.--%>
-    <title>Internet Shop main page.</title>
+    <title>Item Page</title>
 
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="../../view.components/css/styles.css" rel="stylesheet">
-
-
-    <style>
-        html { height: 100%; }
-        .my-div {
-            margin: 0; /* Убираем отступы */
-            /*height: 43%;*/
-            height: 57%;
-            width: 100%; /* Высота страницы */
-            background: url(http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg); /* Параметры фона */
-            background-size: auto; /* Фон занимает всю доступную площадь */
-        }
-    </style>
+    <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
+    <!-- Добавляем свой стиль -->
+    <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
 </head>
 
-<body>
 
-<%--Test image--%>
-<%--<div align="center">3<img src="http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg" width="100%" height="100%"></div>--%>
-<%--/Test image--%>
+<body>
 <%--Image--%>
 <div class="jumbotron">
     <div class="container text-left my-div">
@@ -53,8 +46,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     </div>
 </div>
 <%--/Image--%>
-
-<%--<%@ include file="3-slide_header_carousel.jsp" %>--%>
 
 <%--Fixed header elements--%>
 <div class="container">
@@ -87,73 +78,102 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div>
 <%--/Fixed header elements--%>
 
-<%--Categories--%>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=1">
-            <div class="panel panel-primary">
-                <div class="panel-heading"><fmt:message key="category.for_self_defense" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/For self-defense.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_self_defense.description" bundle="${rb}"/></div>
-            </div></a>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-danger">
-                <div class="panel-heading"><fmt:message key="category.for_respect" bundle="${rb}"/></div>
-                <a href="Controller?command=gotocategory&category_id=2">
-                    <div class="panel-body"><img src="../../view.components/images/main_categories/For respect.png?text=IMAGE"
-                                                 class="img-responsive" style="width:100%" alt="Image"></div>
-                </a>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_respect.description" bundle="${rb}"/></div>
+<%--Item--%>
+<div class="container-fluid">
+    <div class="content-wrapper">
+        <div class="item-container">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="product col-md-3 service-image-left">
+
+                        <center>
+                            <img id="item-display" src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
+                        </center>
+                    </div>
+
+                    <div class="container service1-items col-sm-2 col-md-2 pull-left">
+                        <center>
+                            <a id="item-1" class="service1-item">
+                                <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
+                            </a>
+                            <a id="item-2" class="service1-item">
+                                <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
+                            </a>
+                            <a id="item-3" class="service1-item">
+                                <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
+                            </a>
+                        </center>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="product-title">Corsair GS600 600 Watt PSU</div>
+                    <div class="product-desc">The Corsair Gaming Series GS600 is the ideal price/performance choice for mid-spec gaming PC</div>
+                    <div class="product-rating"><i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star-o"></i> </div>
+                    <hr>
+                    <div class="product-price">$ 1234.00</div>
+                    <div class="product-stock">In Stock</div>
+                    <hr>
+                    <div class="btn-group cart">
+                        <button type="button" class="btn btn-success">
+                            Add to cart
+                        </button>
+                    </div>
+                    <div class="btn-group wishlist">
+                        <button type="button" class="btn btn-danger">
+                            Add to wishlist
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="panel panel-success">
-                <div class="panel-heading"><fmt:message key="category.ultimate_solutions" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/Ultimate Solutions.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge">-17%</span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.ultimate_solutions.description" bundle="${rb}"/></div>
+        <div class="container-fluid">
+            <div class="col-md-12 product-info">
+                <ul id="myTab" class="nav nav-tabs nav_tabs">
+
+                    <li class="active"><a href="#service-one" data-toggle="tab">DESCRIPTION</a></li>
+                    <li><a href="#service-two" data-toggle="tab">PRODUCT INFO</a></li>
+                    <li><a href="#service-three" data-toggle="tab">REVIEWS</a></li>
+
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="service-one">
+
+                        <section class="container product-info">
+                            The Corsair Gaming Series GS600 power supply is the ideal price-performance solution for building or upgrading a Gaming PC. A single +12V rail provides up to 48A of reliable, continuous power for multi-core gaming PCs with multiple graphics cards. The ultra-quiet, dual ball-bearing fan automatically adjusts its speed according to temperature, so it will never intrude on your music and games. Blue LEDs bathe the transparent fan blades in a cool glow. Not feeling blue? You can turn off the lighting with the press of a button.
+
+                            <h3>Corsair Gaming Series GS600 Features:</h3>
+                            <li>It supports the latest ATX12V v2.3 standard and is backward compatible with ATX12V 2.2 and ATX12V 2.01 systems</li>
+                            <li>An ultra-quiet 140mm double ball-bearing fan delivers great airflow at an very low noise level by varying fan speed in response to temperature</li>
+                            <li>80Plus certified to deliver 80% efficiency or higher at normal load conditions (20% to 100% load)</li>
+                            <li>0.99 Active Power Factor Correction provides clean and reliable power</li>
+                            <li>Universal AC input from 90~264V — no more hassle of flipping that tiny red switch to select the voltage input!</li>
+                            <li>Extra long fully-sleeved cables support full tower chassis</li>
+                            <li>A three year warranty and lifetime access to Corsair’s legendary technical support and customer service</li>
+                            <li>Over Current/Voltage/Power Protection, Under Voltage Protection and Short Circuit Protection provide complete component safety</li>
+                            <li>Dimensions: 150mm(W) x 86mm(H) x 160mm(L)</li>
+                            <li>MTBF: 100,000 hours</li>
+                            <li>Safety Approvals: UL, CUL, CE, CB, FCC Class B, TÜV, CCC, C-tick</li>
+                        </section>
+
+                    </div>
+                    <div class="tab-pane fade" id="service-two">
+
+                        <section class="container">
+
+                        </section>
+
+                    </div>
+                    <div class="tab-pane fade" id="service-three">
+
+                    </div>
+                </div>
+                <hr>
             </div>
         </div>
     </div>
 </div>
-<%--<br>--%>
-
-<%--<div class="container">--%>
-<%--<div class="row">--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<br><br>--%>
-<%--/Categories--%>
+<%--/Item--%>
 
 
 <%--Slider Products--%>
@@ -250,6 +270,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
 <%--/Slider Products--%>
 
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -258,7 +279,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
-
-<jsp:include page="footer.jsp"/>
+<%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>

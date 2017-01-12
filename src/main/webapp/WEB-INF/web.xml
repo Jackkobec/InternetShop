@@ -38,9 +38,9 @@
     </servlet-mapping>
 
     <!--Start page-->
-    <!--<welcome-file-list>-->
-        <!--<welcome-file>user_profile.jsp</welcome-file>-->
-    <!--</welcome-file-list>-->
+    <welcome-file-list>
+        <welcome-file>/WEB-INF/pages/main_page.jsp</welcome-file>
+    </welcome-file-list>
 
     <resource-ref>
         <!--just description-->

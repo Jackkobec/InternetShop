@@ -3,6 +3,8 @@ package com.gmail.jackkobec.internetshop.controller;
 
 
 import com.gmail.jackkobec.internetshop.commands.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -12,10 +14,10 @@ import java.util.HashMap;
  * Created by Jack on 28.12.2016.
  */
 public class ControllerHelper {
+    public static final Logger LOGGER = LogManager.getLogger(ControllerHelper.class);
 
     private static ControllerHelper controllerHelper;
-
-    HashMap<String, ICommand> commands = new HashMap<>();
+    private HashMap<String, ICommand> commands = new HashMap<>();
 
     /**
      * Init map with all possible commands.
@@ -24,6 +26,8 @@ public class ControllerHelper {
         commands.put("userlogin", new UserLoginCommand());
         commands.put("register", new RegisterCommand());
         commands.put("find", new UserInfoCommand());
+        commands.put("gotocategory", new GoCategoryCommand());
+        commands.put("showitem", new ShowItemCommand());
         commands.put("userregistration", new UserRegistrtionCommand());
         commands.put("userlogout", new UserLogOutCommand());
 

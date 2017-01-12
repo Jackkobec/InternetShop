@@ -3,6 +3,8 @@ package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +15,7 @@ import java.util.List;
  * Created by Jack on 28.12.2016.
  */
 public class UserDaoJdbcImpl implements UserDao {
+    public static final Logger LOGGER = LogManager.getLogger(UserDaoJdbcImpl.class);
 
     private static UserDaoJdbcImpl userDaoJdbc;
     private ConnectionManager connectionManager;
@@ -25,7 +28,7 @@ public class UserDaoJdbcImpl implements UserDao {
     /**
      * @return UserDaoJdbcImpl instance.
      */
-    public static UserDaoJdbcImpl getUserDaoJdbc(ConnectionManager connectionManager) {
+    public static synchronized UserDaoJdbcImpl getUserDaoJdbc(ConnectionManager connectionManager) {
         //worked with init in the constructor
         return (userDaoJdbc == null)
                 ? userDaoJdbc = new UserDaoJdbcImpl(connectionManager)

@@ -55,13 +55,16 @@ INSERT INTO itemStatus(itemStatusName) VAlUES ('PRESENT');
 INSERT INTO itemStatus(itemStatusName) VAlUES ('NOT_PRESENT');
 
 
-CREATE TABLE itemCategory (
+CREATE TABLE item_category (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  itemCategoryName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
+  itemCategoryName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL,
+  categoryDescription VARCHAR (122) CHARACTER SET 'utf8',
+  categoryPicturePath300x160 VARCHAR (122) CHARACTER SET 'utf8'
 );
 
-INSERT INTO itemCategory(itemCategoryName) VAlUES ('Category1');
-INSERT INTO itemCategory(itemCategoryName) VAlUES ('Category2');
+INSERT INTO item_category(itemCategoryName, categoryPicturePath300x160) VAlUES ('For self-defense', 'view.components/images/main_categories/For self-defense.png');
+INSERT INTO item_category(itemCategoryName, categoryPicturePath300x160) VAlUES ('For respect', 'view.components/images/main_categories/For respect.png');
+INSERT INTO item_category(itemCategoryName, categoryPicturePath300x160) VAlUES ('Ultimate Solutions', 'view.components/images/main_categories/Ultimate Solutions.png');
 
 
 CREATE TABLE items (

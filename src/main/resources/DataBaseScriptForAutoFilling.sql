@@ -50,22 +50,31 @@ INSERT INTO item_status(itemStatusName) VAlUES ('NOT_PRESENT');
 
 CREATE TABLE item_category (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  itemCategoryName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL
+  itemCategoryName VARCHAR (22) CHARACTER SET 'utf8' NOT NULL,
+  categoryDescription VARCHAR (122) CHARACTER SET 'utf8',
+  categoryPicturePath300x160 VARCHAR (122) CHARACTER SET 'utf8'
 );
 
-INSERT INTO item_category(itemCategoryName) VAlUES ('Category1');
-INSERT INTO item_category(itemCategoryName) VAlUES ('Category2');
+INSERT INTO item_category(itemCategoryName, categoryPicturePath300x160) VAlUES ('For self-defense', 'view.components/images/main_categories/For self-defense.png');
+INSERT INTO item_category(itemCategoryName, categoryPicturePath300x160) VAlUES ('For respect', 'view.components/images/main_categories/For respect.png');
+INSERT INTO item_category(itemCategoryName, categoryPicturePath300x160) VAlUES ('Ultimate Solutions', 'view.components/images/main_categories/Ultimate Solutions.png');
+
 
 CREATE TABLE item (
   id INT PRIMARY KEY AUTO_INCREMENT,
   itemName VARCHAR (43) CHARACTER SET 'utf8' NOT NULL,
-  itemDescription VARCHAR (122) CHARACTER SET 'utf8' NOT NULL,
+  itemDescription VARCHAR (122) CHARACTER SET 'utf8',
   itemPrice DECIMAL(7,2) NOT NULL,
+  itemBigPicturePath800x600 VARCHAR(122) CHARACTER SET 'utf8',
+  itemSmallPicturePath350x260 VARCHAR(122) CHARACTER SET 'utf8',
+  itemRating INT(11) NOT NULL,
   itemCategory INT(11) NOT NULL,
   itemStatus INT(11) NOT NULL,
   FOREIGN KEY(itemCategory) REFERENCES item_category(id),
   FOREIGN KEY(itemStatus) REFERENCES item_status(id)
 );
+
+
 
 CREATE TABLE order_item (
   order_id INT(11) NOT NULL,

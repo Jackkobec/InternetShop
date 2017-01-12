@@ -2,13 +2,10 @@ package com.gmail.jackkobec.internetshop.commands;
 
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
-import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.service.ClientService;
 import com.gmail.jackkobec.internetshop.service.IClientService;
 import com.gmail.jackkobec.internetshop.service.LanguageService;
-import com.gmail.jackkobec.internetshop.validation.InputDataValidation;
-import com.gmail.jackkobec.internetshop.validation.Validation;
 import com.gmail.jackkobec.internetshop.validation.ValidationFeedbackManager;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -61,7 +58,7 @@ public class UserRegistrtionCommand implements ICommand {
         } else {
             request.getSession().setAttribute("currentUserInSystem", forRegister);
 
-            return (iClientService.userRegistrer(forRegister))
+            return (iClientService.userRegistration(forRegister))
                     ? PageManager.getPageManager().getPage(PageManager.MAIN_PAGE)
                     : errorPage;
 
