@@ -19,7 +19,7 @@ import static com.gmail.jackkobec.internetshop.persistence.model.UserType.BANNED
 /**
  * Created by Jack on 08.01.2017.
  */
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"/Controller"})
 public class BlockedUserFilter implements Filter {
 
     List<User> blacklist = new ArrayList<>();
@@ -39,28 +39,30 @@ public class BlockedUserFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession(false);
 
+        if (!req.getParameter("command").equals("userlogin") || !req.getParameter("command").equals("userregistration")) {
+            try {
+                User currentUserInSystem = (User) session.getAttribute("currentUserInSystem");
+                //User finded = iClientService.findByEmail(currentUserInSystem.getEmail());
 
-        try {
+//                if (finded.getEmail() != null) {
+//
+//                    if (finded.getUserType().equals(BANNED)) {
+//
+//                        request.setAttribute("errorInfo", "You are in the black list!");
+//                        RequestDispatcher dispatcher = request.getServletContext().
+//                                getRequestDispatcher(PageManager.getPageManager().getPage(PageManager.ERROR_PAGE));
+//                        dispatcher.forward(request, response);
+//                    }
+//                }
 
-            User currentUserInSystem = (User) session.getAttribute("currentUserInSystem");
-            User finded = iClientService.findByEmail(currentUserInSystem.getEmail());
-
-            if (finded.getEmail() != null) {
-
-                if (finded.getUserType().equals(BANNED)) {
-
-                    request.setAttribute("errorInfo", "You are in the black list!");
-                    RequestDispatcher dispatcher = request.getServletContext().
-                            getRequestDispatcher(PageManager.getPageManager().getPage(PageManager.ERROR_PAGE));
-                    dispatcher.forward(request, response);
-                }
+            } catch (NullPointerException e) {
+                request.setAttribute("errorInfo", "NullPointerException");
+                RequestDispatcher dispatcher = request.getServletContext().
+                        getRequestDispatcher(PageManager.getPageManager().getPage(PageManager.ERROR_PAGE));
+                dispatcher.forward(request, response);
             }
-
-            chain.doFilter(request, response);
-
-        } catch (NullPointerException e) {
-            chain.doFilter(request, response);
         }
+        chain.doFilter(request, response);
     }
 
     @Override

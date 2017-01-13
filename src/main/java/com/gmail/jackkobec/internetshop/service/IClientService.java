@@ -17,4 +17,6 @@ public interface IClientService {
     boolean userRegistration(User user);
 
     List<Item> getItemsByCategoryId(final Integer categoryId);
+
+    List<Item> initSixItemCarousel();
 }

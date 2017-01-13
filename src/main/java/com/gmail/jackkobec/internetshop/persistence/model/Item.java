@@ -9,7 +9,10 @@ public class Item {
 
     private Integer id;
     private String itemName;
-    private String itemDescription;
+    private String itemSmallDescription;
+    private String itemFullDescription;
+    private String itemProductInfo;
+
     private BigDecimal itemPrice;
 
     private String itemBigPicturePath800x600;
@@ -22,10 +25,12 @@ public class Item {
     public Item() {
     }
 
-    public Item(Integer id, String itemName, String itemDescription, BigDecimal itemPrice, String itemBigPicturePath800x600, String itemSmallPicturePath350x260, Integer itemRating, ItemCategory itemCategory, ItemStatus itemStatus) {
+    public Item(Integer id, String itemName, String itemSmallDescription, String itemFullDescription, String itemProductInfo, BigDecimal itemPrice, String itemBigPicturePath800x600, String itemSmallPicturePath350x260, Integer itemRating, ItemCategory itemCategory, ItemStatus itemStatus) {
         this.id = id;
         this.itemName = itemName;
-        this.itemDescription = itemDescription;
+        this.itemSmallDescription = itemSmallDescription;
+        this.itemFullDescription = itemFullDescription;
+        this.itemProductInfo = itemProductInfo;
         this.itemPrice = itemPrice;
         this.itemBigPicturePath800x600 = itemBigPicturePath800x600;
         this.itemSmallPicturePath350x260 = itemSmallPicturePath350x260;
@@ -50,12 +55,28 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
+    public String getItemSmallDescription() {
+        return itemSmallDescription;
     }
 
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
+    public void setItemSmallDescription(String itemSmallDescription) {
+        this.itemSmallDescription = itemSmallDescription;
+    }
+
+    public String getItemFullDescription() {
+        return itemFullDescription;
+    }
+
+    public void setItemFullDescription(String itemFullDescription) {
+        this.itemFullDescription = itemFullDescription;
+    }
+
+    public String getItemProductInfo() {
+        return itemProductInfo;
+    }
+
+    public void setItemProductInfo(String itemProductInfo) {
+        this.itemProductInfo = itemProductInfo;
     }
 
     public BigDecimal getItemPrice() {
@@ -94,16 +115,35 @@ public class Item {
         return itemCategory;
     }
 
-    public void setItemCategory(ItemCategory itemCategory) {
-        this.itemCategory = itemCategory;
+    public void setItemCategory(final Integer itemCategoryId) {
+
+        switch (itemCategoryId) {
+            case 1:
+                this.itemCategory = ItemCategory.FOR_SELF_DEFENSE;
+                break;
+            case 2:
+                this.itemCategory = ItemCategory.FOR_RESPECT;
+                break;
+            case 3:
+                this.itemCategory = ItemCategory.ULTIMATE_SOLUTIONS;
+                break;
+        }
     }
 
     public ItemStatus getItemStatus() {
         return itemStatus;
     }
 
-    public void setItemStatus(ItemStatus itemStatus) {
-        this.itemStatus = itemStatus;
+    public void setItemStatus(final Integer itemStatusId) {
+
+        switch (itemStatusId) {
+            case 1:
+                this.itemStatus = ItemStatus.PRESENT;
+                break;
+            case 2:
+                this.itemStatus = ItemStatus.NOT_PRESENT;
+                break;
+        }
     }
 
     @Override
@@ -115,7 +155,11 @@ public class Item {
 
         if (id != null ? !id.equals(item.id) : item.id != null) return false;
         if (itemName != null ? !itemName.equals(item.itemName) : item.itemName != null) return false;
-        if (itemDescription != null ? !itemDescription.equals(item.itemDescription) : item.itemDescription != null)
+        if (itemSmallDescription != null ? !itemSmallDescription.equals(item.itemSmallDescription) : item.itemSmallDescription != null)
+            return false;
+        if (itemFullDescription != null ? !itemFullDescription.equals(item.itemFullDescription) : item.itemFullDescription != null)
+            return false;
+        if (itemProductInfo != null ? !itemProductInfo.equals(item.itemProductInfo) : item.itemProductInfo != null)
             return false;
         if (itemPrice != null ? !itemPrice.equals(item.itemPrice) : item.itemPrice != null) return false;
         if (itemBigPicturePath800x600 != null ? !itemBigPicturePath800x600.equals(item.itemBigPicturePath800x600) : item.itemBigPicturePath800x600 != null)
@@ -132,7 +176,9 @@ public class Item {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (itemName != null ? itemName.hashCode() : 0);
-        result = 31 * result + (itemDescription != null ? itemDescription.hashCode() : 0);
+        result = 31 * result + (itemSmallDescription != null ? itemSmallDescription.hashCode() : 0);
+        result = 31 * result + (itemFullDescription != null ? itemFullDescription.hashCode() : 0);
+        result = 31 * result + (itemProductInfo != null ? itemProductInfo.hashCode() : 0);
         result = 31 * result + (itemPrice != null ? itemPrice.hashCode() : 0);
         result = 31 * result + (itemBigPicturePath800x600 != null ? itemBigPicturePath800x600.hashCode() : 0);
         result = 31 * result + (itemSmallPicturePath350x260 != null ? itemSmallPicturePath350x260.hashCode() : 0);
@@ -147,7 +193,9 @@ public class Item {
         return "Item{" +
                 "id=" + id +
                 ", itemName='" + itemName + '\'' +
-                ", itemDescription='" + itemDescription + '\'' +
+                ", itemSmallDescription='" + itemSmallDescription + '\'' +
+                ", itemFullDescription='" + itemFullDescription + '\'' +
+                ", itemProductInfo='" + itemProductInfo + '\'' +
                 ", itemPrice=" + itemPrice +
                 ", itemBigPicturePath800x600='" + itemBigPicturePath800x600 + '\'' +
                 ", itemSmallPicturePath350x260='" + itemSmallPicturePath350x260 + '\'' +

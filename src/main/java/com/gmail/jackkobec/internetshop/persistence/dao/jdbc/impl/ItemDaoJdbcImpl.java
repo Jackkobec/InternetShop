@@ -68,6 +68,14 @@ public class ItemDaoJdbcImpl implements ItemDao {
         return getListOfItemBySqlQuery(sqlQuery);
     }
 
+    @Override
+    public List<Item> initSixItemCarousel() {
+
+        String sqlQuery = "SELECT * FROM six_item_carousel LEFT JOIN item ON six_item_carousel.item_id = item.id";
+
+        return getListOfItemBySqlQuery(sqlQuery);
+    }
+
     private List<Item> getListOfItemBySqlQuery(String sqlQuery) {
 
         try (PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(sqlQuery);
@@ -77,12 +85,21 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
             while (resultSet.next()) {
 
-                Item group = new Item();
-//
-//                group.setId(resultSet.getInt("id"));
-//                group.setName(resultSet.getString("name"));
-//
-//                groups.add(group);
+                Item item = new Item();
+
+                item.setId(resultSet.getInt("id"));
+                item.setItemName(resultSet.getString("itemName"));
+                item.setItemSmallDescription(resultSet.getString("itemSmallDescription"));
+                item.setItemFullDescription(resultSet.getString("itemFullDescription"));
+                item.setItemProductInfo(resultSet.getString("itemProductInfo"));
+                item.setItemPrice(resultSet.getBigDecimal("itemPrice"));
+                item.setItemBigPicturePath800x600(resultSet.getString("itemBigPicturePath800x600"));
+                item.setItemSmallPicturePath350x260(resultSet.getString("itemSmallPicturePath350x260"));
+                item.setItemRating(resultSet.getInt("itemRating"));
+                item.setItemCategory(resultSet.getInt("itemCategory"));
+                item.setItemStatus(resultSet.getInt("itemStatus"));
+
+                items.add(item);
             }
 
             return items;

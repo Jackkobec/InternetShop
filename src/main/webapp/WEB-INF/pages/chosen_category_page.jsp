@@ -134,7 +134,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <div class="col-sm-3">
                             <div class="col-item">
                                 <div class="photo">
-                                    <img src="http://placehold.it/350x260" class="img-responsive" alt="a" />
+                                    <img src="view.components/images/for_self_defense/Beretta92_350x260.png" class="img-responsive" alt="a" />
                                 </div>
                                 <div class="info">
                                     <div class="row">

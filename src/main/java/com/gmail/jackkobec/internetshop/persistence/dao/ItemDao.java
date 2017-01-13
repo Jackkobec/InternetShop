@@ -10,4 +10,6 @@ import java.util.List;
 public interface ItemDao extends CommonDao<Item, Integer>{
 
     List<Item> getItemsByCategoryId(final Integer categoryId);
+
+    List<Item> initSixItemCarousel();
 }

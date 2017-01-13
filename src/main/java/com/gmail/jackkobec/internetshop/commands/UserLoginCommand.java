@@ -1,6 +1,7 @@
 package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
+import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.persistence.model.UserType;
 import com.gmail.jackkobec.internetshop.service.ClientService;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Jack on 04.01.2017.
@@ -62,6 +64,8 @@ public class UserLoginCommand implements ICommand {
             cookie.setMaxAge(3600);
             response.addCookie(cookie);
 
+            initItemCarousel(request);
+
             return PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
 
         } else {
@@ -76,5 +80,15 @@ public class UserLoginCommand implements ICommand {
     private boolean isUserInTheBlockList(User user) {
 
         return user.getUserType() != null && user.getUserType().equals(UserType.BANNED);
+    }
+
+    private void initItemCarousel(HttpServletRequest request) {
+
+        IClientService iClientService = new ClientService();
+        List<Item> carouselItems = iClientService.initSixItemCarousel();
+        System.out.println(carouselItems.size());
+        carouselItems.forEach(System.out::print);
+
+        request.setAttribute("sixItemCarousel", carouselItems);
     }
 }

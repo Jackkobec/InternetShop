@@ -42,4 +42,10 @@ public class ClientService implements IClientService{
 
         return null;
     }
+
+    @Override
+    public List<Item> initSixItemCarousel() {
+
+        return itemDao.initSixItemCarousel();
+    }
 }
