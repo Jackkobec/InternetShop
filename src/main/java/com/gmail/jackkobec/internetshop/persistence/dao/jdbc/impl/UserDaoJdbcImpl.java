@@ -6,6 +6,7 @@ import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     private static UserDaoJdbcImpl userDaoJdbc;
     private ConnectionManager connectionManager;
+    private Connection connection;
 
 
     private UserDaoJdbcImpl(ConnectionManager connectionManager) {
@@ -33,6 +35,21 @@ public class UserDaoJdbcImpl implements UserDao {
         return (userDaoJdbc == null)
                 ? userDaoJdbc = new UserDaoJdbcImpl(connectionManager)
                 : userDaoJdbc;
+    }
+
+    private Connection getConnection() {
+
+        return connectionManager.getConnection();
+    }
+
+    private void closeConnection(Connection connection) {
+
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOGGER.error("Cant close connection");
+        }
     }
 
 
@@ -99,7 +116,8 @@ public class UserDaoJdbcImpl implements UserDao {
             throw new NullPointerException("Передан пустой sqlQuery");
         }
 
-        try (ResultSet resultSet = connectionManager.getConnection().prepareStatement(sqlQuery).executeQuery(sqlQuery)) {
+        connection = getConnection();
+        try (ResultSet resultSet = connection.prepareStatement(sqlQuery).executeQuery(sqlQuery)) {
 //             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 //             ResultSet resultSet = preparedStatement.executeQuery(sqlQuery)) {
 
@@ -119,6 +137,8 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            closeConnection(connection);
         }
     }
 
@@ -128,7 +148,8 @@ public class UserDaoJdbcImpl implements UserDao {
             throw new NullPointerException("Передан пустой sqlQuery / entity");
         }
 
-        try (PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(sqlQuery)) {
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
 
             preparedStatement.setString(1, entity.getEmail());
             preparedStatement.setString(2, entity.getPassword());
@@ -140,6 +161,8 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            closeConnection(connection);
         }
 
         return true;

@@ -47,10 +47,11 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <%--/Test image--%>
 <%--Image--%>
 <div class="jumbotron">
+    <a href="Controller?command=gotomainpage">
     <div class="container text-left my-div">
         <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
         <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
-    </div>
+    </div></a>
 </div>
 <%--/Image--%>
 

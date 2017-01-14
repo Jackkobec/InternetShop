@@ -4,28 +4,28 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
-    <!--<filter>-->
-        <!--&lt;!&ndash;EncodingFilter для кириллицы&ndash;&gt;-->
-        <!--<filter-name>EncodingFilter</filter-name>-->
-        <!--<filter-class>&lt;!&ndash;пусть к EncodingFilter&ndash;&gt;-->
-            <!--com.gmail.jackkobec.internetshop.filters.EncodingFilter-->
-        <!--</filter-class>-->
-        <!--&lt;!&ndash;настройка фильтра&ndash;&gt;-->
-        <!--<init-param>-->
-            <!--<param-name>encoding</param-name>-->
-            <!--<param-value>UTF-8</param-value>-->
-        <!--</init-param>-->
-    <!--</filter>-->
-    <!--&lt;!&ndash;мапинг для EncodingFilter&ndash;&gt;-->
-    <!--&lt;!&ndash;Можно делать и анотацей:-->
-    <!--@WebFilter(urlPatterns = "/*", initParams = {-->
-        <!--@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding param")-->
-<!--})-->
-<!--&ndash;&gt;-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>EncodingFilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter>
+        <!--EncodingFilter для кириллицы-->
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class><!--пусть к EncodingFilter-->
+            com.gmail.jackkobec.internetshop.filters.EncodingFilter
+        </filter-class>
+        <!--настройка фильтра-->
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <!--мапинг для EncodingFilter-->
+    <!--Можно делать и анотацей:
+    @WebFilter(urlPatterns = "/*", initParams = {
+        @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding param")
+})
+-->
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!--Мапинг для использования на страницах при импорте и ссылках на ресурсы относительного пути,
     обрабатывается сервлетом по умолчанию Томката, без мапинга относительный путь не будет видеть. Пример:

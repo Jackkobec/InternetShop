@@ -56,7 +56,7 @@ public class UserRegistrtionCommand implements ICommand {
             validationFeedbackManager.createFeedBack(request, true, true, true, validationFeedbackManager.USER_WITH_THIS_EMAIL_ALREADY_EXIST);
             return registrationPage;
         } else {
-            request.getSession().setAttribute("currentUserInSystem", forRegister);
+            request.getSession(true).setAttribute("currentUserInSystem", forRegister);
 
             return (iClientService.userRegistration(forRegister))
                     ? PageManager.getPageManager().getPage(PageManager.MAIN_PAGE)

@@ -56,7 +56,7 @@ public class UserLoginCommand implements ICommand {
 
             finded.setLanguage(selectedLanguage);
 
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession(true);
             session.setAttribute("currentUserInSystem", finded);
             session.setAttribute("selectedLocale", selectedLanguage);
 
@@ -87,7 +87,7 @@ public class UserLoginCommand implements ICommand {
         IClientService iClientService = new ClientService();
         List<Item> carouselItems = iClientService.initSixItemCarousel();
         System.out.println(carouselItems.size());
-        carouselItems.forEach(System.out::print);
+        //carouselItems.forEach(System.out::print);
 
         request.setAttribute("sixItemCarousel", carouselItems);
     }

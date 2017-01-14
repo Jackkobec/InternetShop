@@ -27,6 +27,7 @@ public class ControllerHelper {
         commands.put("register", new RegisterCommand());
         commands.put("find", new UserInfoCommand());
         commands.put("gotocategory", new GoCategoryCommand());
+        commands.put("gotomainpage", new GoToMainPageCommand());
         commands.put("showitem", new ShowItemCommand());
         commands.put("userregistration", new UserRegistrtionCommand());
         commands.put("userlogout", new UserLogOutCommand());

@@ -6,6 +6,7 @@ import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
     private static ItemDaoJdbcImpl itemDaoJdbc;
     private ConnectionManager connectionManager;
+    private Connection connection;
 
     private ItemDaoJdbcImpl(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -33,6 +35,21 @@ public class ItemDaoJdbcImpl implements ItemDao {
         return (itemDaoJdbc == null)
                 ? itemDaoJdbc = new ItemDaoJdbcImpl(connectionManager)
                 : itemDaoJdbc;
+    }
+
+    private Connection getConnection() {
+
+        return connectionManager.getConnection();
+    }
+
+    private void closeConnection(Connection connection) {
+
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOGGER.error("Cant close connection");
+        }
     }
 
     @Override
@@ -78,7 +95,8 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
     private List<Item> getListOfItemBySqlQuery(String sqlQuery) {
 
-        try (PreparedStatement preparedStatement = connectionManager.getConnection().prepareStatement(sqlQuery);
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
              ResultSet resultSet = preparedStatement.executeQuery(sqlQuery)) {
 
             List<Item> items = new ArrayList<>();
@@ -107,6 +125,8 @@ public class ItemDaoJdbcImpl implements ItemDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            closeConnection(connection);
         }
     }
 }

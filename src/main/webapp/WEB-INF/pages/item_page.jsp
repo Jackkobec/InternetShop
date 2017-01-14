@@ -34,6 +34,18 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
     <!-- Добавляем свой стиль -->
     <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
+
+    <style>
+        html { height: 100%; }
+        .my-div {
+            margin: 0; /* Убираем отступы */
+            /*height: 43%;*/
+            height: 57%;
+            width: 100%; /* Высота страницы */
+            background: url(http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg); /* Параметры фона */
+            background-size: auto; /* Фон занимает всю доступную площадь */
+        }
+    </style>
 </head>
 
 
@@ -41,7 +53,9 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <%--Image--%>
 <div class="jumbotron">
     <div class="container text-left my-div">
-        <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        <a href="Controller?command=gotomainpage">
+            <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        </a>
         <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
     </div>
 </div>
@@ -70,13 +84,138 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <%--</li>--%>
                 <li>
                     <div class="row"><span class="glyphicon glyphicon-shopping-cart mycolorspan"></div>
-                    <div class="row"><a href="#"></span>Cart</a></div>
+                    <div class="row"><a data-toggle="modal" href="#myModal"></span>Cart</a></div>
                 </li>
             </ul>
         </div>
     </div>
 </div>
 <%--/Fixed header elements--%>
+
+<%--test model--%>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body"><%--body--%>
+                <%--test shoping cart--%>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10 col-md-offset-1">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Total</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                                    <td class="col-sm-1 col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="2" type="email">
+                                    </td>
+                                    <td class="col-md-1 text-center"><strong>$4.99</strong></td>
+                                    <td class="col-md-1 text-center"><strong>$9.98</strong></td>
+                                    <td class="col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><h5>Subtotal</h5></td>
+                                    <td class="text-right"><h5><strong>$106.94</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><h5>Discount</h5></td>
+                                    <td class="text-right"><h5><strong>$6.94</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><h3>Total</h3></td>
+                                    <td class="text-right"><h3><strong>$100.0</strong></h3></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                                        </button></td>
+                                    <td>
+                                        <button type="button" class="btn btn-success">
+                                            Checkout <span class="glyphicon glyphicon-play"></span>
+                                        </button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <%--/test shoping cart--%>
+
+            </div><%--/body--%>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<%--/test modal--%>
+
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    });
+</script>
+
 
 <%--Item--%>
 <div class="container-fluid">
@@ -115,15 +254,27 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="product-stock">In Stock</div>
                     <hr>
                     <div class="btn-group cart">
-                        <button type="button" class="btn btn-success">
+                        <a href="#" data-toggle="tooltip" title="Hooray!">
+                        <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
                             Add to cart
-                        </button>
+                        </button></a>
                     </div>
-                    <div class="btn-group wishlist">
-                        <button type="button" class="btn btn-danger">
-                            Add to wishlist
-                        </button>
+                    <%--<div class="btn-group wishlist">--%>
+                        <%--<button type="button" class="btn btn-danger">--%>
+                            <%--Add to wishlist--%>
+                        <%--</button>--%>
+                    <%--</div>--%>
+
+                        <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover"
+                           data-trigger="focus" title="Dismissible popover"
+                           data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
+                    <%--test alert--%>
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Success!</strong> This alert box could indicate a successful or positive action.
                     </div>
+                    <%--/test alert--%>
+
                 </div>
             </div>
         </div>
@@ -269,10 +420,24 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <!-- Item slider end-->
 
 <%--/Slider Products--%>
+<script>
+$(function () {
+$('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+<script>
+    $('.popover-dismiss').popover({
+        trigger: 'focus'
+    })
+</script>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Добавляем свой скрипт -->
+<script src="../../view.components/js/tether.min.js"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../view.components/js/bootstrap.min.js"></script>
 <!-- Добавляем свой скрипт -->
