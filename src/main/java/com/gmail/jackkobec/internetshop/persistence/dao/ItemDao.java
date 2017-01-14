@@ -12,4 +12,6 @@ public interface ItemDao extends CommonDao<Item, Integer>{
     List<Item> getItemsByCategoryId(final Integer categoryId);
 
     List<Item> initSixItemCarousel();
+
+    Item getItemById(final Integer id);
 }

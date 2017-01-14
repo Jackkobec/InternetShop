@@ -19,4 +19,6 @@ public interface IClientService {
     List<Item> getItemsByCategoryId(final Integer categoryId);
 
     List<Item> initSixItemCarousel();
+
+    Item getItemById(final Integer id);
 }

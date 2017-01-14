@@ -1,5 +1,9 @@
 package com.gmail.jackkobec.internetshop.commands;
 
+import com.gmail.jackkobec.internetshop.controller.PageManager;
+import com.gmail.jackkobec.internetshop.persistence.model.Item;
+import com.gmail.jackkobec.internetshop.service.ClientService;
+import com.gmail.jackkobec.internetshop.service.IClientService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -15,13 +19,26 @@ public class ShowItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(ShowItemCommand.class);
 
     private static final String ITEM_ID = "item_id";
+    private static final String ITEM_COUNT = "item_count";
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
+        final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
 
+        IClientService iClientService = new ClientService();
+        Item currentItemForShow = iClientService.getItemById(itemId);
 
-        return "/WEB-INF/pages/item_page.jsp";
+        if (currentItemForShow != null) {
+            request.setAttribute("currentItemForShow", currentItemForShow);
+
+            return "/WEB-INF/pages/item_page.jsp";
+
+        } else {
+            request.setAttribute("errorInfo", "Item with " + itemId + " doesn't exist!");
+
+            return PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
+        }
     }
 }

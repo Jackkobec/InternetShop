@@ -255,25 +255,33 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <hr>
                     <div class="btn-group cart">
                         <a href="#" data-toggle="tooltip" title="Hooray!">
-                        <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
+                        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalNotification">
                             Add to cart
                         </button></a>
                     </div>
-                    <%--<div class="btn-group wishlist">--%>
-                        <%--<button type="button" class="btn btn-danger">--%>
-                            <%--Add to wishlist--%>
-                        <%--</button>--%>
-                    <%--</div>--%>
 
-                        <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover"
-                           data-trigger="focus" title="Dismissible popover"
-                           data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
-                    <%--test alert--%>
-                    <div class="alert alert-success alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Success!</strong> This alert box could indicate a successful or positive action.
+                    <%--Modal -   #myModalNotification--%>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModalNotification" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Item added to the cart.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <%--/test alert--%>
+                    <%--/Modal -   #myModalNotification--%>
 
                 </div>
             </div>

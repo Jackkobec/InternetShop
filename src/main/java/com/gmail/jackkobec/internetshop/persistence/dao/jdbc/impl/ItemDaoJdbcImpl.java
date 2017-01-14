@@ -80,7 +80,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
     @Override
     public List<Item> getItemsByCategoryId(final Integer categoryId) {
 
-        String sqlQuery = "SELECT * FROM item_category WHERE item_category.id = " + categoryId;
+        String sqlQuery = "SELECT * FROM item WHERE item.itemCategory = " + categoryId;
 
         return getListOfItemBySqlQuery(sqlQuery);
     }
@@ -91,6 +91,51 @@ public class ItemDaoJdbcImpl implements ItemDao {
         String sqlQuery = "SELECT * FROM six_item_carousel LEFT JOIN item ON six_item_carousel.item_id = item.id";
 
         return getListOfItemBySqlQuery(sqlQuery);
+    }
+
+    @Override
+    public Item getItemById(final Integer id) {
+
+        String sqlQuery = "SELECT * FROM item WHERE item.id = " + id;
+
+        return getItemBySqlQuery(sqlQuery);
+    }
+
+    private Item getItemBySqlQuery(String sqlQuery) {
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+             ResultSet resultSet = preparedStatement.executeQuery(sqlQuery)) {
+
+            Item item = new Item();
+
+            while (resultSet.next()) {
+
+                item = new Item();
+
+                item.setId(resultSet.getInt("id"));
+                item.setItemName(resultSet.getString("itemName"));
+                item.setItemSmallDescription(resultSet.getString("itemSmallDescription"));
+                item.setItemFullDescription(resultSet.getString("itemFullDescription"));
+                item.setItemProductInfo(resultSet.getString("itemProductInfo"));
+                item.setItemPrice(resultSet.getBigDecimal("itemPrice"));
+                item.setItemBigPicturePath800x600(resultSet.getString("itemBigPicturePath800x600"));
+                item.setItemSmallPicturePath350x260(resultSet.getString("itemSmallPicturePath350x260"));
+                item.setItemRating(resultSet.getInt("itemRating"));
+                item.setItemCategory(resultSet.getInt("itemCategory"));
+                item.setItemStatus(resultSet.getInt("itemStatus"));
+
+            }
+
+            return item;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeConnection(connection);
+        }
+
     }
 
     private List<Item> getListOfItemBySqlQuery(String sqlQuery) {

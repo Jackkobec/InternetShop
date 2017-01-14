@@ -38,14 +38,20 @@ public class ClientService implements IClientService{
     }
 
     @Override
-    public List<Item> getItemsByCategoryId(Integer categoryId) {
+    public List<Item> getItemsByCategoryId(final Integer categoryId) {
 
-        return null;
+        return itemDao.getItemsByCategoryId(categoryId);
     }
 
     @Override
     public List<Item> initSixItemCarousel() {
 
         return itemDao.initSixItemCarousel();
+    }
+
+    @Override
+    public Item getItemById(final Integer id) {
+
+        return itemDao.getItemById(id);
     }
 }
