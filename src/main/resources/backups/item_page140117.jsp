@@ -117,7 +117,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 </tr>
                                 </thead>
                                 <tbody>
-
                                 <tr>
                                     <td class="col-sm-8 col-md-6">
                                         <div class="media">
@@ -159,113 +158,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <span class="glyphicon glyphicon-remove"></span> Remove
                                         </button></td>
                                 </tr>
-
-                                <%--test yet item--%>
-                                <tr>
-                                    <td class="col-md-6">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                                <span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>
-                                            </div>
-                                        </div></td>
-                                    <td class="col-md-1" style="text-align: center">
-                                        <input class="form-control" id="exampleInputEmail1" value="2" type="email">
-                                    </td>
-                                    <td class="col-md-1 text-center"><strong>$4.99</strong></td>
-                                    <td class="col-md-1 text-center"><strong>$9.98</strong></td>
-                                    <td class="col-md-1">
-                                        <button type="button" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove
-                                        </button></td>
-                                </tr>
-                                <%--/test yet item--%>
-
-                                <%--test size--%>
-                                <tr>
-                                    <td class="col-sm-8 col-md-6">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-                                            </div>
-                                        </div></td>
-                                    <td class="col-sm-1 col-md-1" style="text-align: center">
-                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
-                                    </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                                    <td class="col-sm-1 col-md-1">
-                                        <button type="button" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove
-                                        </button></td>
-                                </tr>
-
-                                <tr>
-                                    <td class="col-sm-8 col-md-6">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-                                            </div>
-                                        </div></td>
-                                    <td class="col-sm-1 col-md-1" style="text-align: center">
-                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
-                                    </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                                    <td class="col-sm-1 col-md-1">
-                                        <button type="button" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove
-                                        </button></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-sm-8 col-md-6">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-                                            </div>
-                                        </div></td>
-                                    <td class="col-sm-1 col-md-1" style="text-align: center">
-                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
-                                    </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                                    <td class="col-sm-1 col-md-1">
-                                        <button type="button" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove
-                                        </button></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-sm-8 col-md-6">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-                                            </div>
-                                        </div></td>
-                                    <td class="col-sm-1 col-md-1" style="text-align: center">
-                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
-                                    </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                                    <td class="col-sm-1 col-md-1">
-                                        <button type="button" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove
-                                        </button></td>
-                                </tr>
-                                <%--/test size--%>
 
                                 <tr>
                                     <td></td>
@@ -470,28 +362,61 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <div class="carousel carousel-showmanymoveone slide" id="itemslider">
                 <div class="carousel-inner">
 
-                    <%--<c:set var="sixItemCarousel" value="${sessionScope.sixItemCarousel}"/> &lt;%&ndash;не обязательно,
-                     сам подтянет с сессии по имени sixItemCarousel&ndash;%&gt;--%>
-
-                    <div class="item active"><%--Обязательно должен быть - это первый элемент карусели--%>
+                    <div class="item active">
                         <div class="col-xs-12 col-sm-6 col-md-2">
-                            <a href="Controller?command=showitem&item_id=${sixItemCarousel.get(0).getId()}"><img src="${sixItemCarousel.get(0).getItemSmallPicturePath350x260()}"
+                            <a href="#"><img src="https://s12.postimg.org/655583bx9/item_1_180x200.png"
                                              class="img-responsive center-block"></a>
-                            <h4 class="text-center">${sixItemCarousel.get(0).getItemName()}</h4> <%--test name from list--%>
-                            <h5 class="text-center">${sixItemCarousel.get(0).getItemPrice()}</h5>
+                            <h4 class="text-center">MAYORAL SUKNJA</h4>
+                            <h5 class="text-center">4000,00 RSD</h5>
                         </div>
                     </div>
 
-                    <c:forEach var="item" begin="1" items="${sixItemCarousel}">
-                        <div class="item">
-                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                <a href="Controller?command=showitem&item_id=${item.id}"><img src="${item.itemSmallPicturePath350x260}"
-                                                 class="img-responsive center-block"></a>
-                                <h4 class="text-center">${item.itemName}</h4>
-                                <h5 class="text-center">${item.itemPrice}</h5>
-                            </div>
+                    <div class="item">
+                        <div class="col-xs-12 col-sm-6 col-md-2">
+                            <a href="#"><img src="https://s12.postimg.org/41uq0fc4d/item_2_180x200.png"
+                                             class="img-responsive center-block"></a>
+                            <h4 class="text-center">MAYORAL KOŠULJA</h4>
+                            <h5 class="text-center">4000,00 RSD</h5>
                         </div>
-                    </c:forEach>
+                    </div>
+
+                    <div class="item">
+                        <div class="col-xs-12 col-sm-6 col-md-2">
+                            <a href="#"><img src="../../view.components/images/uV4ABsIur2s.png"
+                                             class="img-responsive center-block"></a>
+                            <span class="badge">10%</span>
+                            <h4 class="text-center">PANTALONE TERI 2</h4>
+                            <h5 class="text-center">4000,00 RSD</h5>
+                            <h6 class="text-center">5000,00 RSD</h6>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="col-xs-12 col-sm-6 col-md-2">
+                            <a href="#"><img src="https://s12.postimg.org/5w7ki5z4t/item_4_180x200.png"
+                                             class="img-responsive center-block"></a>
+                            <h4 class="text-center">CVETNA HALJINA</h4>
+                            <h5 class="text-center">4000,00 RSD</h5>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="col-xs-12 col-sm-6 col-md-2">
+                            <a href="#"><img src="https://s12.postimg.org/e2zk9qp7h/item_5_180x200.png"
+                                             class="img-responsive center-block"></a>
+                            <h4 class="text-center">MAJICA FOTO</h4>
+                            <h5 class="text-center">4000,00 RSD</h5>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="col-xs-12 col-sm-6 col-md-2">
+                            <a href="#"><img src="https://s12.postimg.org/46yha3jfh/item_6_180x200.png"
+                                             class="img-responsive center-block"></a>
+                            <h4 class="text-center">MAJICA MAYORAL</h4>
+                            <h5 class="text-center">4000,00 RSD</h5>
+                        </div>
+                    </div>
 
                 </div>
 

@@ -89,6 +89,7 @@ public class UserLoginCommand implements ICommand {
         System.out.println(carouselItems.size());
         //carouselItems.forEach(System.out::print);
 
-        request.setAttribute("sixItemCarousel", carouselItems);
+        //request.setAttribute("sixItemCarousel", carouselItems);
+        request.getSession(false).setAttribute("sixItemCarousel", carouselItems);
     }
 }

@@ -116,22 +116,15 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                     ${item.itemPrice}</h5>
                                         </div>
                                         <div class="rating hidden-sm col-md-6">
-
-                            <%--<c:forEach var="ratingStar" begin="0" end="${item.itemRating}" items="${currentCategoryItemList}">--%>
+                                                <%--<c:forEach var="ratingStar" begin="0" end="${item.itemRating}" items="${currentCategoryItemList}">--%>
                                 <c:forEach var="ratingStar" begin="1" end="${item.itemRating}">
-                                <i class="price-text-color fa fa-star"></i>
+                                <i class="price-text-color fa fa-star"></i><%--</i><i class="price-text-color fa fa-star">  - одна звезда, цветная--%>
                                 </c:forEach>
                                 <c:forEach var="ratingStar" begin="${item.itemRating}" end="4">
-                                    </i><i class="fa fa-star"></i></i>
+                                    </i><i class="fa fa-star"></i></i><%--</i><i class="fa fa-star"></i></i>   - одна звезда, не цветная--%>
                                 </c:forEach>
-
-                                            <%--<i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">--%>
-                                        <%--</i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">--%>
-                                        <%--</i><i class="fa fa-star"></i></i>--%>
-
-
-                                            <%--</i><i class="price-text-color fa fa-star">  - одна звезда, цветная--%>
-                                            <%--</i><i class="fa fa-star"></i></i>   - одна звезда, не цветная--%>
+                                    <%--</i><i class="price-text-color fa fa-star">  - одна звезда, цветная--%>
+                                    <%--</i><i class="fa fa-star"></i></i>   - одна звезда, не цветная--%>
                                         </div>
                                     </div>
                                     <div class="separator clear-left">

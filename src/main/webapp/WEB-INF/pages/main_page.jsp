@@ -180,7 +180,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                     <div class="item active"><%--Обязательно должен быть - это первый элемент карусели--%>
                         <div class="col-xs-12 col-sm-6 col-md-2">
-                            <a href="#"><img src="${sixItemCarousel.get(0).getItemSmallPicturePath350x260()}"
+                            <a href="Controller?command=showitem&item_id=${sixItemCarousel.get(0).getId()}"><img src="${sixItemCarousel.get(0).getItemSmallPicturePath350x260()}"
                                              class="img-responsive center-block"></a>
                             <h4 class="text-center">${sixItemCarousel.get(0).getItemName()}</h4> <%--test name from list--%>
                             <h5 class="text-center">${sixItemCarousel.get(0).getItemPrice()}</h5>
@@ -190,7 +190,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <c:forEach var="item" begin="1" items="${sixItemCarousel}">
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-2">
-                                <a href="#"><img src="${item.itemSmallPicturePath350x260}"
+                                <a href="Controller?command=showitem&item_id=${item.id}"><img src="${item.itemSmallPicturePath350x260}"
                                                  class="img-responsive center-block"></a>
                                 <h4 class="text-center">${item.itemName}</h4>
                                 <h5 class="text-center">${item.itemPrice}</h5>
