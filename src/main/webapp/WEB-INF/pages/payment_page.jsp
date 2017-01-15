@@ -151,7 +151,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                                         <form action="Controller?command=removeitemfromcart" method="POST">
                                             <input type="hidden" name="item_id" value="${item.id}"> </input>
-                                            <input type="hidden" name="from_page" value="ORDER_PAGE"> </input>
+                                            <input type="hidden" name="from_page" value="PAYMENT_PAGE"> </input>
                                             <td class="col-sm-1 col-md-1">
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-remove"></span> Remove

@@ -156,32 +156,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         </form>
                                 </tr>
                                 </c:forEach>
-                                <%--<tr>--%>
-                                    <%--<td class="col-md-6">--%>
-                                        <%--<div class="media">--%>
-                                            <%--<a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>--%>
-                                            <%--<div class="media-body">--%>
-                                                <%--<h4 class="media-heading"><a href="#">Product name</a></h4>--%>
-                                                <%--<h5 class="media-heading"> by <a href="#">Brand name</a></h5>--%>
-                                                <%--<span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>--%>
-                                            <%--</div>--%>
-                                        <%--</div></td>--%>
-                                    <%--<td class="col-md-1" style="text-align: center">--%>
-                                        <%--<input class="form-control" id="exampleInputEmail1" value="2" type="email">--%>
-                                    <%--</td>--%>
-                                    <%--<td class="col-md-1 text-center"><strong>$4.99</strong></td>--%>
-                                    <%--<td class="col-md-1 text-center"><strong>$9.98</strong></td>--%>
-                                    <%--<td class="col-md-1">--%>
-                                        <%--<button type="button" class="btn btn-danger">--%>
-                                            <%--<span class="glyphicon glyphicon-remove"></span> Remove--%>
-                                        <%--</button></td>--%>
-                                <%--</tr>--%>
-
-                                <%--test foreach--%>
-
-                                <%--/test foreach--%>
-
-
 
                                 <tr>
                                     <td></td>
@@ -214,10 +188,23 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                         </button></td>
                                         </form>
-                                    <td>
-                                        <button type="button" class="btn btn-success">
-                                            Checkout <span class="glyphicon glyphicon-play"></span>
-                                        </button></td>
+                                    <c:choose>
+                                        <c:when test="${currentUserCart.size() == 0}">
+                                            <c:set var="isDisable" value="disabled"/>
+                                        </c:when>
+                                        <c:when test="${currentUserCart.size() > 0}">
+                                            <c:set var="isDisable" value=""/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="isDisable" value=""/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <form action="Controller?command=makeorder" method="POST">
+                                        <td>
+                                            <button type="submit" class="btn btn-success ${isDisable}">
+                                                Make Order <span class="glyphicon glyphicon-ok"></span>
+                                            </button></td>
+                                    </form>
                                 </tr>
                                 </tbody>
                             </table>
@@ -230,9 +217,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <form action="Controller?command=makeorder" method="POST">
-                <button type="submit" class="btn btn-primary">Make Order</button>
-                    </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
