@@ -31,7 +31,7 @@ public class ShowItemCommand implements ICommand {
         Item currentItemForShow = iClientService.getItemById(itemId);
 
         if (currentItemForShow != null) {
-            request.setAttribute("currentItemForShow", currentItemForShow);
+            request.getSession(false).setAttribute("currentItemForShow", currentItemForShow);
 
             return "/WEB-INF/pages/item_page.jsp";
 

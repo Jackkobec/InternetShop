@@ -106,7 +106,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">Cart</h4>
             </div>
             <div class="modal-body"><%--body--%>
                 <%--test shoping cart--%>
@@ -146,10 +146,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                     <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
                                     <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
 
+                                    <form action="Controller?command=removeitemfromcart" method="POST">
+                                        <input type="hidden" name="item_id" value="${item.id}"> </input>
                                     <td class="col-sm-1 col-md-1">
-                                        <button type="button" class="btn btn-danger">
+                                        <button type="submit" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove"></span> Remove
                                         </button></td>
+                                        </form>
                                 </tr>
                                 </c:forEach>
                                 <%--<tr>--%>
