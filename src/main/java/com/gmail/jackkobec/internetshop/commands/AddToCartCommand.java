@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -23,15 +24,28 @@ public class AddToCartCommand implements ICommand {
         final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
 
 
-
         List<Item> currentUserCart = (List<Item>) request.getSession(false).getAttribute("currentUserCart");
-        System.out.println("currentUserCart " + currentUserCart);
-        IClientService iClientService = new ClientService();
-        Item currentItemForShow = iClientService.getItemById(itemId);
+        Item currentItemForShow = (Item) request.getSession(false).getAttribute("currentItemForShow");
+
+        BigDecimal summaryCartPrice = currentItemForShow.getItemPrice();
+
+        if (currentUserCart.size() != 0) {
+//            BigDecimal summaryCartPrice = currentUserCart.stream().map(Item::getItemPrice).reduce(BigDecimal::add).get();
+            for (Item item : currentUserCart) {
+                summaryCartPrice = summaryCartPrice.add(item.getItemPrice());
+            }
+            request.getSession(false).setAttribute("summaryCartPrice", summaryCartPrice);
+        } else if (currentUserCart.size() == 0) {
+            request.getSession(false).setAttribute("summaryCartPrice", currentItemForShow.getItemPrice());
+        }
+
+//        System.out.println("currentUserCart " + currentUserCart);
+//        IClientService iClientService = new ClientService();
+//        Item currentItemForShow = iClientService.getItemById(itemId);
         currentUserCart.add(currentItemForShow);
         System.out.println("currentUserCart.add " + currentUserCart);
         request.getSession(false).setAttribute("currentUserCart", currentUserCart);
-        request.setAttribute("currentItemForShow", currentItemForShow);
+
         return "/WEB-INF/pages/item_page.jsp";
     }
 }

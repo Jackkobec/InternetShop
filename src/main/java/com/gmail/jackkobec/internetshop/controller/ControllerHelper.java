@@ -30,6 +30,7 @@ public class ControllerHelper {
         commands.put("gotomainpage", new GoToMainPageCommand());
         commands.put("showitem", new ShowItemCommand());
         commands.put("addtocart", new AddToCartCommand());
+        commands.put("makeorder", new MakeOrderCommand());
         commands.put("removeitemfromcart", new RemoveItemFromCartCommand());
         commands.put("userregistration", new UserRegistrtionCommand());
         commands.put("userlogout", new UserLogOutCommand());

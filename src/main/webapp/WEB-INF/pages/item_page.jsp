@@ -187,21 +187,21 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                     <td></td>
                                     <td></td>
                                     <td><h5>Subtotal</h5></td>
-                                    <td class="text-right"><h5><strong>$106.94</strong></h5></td>
+                                    <td class="text-right"><h5><strong>$${summaryCartPrice}</strong></h5></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td><h5>Discount</h5></td>
-                                    <td class="text-right"><h5><strong>$6.94</strong></h5></td>
+                                    <td class="text-right"><h5><strong>$0.00</strong></h5></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td><h3>Total</h3></td>
-                                    <td class="text-right"><h3><strong>$100.0</strong></h3></td>
+                                    <td class="text-right"><h3><strong>$${summaryCartPrice}</strong></h3></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -227,7 +227,9 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <form action="Controller?command=makeorder" method="POST">
+                <button type="submit" class="btn btn-primary">Make Order</button>
+                    </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -427,6 +429,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <!-- Item slider end-->
 
 <%--/Slider Products--%>
+
 <script>
 $(function () {
 $('[data-toggle="tooltip"]').tooltip()
