@@ -20,6 +20,8 @@ public class PageManager {
     public static final String INDEX_PAGE = "INDEX_PAGE";
     public static final String REGISTRATION_PAGE = "REGISTRATION_PAGE";
     public static final String MAIN_PAGE = "MAIN_PAGE";
+    public static final String ITEM_PAGE = "ITEM_PAGE";
+    public static final String ORDER_PAGE = "ORDER_PAGE";
     public static final String ERROR_PAGE = "ERROR_PAGE";
 
 

@@ -1,5 +1,6 @@
 package com.gmail.jackkobec.internetshop.commands;
 
+import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
 
 import javax.servlet.ServletException;
@@ -16,11 +17,15 @@ public class RemoveItemFromCartCommand implements ICommand {
 
 
     private static final String ITEM_ID = "item_id";
+    private static final String FROM_PAGE = "from_page";
+
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
+        final String fromPage = request.getParameter(FROM_PAGE);
+        System.out.println("FROM_PAGE + " + fromPage);
 
         List<Item> currentUserCart = (List<Item>) request.getSession(false).getAttribute("currentUserCart");
         BigDecimal summaryCartPrice = (BigDecimal) request.getSession(false).getAttribute("summaryCartPrice");
@@ -41,6 +46,6 @@ public class RemoveItemFromCartCommand implements ICommand {
         request.getSession(false).setAttribute("summaryCartPrice", summaryCartPrice);
         request.getSession(false).setAttribute("currentUserCart", currentUserCart);
 
-        return "/WEB-INF/pages/item_page.jsp";
+        return PageManager.getPageManager().getPage(fromPage);
     }
 }

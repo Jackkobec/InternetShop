@@ -35,6 +35,10 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     <!-- Добавляем свой стиль -->
     <%--Для корзины тоже нужен--%>
     <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
+    <!-- Добавляем свой стиль -->
+    <%--for payment--%>
+    <link type="text/css" href="view.components/css/payment_page.css" rel="stylesheet">
+
     <style>
         html { height: 100%; }
         .my-div {
@@ -197,11 +201,11 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             </c:otherwise>
                                         </c:choose>
                                         <form action="Controller?command=makeorder" method="POST">
-                                        <td>
-                                            <button type="submit" class="btn btn-success ${isDisable}">
-                                                Make Order <span class="glyphicon glyphicon-ok"></span>
-                                            </button></td>
-                                            </form>
+                                            <td>
+                                                <button type="submit" class="btn btn-success ${isDisable}">
+                                                    Make Order <span class="glyphicon glyphicon-ok"></span>
+                                                </button></td>
+                                        </form>
                                     </tr>
                                 </tbody>
                             </table>
@@ -228,101 +232,158 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </script>
 
 
-<%--test shoping cart--%>
+
+<%--payment--%>
+
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015 William Hilton
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<!-- Vendor libraries -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
+
+<!-- If you're using Stripe for payments -->
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th class="text-center">Price</th>
-                    <th class="text-center">Total</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
+        <!-- You can make it whatever width you want. I'm making it full width
+             on <= small devices and 4/12 page width on >= medium devices -->
+        <div class="col-xs-12 col-md-4">
 
 
-                <h1>h1. Bootstrap heading</h1>
-                <br>
-                <h2>h2. Bootstrap heading</h2>
-                <br>
-                <c:if test="${currentUserCart.size() == 0}">
-                <p><h4>Order is empty</h4><p>
-                    </c:if>
-                    <c:forEach var="item" items="${currentUserCart}">
-                    <tr>
-                        <td class="col-sm-8 col-md-6">
-                            <div class="media">
-                                <a class="thumbnail pull-left" href="Controller?command=showitem&item_id=${item.id}"> <img class="media-object" src="${item.itemSmallPicturePath350x260}" style="width: 72px; height: 72px;"> </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading"><a href="Controller?command=showitem&item_id=${item.id}">${item.itemName}</a></h4>
-                                    <h5 class="media-heading">Category: <a href="#"><br>${item.itemCategory.categoryName}</a></h5>
-                                    <span>Status: </span><span class="text-success"><strong>${item.itemStatus}</strong></span>
+            <!-- CREDIT CARD FORM STARTS HERE -->
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading display-table" >
+                    <div class="row display-tr" >
+                        <h3 class="panel-title display-td" >Payment Details</h3>
+                        <div class="display-td" >
+                            <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="cardNumber">CARD NUMBER</label>
+                                    <div class="input-group">
+                                        <input
+                                                type="tel"
+                                                class="form-control"
+                                                name="cardNumber"
+                                                placeholder="Valid Card Number"
+                                                autocomplete="cc-number"
+                                                required autofocus
+                                        />
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                    </div>
                                 </div>
-                            </div></td>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7 col-md-7">
+                                <div class="form-group">
+                                    <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                    <input
+                                            type="tel"
+                                            class="form-control"
+                                            name="cardExpiry"
+                                            placeholder="MM / YY"
+                                            autocomplete="cc-exp"
+                                            required
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-xs-5 col-md-5 pull-right">
+                                <div class="form-group">
+                                    <label for="cardCVC">CV CODE</label>
+                                    <input
+                                            type="tel"
+                                            class="form-control"
+                                            name="cardCVC"
+                                            placeholder="CVC"
+                                            autocomplete="cc-csc"
+                                            required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="couponCode">COUPON CODE</label>
+                                    <input type="text" class="form-control" name="couponCode" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button class="subscribe btn btn-success btn-lg btn-block" type="button">Start Subscription</button>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none;">
+                            <div class="col-xs-12">
+                                <p class="payment-errors"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- CREDIT CARD FORM ENDS HERE -->
 
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-                            <input class="form-control" id="exampleInputEmail1" value="1" type="email">
-                        </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
 
-                        <form action="Controller?command=removeitemfromcart" method="POST">
-                            <input type="hidden" name="item_id" value="${item.id}"> </input>
-                            <input type="hidden" name="from_page" value="ORDER_PAGE"> </input>
-                            <td class="col-sm-1 col-md-1">
-                                <button type="submit" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span> Remove
-                                </button></td>
-                        </form>
-                    </tr>
-                    </c:forEach>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>$${summaryCartPrice}</strong></h5></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><h5>Discount</h5></td>
-                        <td class="text-right"><h5><strong>$0.00</strong></h5></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>$${summaryCartPrice}</strong></h3></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-remove-circle"></span> Cancel order
-                            </button></td>
-                        <form action="Controller?command=payorder" method="POST">
-                        <td>
-                            <button type="submit" class="btn btn-success">
-                                Pay order <span class="glyphicon glyphicon-usd"></span>
-                            </button></td>
-                            </form>
-                    </tr>
-                </tbody>
-            </table>
         </div>
+
+        <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
+            <p><h1>Features:</h1>
+            <ul>
+                <li>As-you-type, input formatting</li>
+                <li>Form field validation (also as you type)</li>
+                <li>Graceful error feedback for declined card, etc</li>
+                <li>AJAX form submission w/ visual feedback</li>
+                <li>Creates a Stripe credit card token</li>
+            </ul>
+            </p>
+            <p>Be sure to replace the dummy API key with a valid Stripe API key.</p>
+
+            <p>Built upon: Bootstrap, jQuery,
+                <a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a>,
+                <a href="https://github.com/stripe/jquery.payment">jQuery.payment library</a>,
+                and <a href="https://stripe.com/docs/stripe.js">Stripe.js</a>
+            </p>
+        </div>
+
     </div>
 </div>
-<%--/test shoping cart--%>
+
+<%--/payment--%>
+
+
+
+
 
 
 <%--Slider Products--%>
@@ -400,6 +461,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
+<!-- Добавляем свой скрипт -->
+<script src="../../view.components/js/forpayment.js"></script>
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>

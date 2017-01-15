@@ -148,6 +148,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                                     <form action="Controller?command=removeitemfromcart" method="POST">
                                         <input type="hidden" name="item_id" value="${item.id}"> </input>
+                                        <input type="hidden" name="from_page" value="ITEM_PAGE"> </input>
                                     <td class="col-sm-1 col-md-1">
                                         <button type="submit" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove"></span> Remove
@@ -207,10 +208,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                        <form action="Controller?command=makeorder" method="POST">
                                     <td>
-                                        <button type="button" class="btn btn-default">
+                                        <button type="submit" class="btn btn-default">
                                             <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                         </button></td>
+                                        </form>
                                     <td>
                                         <button type="button" class="btn btn-success">
                                             Checkout <span class="glyphicon glyphicon-play"></span>
