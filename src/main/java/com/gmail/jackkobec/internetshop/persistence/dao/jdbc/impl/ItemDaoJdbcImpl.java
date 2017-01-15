@@ -94,6 +94,17 @@ public class ItemDaoJdbcImpl implements ItemDao {
     }
 
     @Override
+    public List<Item> initUserCart(final Integer userId) {
+
+        String sqlQuery = "SELECT * FROM item " +
+                "LEFT JOIN cart ON item.id = cart.item_id " +
+                "LEFT JOIN user ON cart.user_id = user.id " +
+                "WHERE user.id = " + userId;
+
+        return getListOfItemBySqlQuery(sqlQuery);
+    }
+
+    @Override
     public Item getItemById(final Integer id) {
 
         String sqlQuery = "SELECT * FROM item WHERE item.id = " + id;

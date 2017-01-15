@@ -65,6 +65,7 @@ public class UserLoginCommand implements ICommand {
             response.addCookie(cookie);
 
             initItemCarousel(request);
+            initUserCart(request, finded.getId());
 
             return PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
 
@@ -91,5 +92,12 @@ public class UserLoginCommand implements ICommand {
 
         //request.setAttribute("sixItemCarousel", carouselItems);
         request.getSession(false).setAttribute("sixItemCarousel", carouselItems);
+    }
+
+    private void initUserCart(HttpServletRequest request, final Integer userId) {
+
+        IClientService iClientService = new ClientService();
+        List<Item> currentUserCart = iClientService.initUserCart(userId);
+        request.getSession(false).setAttribute("currentUserCart", currentUserCart);
     }
 }

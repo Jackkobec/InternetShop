@@ -254,6 +254,11 @@
     background-color: #ffe; /* Цвет фона */
     color: #930; /* Цвет текста */
 }
+
+.mycolorspan-gold {
+    background-color: #ffe; /* Цвет фона */
+    color: #bed119; /* Цвет текста */
+}
 /*/Colorspan for fixed header elements*/
 
 /*Menu*/

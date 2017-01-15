@@ -20,5 +20,7 @@ public interface IClientService {
 
     List<Item> initSixItemCarousel();
 
+    List<Item> initUserCart(final Integer userId);
+
     Item getItemById(final Integer id);
 }

@@ -29,6 +29,7 @@ public class ControllerHelper {
         commands.put("gotocategory", new GoCategoryCommand());
         commands.put("gotomainpage", new GoToMainPageCommand());
         commands.put("showitem", new ShowItemCommand());
+        commands.put("addtocart", new AddToCartCommand());
         commands.put("userregistration", new UserRegistrtionCommand());
         commands.put("userlogout", new UserLogOutCommand());
 

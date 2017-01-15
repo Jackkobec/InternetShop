@@ -50,6 +50,12 @@ public class ClientService implements IClientService{
     }
 
     @Override
+    public List<Item> initUserCart(final Integer userId) {
+
+        return itemDao.initUserCart(userId);
+    }
+
+    @Override
     public Item getItemById(final Integer id) {
 
         return itemDao.getItemById(id);

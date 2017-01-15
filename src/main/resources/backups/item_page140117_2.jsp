@@ -74,24 +74,17 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="row"><span class="glyphicon glyphicon-user mycolorspan"></div>
                     <div class="row"><a href="#"></span>Hello!<br>${sessionScope.currentUserInSystem.email}</a></div>
                 </li2>
-
-                <c:choose>
-                    <c:when test="${currentUserCart.size() == 0}">
-                        <c:set var="spanClass" value="mycolorspan"/>
-                        <c:set var="cartText" value="Cart"/>
-                    </c:when>
-                    <c:when test="${currentUserCart.size() > 0}">
-                        <c:set var="spanClass" value="mycolorspan-gold"/>
-                        <c:set var="cartText" value="Cart(${currentUserCart.size()})"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="spanClass" value="mycolorspan"/>
-                        <c:set var="cartText" value="Cart"/>
-                    </c:otherwise>
-                </c:choose>
+                <%--<li>--%>
+                <%--<div class="row"><span class="glyphicon glyphicon-dashboard"></div>--%>
+                <%--<div class="row"><a href="#"></span>Dashboard</a></div>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                <%--<div class="row"><span class="glyphicon glyphicon-user"></div>--%>
+                <%--<div class="row"><a href="#"></span>User</a></div>--%>
+                <%--</li>--%>
                 <li>
-                    <div class="row"><span class="glyphicon glyphicon-shopping-cart ${spanClass}"></div>
-                    <div class="row"><a data-toggle="modal" href="#myModal"></span>${cartText}</a></div>
+                    <div class="row"><span class="glyphicon glyphicon-shopping-cart mycolorspan"></div>
+                    <div class="row"><a data-toggle="modal" href="#myModal"></span>Cart</a></div>
                 </li>
             </ul>
         </div>
@@ -125,59 +118,154 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 </thead>
                                 <tbody>
 
-                                    <c:if test="${currentUserCart.size() == 0}">
-                                <p><h4>Cart is empty</h4><p>
-                                    </c:if>
-                                <c:forEach var="item" items="${currentUserCart}">
                                 <tr>
                                     <td class="col-sm-8 col-md-6">
                                         <div class="media">
-                                            <a class="thumbnail pull-left" href="Controller?command=showitem&item_id=${item.id}"> <img class="media-object" src="${item.itemSmallPicturePath350x260}" style="width: 72px; height: 72px;"> </a>
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
                                             <div class="media-body">
-                                                <h4 class="media-heading"><a href="Controller?command=showitem&item_id=${item.id}">${item.itemName}</a></h4>
-                                                <h5 class="media-heading">Category: <a href="#"><br>${item.itemCategory.categoryName}</a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>${item.itemStatus}</strong></span>
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
                                             </div>
                                         </div></td>
-
                                     <td class="col-sm-1 col-md-1" style="text-align: center">
-                                        <input class="form-control" id="exampleInputEmail1" value="1" type="email">
+                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
                                     </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
-
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
                                     <td class="col-sm-1 col-md-1">
                                         <button type="button" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove"></span> Remove
                                         </button></td>
                                 </tr>
-                                </c:forEach>
-                                <%--<tr>--%>
-                                    <%--<td class="col-md-6">--%>
-                                        <%--<div class="media">--%>
-                                            <%--<a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>--%>
-                                            <%--<div class="media-body">--%>
-                                                <%--<h4 class="media-heading"><a href="#">Product name</a></h4>--%>
-                                                <%--<h5 class="media-heading"> by <a href="#">Brand name</a></h5>--%>
-                                                <%--<span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>--%>
-                                            <%--</div>--%>
-                                        <%--</div></td>--%>
-                                    <%--<td class="col-md-1" style="text-align: center">--%>
-                                        <%--<input class="form-control" id="exampleInputEmail1" value="2" type="email">--%>
-                                    <%--</td>--%>
-                                    <%--<td class="col-md-1 text-center"><strong>$4.99</strong></td>--%>
-                                    <%--<td class="col-md-1 text-center"><strong>$9.98</strong></td>--%>
-                                    <%--<td class="col-md-1">--%>
-                                        <%--<button type="button" class="btn btn-danger">--%>
-                                            <%--<span class="glyphicon glyphicon-remove"></span> Remove--%>
-                                        <%--</button></td>--%>
-                                <%--</tr>--%>
 
-                                <%--test foreach--%>
+                                <tr>
+                                    <td class="col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="2" type="email">
+                                    </td>
+                                    <td class="col-md-1 text-center"><strong>$4.99</strong></td>
+                                    <td class="col-md-1 text-center"><strong>$9.98</strong></td>
+                                    <td class="col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
 
-                                <%--/test foreach--%>
+                                <%--test yet item--%>
+                                <tr>
+                                    <td class="col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="2" type="email">
+                                    </td>
+                                    <td class="col-md-1 text-center"><strong>$4.99</strong></td>
+                                    <td class="col-md-1 text-center"><strong>$9.98</strong></td>
+                                    <td class="col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
+                                <%--/test yet item--%>
 
+                                <%--test size--%>
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                                    <td class="col-sm-1 col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
 
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                                    <td class="col-sm-1 col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                                    <td class="col-sm-1 col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                            </div>
+                                        </div></td>
+                                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                                        <input class="form-control" id="exampleInputEmail1" value="3" type="email">
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                                    <td class="col-sm-1 col-md-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remove
+                                        </button></td>
+                                </tr>
+                                <%--/test size--%>
 
                                 <tr>
                                     <td></td>
@@ -289,16 +377,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="product-price">$ ${currentItemForShow.itemPrice}</div>
                     <div class="product-stock">${currentItemForShow.itemStatus}</div>
                     <hr>
-                    <form action="Controller?command=addtocart" method="POST">
-                        <input type="hidden" name="item_id" value="${currentItemForShow.id}"> </input>
-
                     <div class="btn-group cart">
                         <a href="#" data-toggle="tooltip" title="Hooray!">
-                        <button type="submit" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalNotification">
+                        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalNotification">
                             Add to cart
                         </button></a>
                     </div>
-                    </form>
+
                     <%--Modal -   #myModalNotification--%>
                     <!-- Modal -->
                     <div class="modal fade" id="myModalNotification" role="dialog">
