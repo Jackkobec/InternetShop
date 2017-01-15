@@ -3,7 +3,7 @@
 //
 //import com.gmail.jackkobec.internetshop.controller.PageManager;
 //import com.gmail.jackkobec.internetshop.persistence.model.User;
-//import com.gmail.jackkobec.internetshop.service.ClientService;
+//import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 //import com.gmail.jackkobec.internetshop.service.IClientService;
 //
 //import javax.servlet.*;
@@ -28,7 +28,7 @@
 //    public void init(FilterConfig filterConfig) throws ServletException {
 //
 //
-//        iClientService = new ClientService();
+//        iClientService = new ClientServiceImpl();
 //    }
 //
 //    @Override

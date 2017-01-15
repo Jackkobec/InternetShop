@@ -4,7 +4,7 @@ import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.persistence.model.UserType;
-import com.gmail.jackkobec.internetshop.service.ClientService;
+import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IClientService;
 import com.gmail.jackkobec.internetshop.service.LanguageService;
 import com.gmail.jackkobec.internetshop.validation.ValidationFeedbackManager;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,13 +30,15 @@ public class UserLoginCommand implements ICommand {
     private static final String PASSWORD = "password";
     private static final String LANGUAGE_SELECTION = "language_selection";
     private static final String CHECKBOX = "remember_me";
-
+    
+    private  IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String loginPage = PageManager.getPageManager().getPage(PageManager.INDEX_PAGE);
+        String mainPage = PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
 
         final String email = request.getParameter(EMAIL);
         final String password = request.getParameter(PASSWORD);
@@ -49,7 +52,6 @@ public class UserLoginCommand implements ICommand {
 
         if (validationFeedbackManager.preValidation(request, email, password, null)) return loginPage;
 
-        IClientService iClientService = new ClientService();
         User finded = iClientService.findByEmailAndPassword(email, password);
 
         if (finded.getEmail() != null && finded.getPassword() != null && !(isUserInTheBlockList(finded))) {
@@ -67,7 +69,7 @@ public class UserLoginCommand implements ICommand {
             initItemCarousel(request);
             initUserCart(request, finded.getId());
 
-            return PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
+            return mainPage;
 
         } else {
             validationFeedbackManager.createFeedBack(request, true, true, true, (!isUserInTheBlockList(finded))
@@ -85,19 +87,20 @@ public class UserLoginCommand implements ICommand {
 
     private void initItemCarousel(HttpServletRequest request) {
 
-        IClientService iClientService = new ClientService();
         List<Item> carouselItems = iClientService.initSixItemCarousel();
-        System.out.println(carouselItems.size());
-        //carouselItems.forEach(System.out::print);
-
-        //request.setAttribute("sixItemCarousel", carouselItems);
         request.getSession(false).setAttribute("sixItemCarousel", carouselItems);
     }
 
     private void initUserCart(HttpServletRequest request, final Integer userId) {
 
-        IClientService iClientService = new ClientService();
         List<Item> currentUserCart = iClientService.initUserCart(userId);
+        BigDecimal summaryCartPrice = new BigDecimal(0.00);
+
+        for (Item item : currentUserCart) {
+            summaryCartPrice = summaryCartPrice.add(item.getItemPrice());
+        }
+
         request.getSession(false).setAttribute("currentUserCart", currentUserCart);
+        request.getSession(false).setAttribute("summaryCartPrice", summaryCartPrice);
     }
 }

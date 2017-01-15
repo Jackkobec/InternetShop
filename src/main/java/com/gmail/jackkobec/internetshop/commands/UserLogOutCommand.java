@@ -18,8 +18,10 @@ public  class UserLogOutCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String indexPage = PageManager.getPageManager().getPage(PageManager.INDEX_PAGE);
+        
         request.getSession(false).invalidate();
 
-        return PageManager.getPageManager().getPage(PageManager.INDEX_PAGE);
+        return indexPage;
     }
 }

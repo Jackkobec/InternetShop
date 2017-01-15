@@ -204,8 +204,8 @@ INSERT INTO six_item_carousel(item_id) VAlUES (5);
 INSERT INTO six_item_carousel(item_id) VAlUES (6);
 
 CREATE TABLE cart (
-  user_id INT(11) NOT NULL,
-  item_id INT(11) NOT NULL
+  item_id INT(11) NOT NULL,
+  user_id INT(11) NOT NULL
 );
 
 INSERT INTO cart(item_id, user_id) VAlUES (2, 2);

@@ -18,12 +18,9 @@ public class RegisterCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("email " + request.getParameter("email"));
-        System.out.println("remember_me " + request.getParameter("remember_me"));
-        System.out.println("filter " + request.getParameter("filter"));
-
-//        page = PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
+        String registrationPage = PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
         LOGGER.info("RegisterCommand");
-        return PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
+
+        return registrationPage;
     }
 }

@@ -5,8 +5,14 @@ package com.gmail.jackkobec.internetshop.persistence.model;
  */
 public enum ItemStatus {
 
-    PRESENT, NOT_PRESENT;
+    PRESENT(1), NOT_PRESENT(2);
+    private Integer itemStatusId;
 
-    ItemStatus() {
+    ItemStatus(Integer itemStatusId) {
+        this.itemStatusId = itemStatusId;
+    }
+
+    public Integer getItemStatusId() {
+        return itemStatusId;
     }
 }

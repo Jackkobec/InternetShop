@@ -22,5 +22,9 @@ public interface IClientService {
 
     List<Item> initUserCart(final Integer userId);
 
+    boolean addItemToCart(final Integer itemId, final Integer userId);
+
+    boolean removeItemFromCart(final Integer itemId, final Integer userId);
+
     Item getItemById(final Integer id);
 }

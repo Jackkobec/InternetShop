@@ -112,6 +112,72 @@ public class ItemDaoJdbcImpl implements ItemDao {
         return getItemBySqlQuery(sqlQuery);
     }
 
+    @Override
+    public boolean addItemToCart(final Integer itemId, final Integer userId) {
+
+        String sqlQuery = "INSERT INTO cart (item_id, user_id) VALUES (?, ?)";
+
+        return executeQueryInPreparedStatementForCart(itemId, userId, sqlQuery);
+    }
+
+    @Override
+    public boolean removeItemFromCart(Integer itemId, Integer userId) {
+
+        String sqlQuery = "DELETE FROM cart WHERE cart.item_id = ? AND cart.user_id = ? LIMIT 1";
+
+        return executeQueryInPreparedStatementForCart(itemId, userId, sqlQuery);
+    }
+
+    private boolean executeQueryInPreparedStatementForCart(Integer itemId, Integer userId, String sqlQuery) {
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+
+            preparedStatement.setInt(1, itemId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    private boolean executeQueryInPreparedStatement(Item entity, String sqlQuery) {
+
+        if (null == sqlQuery || entity == null) {
+            throw new NullPointerException("Передан пустой sqlQuery / entity");
+        }
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+
+            preparedStatement.setString(1, entity.getItemName());
+            preparedStatement.setString(2, entity.getItemSmallDescription());
+            preparedStatement.setString(3, entity.getItemFullDescription());
+            preparedStatement.setString(4, entity.getItemProductInfo());
+            preparedStatement.setBigDecimal(5, entity.getItemPrice());
+            preparedStatement.setString(6, entity.getItemBigPicturePath800x600());
+            preparedStatement.setString(7, entity.getItemSmallPicturePath350x260());
+            preparedStatement.setInt(8, entity.getItemRating());
+            preparedStatement.setInt(9, entity.getItemCategory().getCategoryId());
+            preparedStatement.setInt(10, entity.getItemStatus().getItemStatusId());
+            preparedStatement.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
     private Item getItemBySqlQuery(String sqlQuery) {
 
         connection = getConnection();

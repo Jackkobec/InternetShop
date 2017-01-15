@@ -15,11 +15,26 @@ import java.util.List;
 /**
  * Created by Jack on 28.12.2016.
  */
-public class ClientService implements IClientService{
-    public static final Logger LOGGER = LogManager.getLogger(ClientService.class);
+public class ClientServiceImpl implements IClientService{
+    public static final Logger LOGGER = LogManager.getLogger(ClientServiceImpl.class);
 
-    UserDao userDao = (UserDao) JdbcDaoFactory.getJdbcDaoFactory(ConnectionManagerMode.FROM_JNDI).getDao(DaoType.USER_DAO);
-    ItemDao itemDao = (ItemDao) JdbcDaoFactory.getJdbcDaoFactory(ConnectionManagerMode.FROM_JNDI).getDao(DaoType.ITEM_DAO);
+    private static ClientServiceImpl clientServiceImpl;
+    private UserDao userDao = (UserDao) JdbcDaoFactory.getJdbcDaoFactory(ConnectionManagerMode.FROM_JNDI).getDao(DaoType.USER_DAO);
+    private ItemDao itemDao = (ItemDao) JdbcDaoFactory.getJdbcDaoFactory(ConnectionManagerMode.FROM_JNDI).getDao(DaoType.ITEM_DAO);
+
+    private ClientServiceImpl() {
+    }
+
+    /**
+     * @return ClientServiceImpl instance.
+     */
+    public static ClientServiceImpl getClientServiceImpl() {
+
+        LOGGER.info("getPageManager");
+        return (clientServiceImpl == null)
+                ? clientServiceImpl = new ClientServiceImpl()
+                : clientServiceImpl;
+    }
 
     public User findByEmail(String email){
 
@@ -53,6 +68,18 @@ public class ClientService implements IClientService{
     public List<Item> initUserCart(final Integer userId) {
 
         return itemDao.initUserCart(userId);
+    }
+
+    @Override
+    public boolean addItemToCart(final Integer itemId, final Integer userId) {
+
+        return itemDao.addItemToCart(itemId, userId);
+    }
+
+    @Override
+    public boolean removeItemFromCart(final Integer itemId, final Integer userId) {
+
+        return itemDao.removeItemFromCart(itemId, userId);
     }
 
     @Override

@@ -31,12 +31,11 @@ public class NoCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = null;
+        String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
-        request.setAttribute("errorInfo", "Ошибка");
-        page = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
+        request.setAttribute(ERROR_INFO, "NoCommand");
         LOGGER.error("Incorrect command " + request.getParameter(COMMAND));
 
-        return page;
+        return errorPage;
     }
 }

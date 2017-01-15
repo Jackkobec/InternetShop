@@ -1,7 +1,8 @@
 package com.gmail.jackkobec.internetshop.commands;
 
+import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
-import com.gmail.jackkobec.internetshop.service.ClientService;
+import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IClientService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,18 +20,18 @@ public class GoCategoryCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(GoCategoryCommand.class);
 
     private static final String CATEGORY_ID = "category_id";
+    IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String chosenCategoryPage = PageManager.getPageManager().getPage(PageManager.CHOSEN_CATEGORY_PAGE);
+
         final Integer categoryId = Integer.valueOf(request.getParameter(CATEGORY_ID));
-        System.out.println("categoryID " + categoryId);
-        IClientService iClientService = new ClientService();
+
         List<Item> currentCategoryItemList = iClientService.getItemsByCategoryId(categoryId);
-        System.out.println("currentCategoryItemList size " + currentCategoryItemList.size());
         request.setAttribute("currentCategoryItemList", currentCategoryItemList);
 
-
-        return "/WEB-INF/pages/chosen_category_page.jsp";
+        return chosenCategoryPage;
     }
 }
