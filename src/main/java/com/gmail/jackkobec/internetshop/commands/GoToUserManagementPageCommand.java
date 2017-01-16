@@ -4,9 +4,7 @@ import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.persistence.model.UserType;
 import com.gmail.jackkobec.internetshop.service.AdminServiceImpl;
-import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IAdminService;
-import com.gmail.jackkobec.internetshop.service.IClientService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -20,8 +18,8 @@ import java.util.List;
 /**
  * Created by Jack on 15.01.2017.
  */
-public class GoToAdminPageCommand implements ICommand {
-    public static final Logger LOGGER = LogManager.getLogger(GoToAdminPageCommand.class);
+public class GoToUserManagementPageCommand implements ICommand {
+    public static final Logger LOGGER = LogManager.getLogger(GoToUserManagementPageCommand.class);
 
     private static final String CURRENT_USER_IN_SYSTEM = "currentUserInSystem";
     private static final String ERROR_INFO = "errorInfo";

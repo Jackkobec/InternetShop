@@ -33,8 +33,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     <!-- Добавляем свой стиль -->
     <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="view.components/css/user_management_page.css" rel="stylesheet">
-    <!-- Добавляем свой стиль -->
     <%--Для корзины тоже нужен--%>
     <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
     <style>
@@ -230,124 +228,199 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </script>
 
 
-<%--dual list--%>
+<%--Item management form--%>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
 <div class="container">
-    <br />
     <div class="row">
 
-        <div class="dual-list list-left col-md-5">
-            <h2>Unblocked users</h2>
-            <div class="well text-right">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            <span class="input-group-addon glyphicon glyphicon-search"></span>
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="btn-group">
-                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <ul class="list-group">
-                    <c:forEach var="notBanedUser" items="${notBannedUsers}">
-                        <li class="list-group-item">
-                                <%--${notBanedUser.email}--%>
-                                <div class="btn-group btn-group-justified">
-                                    <form  class="btn btn-outline-info">
-                                    Email: ${notBanedUser.email}<br>
-                                            Type: ${notBanedUser.userType} | Language: ${notBanedUser.language}
-                                    </form>
-                                    <c:if test="${notBanedUser.getUserType() == 'BANNED'}">
-                                        <form action="Controller?command=removeuserfromblocklist" method="post">
-                                            <input type="hidden" name="user_id" value="${notBanedUser.id}"> </input>
-                                        <button class="btn btn-success" type="submit">Unblock user</button>
-                                        </form>
-                                    </c:if>
-                                    <form action="Controller?command=addusertoblocklist" method="post">
-                                        <input type="hidden" name="user_id" value="${notBanedUser.id}"> </input>
-                                        <button class="btn btn-danger" type="submit">Block user</button>
-                                    </form>
-                                </div>
-                        <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
-                        <%--<button type="button" class="btn btn-danger">Block user</button>--%>
-                    </li>
-                     </c:forEach>
-                    <%--<li class="list-group-item">bootstrap-duallist <a href="https://github.com/bbilginn/bootstrap-duallist" target="_blank">github</a></li>--%>
-                    <%--<li class="list-group-item">Dapibus ac facilisis in</li>--%>
-                    <%--<li class="list-group-item">Morbi leo risus</li>--%>
-                    <%--<li class="list-group-item">Porta ac consectetur ac</li>--%>
-                    <%--<li class="list-group-item">Vestibulum at eros</li>--%>
+
+        <div class="col-md-12">
+            <h4>Bootstrap Snipp for Datatable</h4>
+            <div class="table-responsive">
+
+
+                <table id="mytable" class="table table-bordred table-striped">
+
+                    <thead>
+
+                    <th><input type="checkbox" id="checkall" /></th>
+                    <th>Id</th>
+                    <th>Item Name</th>
+                    <th>Small Description</th>
+                    <th>Full Description</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                    <th>Category</th>
+                    <th>Status</th>
+
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    </thead>
+                    <tbody>
+
+<c:forEach var="item" items="${itemListByCategory}">
+                    <tr>
+                        <td><input type="checkbox" class="checkthis" /></td>
+                        <td>${item.id}</td>
+                        <td>${item.itemName}</td>
+                        <td>${item.itemSmallDescription}</td>
+                        <td>${item.itemFullDescription}</td>
+                        <td>${item.itemPrice}</td>
+                        <td>${item.itemRating}</td>
+                        <td>${item.itemCategory}</td>
+                        <td>${item.itemStatus}</td>
+
+            <form action="Controller?command=edititem" method="POST">
+                <input type="hidden" name="item_id" value="${item.id}"> </input>
+                <input type="hidden" name="from_page" value="USER_MANAGEMENT_PAGE"> </input>
+                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-content="${item.id}"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                            </form>
+                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                    </tr>
+</c:forEach>
+                    <%--<tr>--%>
+                        <%--<td><input type="checkbox" class="checkthis" /></td>--%>
+                        <%--<td>Mohsin</td>--%>
+                        <%--<td>Irshad</td>--%>
+                        <%--<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>--%>
+                        <%--<td>isometric.mohsin@gmail.com</td>--%>
+                        <%--<td>+923335586757</td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>--%>
+                    <%--</tr>--%>
+
+
+                    <%--<tr>--%>
+                        <%--<td><input type="checkbox" class="checkthis" /></td>--%>
+                        <%--<td>Mohsin</td>--%>
+                        <%--<td>Irshad</td>--%>
+                        <%--<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>--%>
+                        <%--<td>isometric.mohsin@gmail.com</td>--%>
+                        <%--<td>+923335586757</td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>--%>
+                    <%--</tr>--%>
+
+
+
+                    <%--<tr>--%>
+                        <%--<td><input type="checkbox" class="checkthis" /></td>--%>
+                        <%--<td>Mohsin</td>--%>
+                        <%--<td>Irshad</td>--%>
+                        <%--<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>--%>
+                        <%--<td>isometric.mohsin@gmail.com</td>--%>
+                        <%--<td>+923335586757</td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>--%>
+                    <%--</tr>--%>
+
+
+                    <%--<tr>--%>
+                        <%--<td><input type="checkbox" class="checkthis" /></td>--%>
+                        <%--<td>Mohsin</td>--%>
+                        <%--<td>Irshad</td>--%>
+                        <%--<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>--%>
+                        <%--<td>isometric.mohsin@gmail.com</td>--%>
+                        <%--<td>+923335586757</td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-content="Содержимое 1..."><span class="glyphicon glyphicon-pencil"></span></button></p></td>--%>
+                        <%--<td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>--%>
+                    <%--</tr>--%>
+
+
+
+
+
+                    </tbody>
+
+                </table>
+
+                <div class="clearfix"></div>
+                <ul class="pagination pull-right">
+                    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
                 </ul>
+
             </div>
+
         </div>
-
-        <div class="list-arrows col-md-1 text-center">
-            <button class="btn btn-default btn-sm move-left">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </button>
-
-            <button class="btn btn-default btn-sm move-right">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
-        </div>
-
-        <div class="dual-list list-right col-md-5">
-            <h2>Blocked users</h2>
-            <div class="well text-right">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="btn-group">
-                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
-                            <span class="input-group-addon glyphicon glyphicon-search"></span>
-                        </div>
-                    </div>
-                </div>
-                <ul class="list-group">
-                    <c:forEach var="banedUser" items="${bannedUsers}">
-                        <li class="list-group-item">
-                                <%--${notBanedUser.email}--%>
-                            <div class="btn-group btn-group-justified">
-                                <form  class="btn btn-outline-info">
-                                    Email: ${banedUser.email}<br>
-                                    Type: ${banedUser.userType} | Language: ${banedUser.language}
-                                </form>
-                                <c:if test="${banedUser.getUserType() != 'BANNED'}">
-                                    <form action="Controller?command=addusertoblocklist" method="post">
-                                        <input type="hidden" name="user_id" value="${banedUser.id}"> </input>
-                                        <button class="btn btn-danger" type="submit">Block user</button>
-                                    </form>
-                                </c:if>
-                                <form action="Controller?command=removeuserfromblocklist" method="post">
-                                    <input type="hidden" name="user_id" value="${banedUser.id}"> </input>
-                                    <button class="btn btn-success" type="submit">Unblock user</button>
-                                </form>
-                            </div>
-                                <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
-                                <%--<button type="button" class="btn btn-danger">Block user</button>--%>
-                        </li>
-                    </c:forEach>
-                    <%--<li class="list-group-item">Cras justo odio</li>--%>
-                    <%--<li class="list-group-item">Dapibus ac facilisis in</li>--%>
-                    <%--<li class="list-group-item">Morbi leo risus</li>--%>
-                    <%--<li class="list-group-item">Porta ac consectetur ac</li>--%>
-                    <%--<li class="list-group-item">Vestibulum at eros</li>--%>
-                </ul>
-            </div>
-        </div>
-
     </div>
 </div>
-<%--/dual list--%>
 
 
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control " type="text"><p id="content"></p><%----%>
+                    <%--<p id="content"></p>&lt;%&ndash;&ndash;%&gt;--%>
+                </div>
+                <div class="form-group">
+
+                    <input class="form-control " type="text" placeholder="Irshad">
+                </div>
+                <div class="form-group">
+                    <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+
+
+                </div>
+                <div class="modal-footer ">
+                <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+            </div>
+            </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<%--test data read--%>
+<script>
+    // при открытии модального окна
+    $('#edit').on('show.bs.modal', function (event) {
+        // получить кнопку, которая его открыло
+        var button = $(event.relatedTarget)
+        // извлечь информацию из атрибута data-content
+        var content = button.data('content')
+        // вывести эту информацию в элемент, имеющий id="content"
+        $(this).find('#content').text(content);
+    })
+</script>
+<%--/test data read--%>
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<%--/Item management form--%>
 
 
 
@@ -427,7 +500,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
 <!-- Добавляем свой скрипт -->
-<script src="../../view.components/js/for_user_management_page.js"></script>
+<script src="../../view.components/js/for_item_management_page.js"></script>
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>

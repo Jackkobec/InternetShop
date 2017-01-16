@@ -93,7 +93,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <c:if test="${currentUserInSystem.getUserType() == 'ADMIN'}">
                     <li>
                         <div class="row"><span class="glyphicon glyphicon-flash mycolorspan"></div>
-                        <div class="row"><a href="Controller?command=gotoadminpage"></span>Admin</a></div>
+                        <div class="row"><a data-toggle="modal" href="#myAdminModal"></span>Admin</a></div>
                     </li>
                 </c:if>
             </ul>
@@ -224,13 +224,50 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div><!-- /.modal -->
 
 <%--/test modal--%>
-
+<%--script for myModal--%>
 <script>
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
+<%--/script for myModal--%>
 
+
+<%--Admin Modal--%>
+<!-- Modal -->
+<div class="modal fade" id="myAdminModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <form action="Controller?command=gotousermanagementpage" method="post">
+                    <%--<input type="hidden" name="user_id" value="${banedUser.id}"> </input>--%>
+                <button type="submit" class="btn btn-warning btn-lg btn-block">User Management</button>
+                    </form>
+                <br><br>
+                    <form action="Controller?command=gotoitemmanagementpage" method="post">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Item Management</button>
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%--/Admin Modal--%>
+<%--script for myAdminModal--%>
+<script>
+    $('#myAdminModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    });
+</script>
+<%--/script for myAdminModal--%>
 
 <%--Categories--%>
 <div class="container">

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Jack
-  Date: 15.01.2017
-  Time: 5:33
+  Date: 12.01.2017
+  Time: 8:33
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="include.jsp" %>
@@ -33,10 +33,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     <!-- Добавляем свой стиль -->
     <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="view.components/css/user_management_page.css" rel="stylesheet">
-    <!-- Добавляем свой стиль -->
-    <%--Для корзины тоже нужен--%>
     <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
+
     <style>
         html { height: 100%; }
         .my-div {
@@ -49,6 +47,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         }
     </style>
 </head>
+
 
 <body>
 <%--Image--%>
@@ -142,14 +141,14 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             </div></td>
 
                                         <td class="col-sm-1 col-md-1" style="text-align: center">
-                                            <input class="form-control" id="exampleInputEmail12" value="1" type="email">
+                                            <input class="form-control" id="exampleInputEmail1" value="1" type="email">
                                         </td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
 
                                         <form action="Controller?command=removeitemfromcart" method="POST">
                                             <input type="hidden" name="item_id" value="${item.id}"> </input>
-                                            <input type="hidden" name="from_page" value="USER_MANAGEMENT_PAGE"> </input>
+                                            <input type="hidden" name="from_page" value="ITEM_PAGE"> </input>
                                             <td class="col-sm-1 col-md-1">
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-remove"></span> Remove
@@ -183,10 +182,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>
-                                            <button type="button" class="btn btn-default">
-                                                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                                            </button></td>
+                                        <form action="Controller?command=makeorder" method="POST">
+                                            <td>
+                                                <button type="submit" class="btn btn-default">
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                                                </button></td>
+                                        </form>
                                         <c:choose>
                                             <c:when test="${currentUserCart.size() == 0}">
                                                 <c:set var="isDisable" value="disabled"/>
@@ -230,125 +231,156 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </script>
 
 
-<%--dual list--%>
-<div class="container">
-    <br />
-    <div class="row">
+<%--Item--%>
+<div class="container-fluid">
+    <div class="content-wrapper">
+        <div class="item-container">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="product col-md-3 service-image-left">
 
-        <div class="dual-list list-left col-md-5">
-            <h2>Unblocked users</h2>
-            <div class="well text-right">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            <span class="input-group-addon glyphicon glyphicon-search"></span>
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
-                        </div>
+                        <center>
+                            <img id="item-display" src="${itemForEdit.itemBigPicturePath800x600}" alt=""></img>
+                        </center>
                     </div>
-                    <div class="col-md-2">
-                        <div class="btn-group">
-                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <ul class="list-group">
-                    <c:forEach var="notBanedUser" items="${notBannedUsers}">
-                        <li class="list-group-item">
-                                <%--${notBanedUser.email}--%>
-                                <div class="btn-group btn-group-justified">
-                                    <form  class="btn btn-outline-info">
-                                    Email: ${notBanedUser.email}<br>
-                                            Type: ${notBanedUser.userType} | Language: ${notBanedUser.language}
-                                    </form>
-                                    <c:if test="${notBanedUser.getUserType() == 'BANNED'}">
-                                        <form action="Controller?command=removeuserfromblocklist" method="post">
-                                            <input type="hidden" name="user_id" value="${notBanedUser.id}"> </input>
-                                        <button class="btn btn-success" type="submit">Unblock user</button>
-                                        </form>
-                                    </c:if>
-                                    <form action="Controller?command=addusertoblocklist" method="post">
-                                        <input type="hidden" name="user_id" value="${notBanedUser.id}"> </input>
-                                        <button class="btn btn-danger" type="submit">Block user</button>
-                                    </form>
-                                </div>
-                        <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
-                        <%--<button type="button" class="btn btn-danger">Block user</button>--%>
-                    </li>
-                     </c:forEach>
-                    <%--<li class="list-group-item">bootstrap-duallist <a href="https://github.com/bbilginn/bootstrap-duallist" target="_blank">github</a></li>--%>
-                    <%--<li class="list-group-item">Dapibus ac facilisis in</li>--%>
-                    <%--<li class="list-group-item">Morbi leo risus</li>--%>
-                    <%--<li class="list-group-item">Porta ac consectetur ac</li>--%>
-                    <%--<li class="list-group-item">Vestibulum at eros</li>--%>
-                </ul>
-            </div>
-        </div>
 
-        <div class="list-arrows col-md-1 text-center">
-            <button class="btn btn-default btn-sm move-left">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </button>
-
-            <button class="btn btn-default btn-sm move-right">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
-        </div>
-
-        <div class="dual-list list-right col-md-5">
-            <h2>Blocked users</h2>
-            <div class="well text-right">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="btn-group">
-                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
-                            <span class="input-group-addon glyphicon glyphicon-search"></span>
-                        </div>
+                    <div class="container service1-items col-sm-2 col-md-2 pull-left">
+                        <center>
+                            <a id="item-1" class="service1-item">
+                                <img src="${itemForEdit.itemSmallPicturePath350x260}" alt=""></img>
+                            </a>
+                            <a id="item-2" class="service1-item">
+                                <img src="${itemForEdit.itemSmallPicturePath350x260}" alt=""></img>
+                            </a>
+                            <a id="item-3" class="service1-item">
+                                <img src="${itemForEdit.itemSmallPicturePath350x260}" alt=""></img>
+                            </a>
+                        </center>
                     </div>
                 </div>
-                <ul class="list-group">
-                    <c:forEach var="banedUser" items="${bannedUsers}">
-                        <li class="list-group-item">
-                                <%--${notBanedUser.email}--%>
-                            <div class="btn-group btn-group-justified">
-                                <form  class="btn btn-outline-info">
-                                    Email: ${banedUser.email}<br>
-                                    Type: ${banedUser.userType} | Language: ${banedUser.language}
+
+                <div class="col-md-7">
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label >Item Name</label>
+                            <input class="form-control " type="text" placeholder="Item Name" value="${itemForEdit.itemName}">
+                        </div>
+                        <div class="form-group">
+                            <label >Small Description</label>
+                            <input class="form-control " type="text" placeholder="Small Description" value="${itemForEdit.itemSmallDescription}">
+                        </div>
+                        <div class="form-group">
+                            <label >Full Description</label>
+                            <textarea rows="7" class="form-control" placeholder="Product Info" >${itemForEdit.itemFullDescription}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label >Product Info</label>
+                            <textarea rows="7" class="form-control" placeholder="Product Info" value="${itemForEdit.itemProductInfo}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label >Price</label>
+                            <input class="form-control " type="text" placeholder="Price" value="${itemForEdit.itemPrice}">
+                        </div>
+                        <div class="form-group">
+                            <label >Big Picture Path 800x600</label>
+                            <input class="form-control " type="text" placeholder="Big Picture Path 800x600" value="${itemForEdit.itemBigPicturePath800x600}">
+                        </div>
+                        <div class="form-group">
+                            <label >Small Picture Path 350x260</label>
+                            <input class="form-control " type="text" placeholder="Small Picture Path 350x260" value="${itemForEdit.itemSmallPicturePath350x260}">
+                        </div>
+                        <c:choose>
+                            <c:when test="${itemForEdit.itemRating == 1}">
+                                <c:set var="raitingOne" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 2}">
+                                <c:set var="raitingTwo" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 3}">
+                                <c:set var="raitingThree" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 4}">
+                                <c:set var="raitingFour" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 5}">
+                                <c:set var="raitingFive" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="raitingFive" value="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="form-group">
+                            <label >Item Rating</label>
+                            <select class="form-control" id="itemRating" name="itemRating">
+                                <option value="1" ${raitingOne}>1</option>
+                                <option value="2" ${raitingTwo}>2</option>
+                                <option value="3" ${raitingThree}>3</option>
+                                <option value="4" ${raitingFour}>4</option>
+                                <option value="5" ${raitingFive}>5</option>
+                            </select>
+                        </div>
+                        <c:choose>
+                        <c:when test="${itemForEdit.itemCategory == 'FOR_SELF_DEFENSE'}">
+                            <c:set var="isOneSelected" value="selected"/>
+                        </c:when>
+                        <c:when test="${itemForEdit.itemCategory == 'FOR_RESPECT'}">
+                            <c:set var="isTwoSelected" value="selected"/>
+                        </c:when>
+                            <c:when test="${itemForEdit.itemCategory == 'ULTIMATE_SOLUTIONS'}">
+                                <c:set var="isThreeSelected" value="selected"/>
+                            </c:when>
+                        <c:otherwise>
+                            <c:set var="isOneSelected" value="selected"/>
+                        </c:otherwise>
+                        </c:choose>
+                        <div class="form-group">
+                            <label >Item Category</label>
+                            <select class="form-control" id="itemCategory" name="itemCategory">
+                                <option value="1" ${isOneSelected}>FOR_SELF_DEFENSE</option>
+                                <option value="2" ${isTwoSelected}>FOR_RESPECT</option>
+                                <option value="3" ${isThreeSelected}>ULTIMATE_SOLUTIONS</option>
+                            </select>
+                        </div>
+                        <c:choose>
+                            <c:when test="${itemForEdit.itemStatus == 'PRESENT'}">
+                                <c:set var="isFirstStatusSelected" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemStatus == 'NOT_PRESENT'}">
+                                <c:set var="isSecondStatusSelected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="isFirstStatusSelected" value="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="form-group">
+                            <label >Item Status</label>
+                            <select class="form-control" id="itemStatus" name="itemStatus">
+                                <option value="1" ${isFirstStatusSelected}>PRESENT</option>
+                                <option value="2" ${isSecondStatusSelected}>NOT_PRESENT</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer ">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <form action="Controller?command=updateitem" method="POST">
+                                <input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>
+                            <button type="submit" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Update</button>
                                 </form>
-                                <c:if test="${banedUser.getUserType() != 'BANNED'}">
-                                    <form action="Controller?command=addusertoblocklist" method="post">
-                                        <input type="hidden" name="user_id" value="${banedUser.id}"> </input>
-                                        <button class="btn btn-danger" type="submit">Block user</button>
-                                    </form>
-                                </c:if>
-                                <form action="Controller?command=removeuserfromblocklist" method="post">
-                                    <input type="hidden" name="user_id" value="${banedUser.id}"> </input>
-                                    <button class="btn btn-success" type="submit">Unblock user</button>
+                            <form action="Controller?command=addnewitem" method="POST">
+                                <input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>
+                            <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Add New</button>
                                 </form>
-                            </div>
-                                <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
-                                <%--<button type="button" class="btn btn-danger">Block user</button>--%>
-                        </li>
-                    </c:forEach>
-                    <%--<li class="list-group-item">Cras justo odio</li>--%>
-                    <%--<li class="list-group-item">Dapibus ac facilisis in</li>--%>
-                    <%--<li class="list-group-item">Morbi leo risus</li>--%>
-                    <%--<li class="list-group-item">Porta ac consectetur ac</li>--%>
-                    <%--<li class="list-group-item">Vestibulum at eros</li>--%>
-                </ul>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
     </div>
 </div>
-<%--/dual list--%>
-
-
-
+<%--/Item--%>
 
 
 <%--Slider Products--%>
@@ -412,6 +444,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
 <%--/Slider Products--%>
 
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script>
+    $('.popover-dismiss').popover({
+        trigger: 'focus'
+    })
+</script>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -426,8 +468,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
-<!-- Добавляем свой скрипт -->
-<script src="../../view.components/js/for_user_management_page.js"></script>
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>
