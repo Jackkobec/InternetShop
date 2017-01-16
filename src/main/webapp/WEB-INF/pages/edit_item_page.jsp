@@ -259,36 +259,37 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     </div>
                 </div>
 
+                <form action="Controller?command=updateitem" method="POST">
+                    <input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>
                 <div class="col-md-7">
-
                     <div class="modal-body">
                         <div class="form-group">
                             <label >Item Name</label>
-                            <input class="form-control " type="text" placeholder="Item Name" value="${itemForEdit.itemName}">
+                            <input class="form-control " name="itemName" type="text" placeholder="Item Name" value="${itemForEdit.itemName}">
                         </div>
                         <div class="form-group">
                             <label >Small Description</label>
-                            <input class="form-control " type="text" placeholder="Small Description" value="${itemForEdit.itemSmallDescription}">
+                            <input class="form-control " name="itemSmallDescription" type="text" placeholder="Small Description" value="${itemForEdit.itemSmallDescription}">
                         </div>
                         <div class="form-group">
                             <label >Full Description</label>
-                            <textarea rows="7" class="form-control" placeholder="Product Info" >${itemForEdit.itemFullDescription}</textarea>
+                            <textarea rows="7" class="form-control" name="itemFullDescription" placeholder="Product Info" >${itemForEdit.itemFullDescription}</textarea>
                         </div>
                         <div class="form-group">
                             <label >Product Info</label>
-                            <textarea rows="7" class="form-control" placeholder="Product Info" value="${itemForEdit.itemProductInfo}"></textarea>
+                            <textarea rows="7" class="form-control" name="itemProductInfo" placeholder="Product Info" value="${itemForEdit.itemProductInfo}"></textarea>
                         </div>
                         <div class="form-group">
                             <label >Price</label>
-                            <input class="form-control " type="text" placeholder="Price" value="${itemForEdit.itemPrice}">
+                            <input class="form-control " name="itemPrice" type="number" placeholder="Price" value="${itemForEdit.itemPrice}">
                         </div>
                         <div class="form-group">
                             <label >Big Picture Path 800x600</label>
-                            <input class="form-control " type="text" placeholder="Big Picture Path 800x600" value="${itemForEdit.itemBigPicturePath800x600}">
+                            <input class="form-control " name="itemBigPicturePath800x600" type="text" placeholder="Big Picture Path 800x600" value="${itemForEdit.itemBigPicturePath800x600}">
                         </div>
                         <div class="form-group">
                             <label >Small Picture Path 350x260</label>
-                            <input class="form-control " type="text" placeholder="Small Picture Path 350x260" value="${itemForEdit.itemSmallPicturePath350x260}">
+                            <input class="form-control " name="itemSmallPicturePath350x260" type="text" placeholder="Small Picture Path 350x260" value="${itemForEdit.itemSmallPicturePath350x260}">
                         </div>
                         <c:choose>
                             <c:when test="${itemForEdit.itemRating == 1}">
@@ -362,19 +363,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         </div>
                         <div class="modal-footer ">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <form action="Controller?command=updateitem" method="POST">
-                                <input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>
                             <button type="submit" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Update</button>
-                                </form>
-                            <form action="Controller?command=addnewitem" method="POST">
-                                <input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>
-                            <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Add New</button>
-                                </form>
+
+                            <%--<form action="Controller?command=addnewitem" method="POST">--%>
+                                <%--<input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>--%>
+                            <%--<button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Add New</button>--%>
+                                <%--</form>--%>
                         </div>
                         </div>
                     </div>
-
-                </div>
+                </div></form>
             </div>
         </div>
 

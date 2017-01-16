@@ -59,7 +59,12 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
     @Override
     public boolean updateEntityInfo(Item entity) {
-        return false;
+
+        String sqlQuery = "UPDATE item SET item.itemName = ?, item.itemSmallDescription = ?, item.itemFullDescription = ?, item.itemProductInfo = ?, " +
+                "item.itemPrice = ?, item.itemBigPicturePath800x600 = ?, item.itemSmallPicturePath350x260 = ?, item.itemRating = ?, item.itemCategory = ?, " +
+                "item.itemStatus = ? WHERE item.id = " + entity.getId();
+
+        return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
     @Override

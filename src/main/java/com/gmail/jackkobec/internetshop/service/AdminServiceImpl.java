@@ -5,6 +5,7 @@ import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
 import com.gmail.jackkobec.internetshop.persistence.factory.ConnectionManagerMode;
 import com.gmail.jackkobec.internetshop.persistence.factory.DaoType;
 import com.gmail.jackkobec.internetshop.persistence.factory.JdbcDaoFactory;
+import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -63,5 +64,11 @@ public class AdminServiceImpl implements IAdminService {
     public boolean removeUserFromBlockListById(final Integer id) {
 
         return userDao.removeUserFromBlockListById(id);
+    }
+
+    @Override
+    public boolean updateItemInfo(Item item) {
+
+        return itemDao.updateEntityInfo(item);
     }
 }

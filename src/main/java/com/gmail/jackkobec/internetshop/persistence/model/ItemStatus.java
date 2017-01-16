@@ -15,4 +15,14 @@ public enum ItemStatus {
     public Integer getItemStatusId() {
         return itemStatusId;
     }
+
+    public static ItemStatus getItemStatus(Integer itemStatusId){
+
+        switch (itemStatusId){
+
+            case 1: return PRESENT;
+            case 2: return NOT_PRESENT;
+        }
+        return null;
+    }
 }

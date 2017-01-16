@@ -1,5 +1,6 @@
 package com.gmail.jackkobec.internetshop.service;
 
+import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface IAdminService {
     boolean addUserToBlockListById(final Integer id);
 
     boolean removeUserFromBlockListById(final Integer id);
+
+    boolean updateItemInfo(Item item);
 }

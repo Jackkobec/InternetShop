@@ -21,4 +21,16 @@ public enum ItemCategory {
     public Integer getCategoryId() {
         return categoryId;
     }
+
+    public static ItemCategory getItemCategoryByID(Integer categoryId){
+
+        switch (categoryId){
+
+            case 1: return FOR_SELF_DEFENSE;
+            case 2: return FOR_RESPECT;
+            case 3: return ULTIMATE_SOLUTIONS;
+        }
+
+        return null;
+    }
 }
