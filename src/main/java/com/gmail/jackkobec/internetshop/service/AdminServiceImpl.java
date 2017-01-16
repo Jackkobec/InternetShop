@@ -58,4 +58,10 @@ public class AdminServiceImpl implements IAdminService {
 
         return userDao.addUserToBlockListById(id);
     }
+
+    @Override
+    public boolean removeUserFromBlockListById(final Integer id) {
+
+        return userDao.removeUserFromBlockListById(id);
+    }
 }

@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * Created by Jack on 16.01.2017.
  */
-public class RemoveUserFromTheBlockList implements ICommand {
-    public static final Logger LOGGER = LogManager.getLogger(RemoveUserFromTheBlockList.class);
+public class RemoveUserFromBlockList implements ICommand {
+    public static final Logger LOGGER = LogManager.getLogger(RemoveUserFromBlockList.class);
 
     private static final String USER_ID = "user_id";
     private static final String ALL_NOT_BANNED_USERS = "notBannedUsers";
@@ -51,7 +51,20 @@ public class RemoveUserFromTheBlockList implements ICommand {
             return userManagementPage;
         }
 
+        if (iAdminService.removeUserFromBlockListById(userId)) {
 
-        return null;
+            bannedUsers.remove(forRemoveFromBlockList);
+            notBannedUsers.add(forRemoveFromBlockList);
+
+            session.setAttribute(ALL_NOT_BANNED_USERS, notBannedUsers);
+            session.setAttribute(ALL_BANNED_USERS, bannedUsers);
+
+            return userManagementPage;
+
+        } else {
+            request.setAttribute(ERROR_INFO, "Cat't remove from the blocklist user with id = " + userId);
+
+            return errorPage;
+        }
     }
 }

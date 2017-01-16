@@ -16,4 +16,6 @@ public interface IAdminService {
     List<User> getAllBannedUsers();
 
     boolean addUserToBlockListById(final Integer id);
+
+    boolean removeUserFromBlockListById(final Integer id);
 }

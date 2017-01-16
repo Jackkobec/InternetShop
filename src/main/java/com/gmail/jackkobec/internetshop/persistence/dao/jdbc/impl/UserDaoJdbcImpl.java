@@ -2,7 +2,6 @@ package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
-import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -135,6 +134,19 @@ public class UserDaoJdbcImpl implements UserDao {
     public boolean addUserToBlockListById(Integer id) {
 
         String sqlQuery = "UPDATE user SET user.userType = 3 WHERE user.id = " + id;
+
+        return executeSimpleQueryInThePreparedStatement(sqlQuery);
+    }
+
+    @Override
+    public boolean removeUserFromBlockListById(Integer id) {
+
+        String sqlQuery = "UPDATE user SET user.userType = 1 WHERE user.id = " + id;
+
+        return executeSimpleQueryInThePreparedStatement(sqlQuery);
+    }
+
+    private boolean executeSimpleQueryInThePreparedStatement(String sqlQuery) {
 
         connection = getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {

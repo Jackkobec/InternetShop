@@ -35,6 +35,7 @@ public class ControllerHelper {
         commands.put("removeitemfromcart", new RemoveItemFromCartCommand());
         commands.put("gotoadminpage", new GoToAdminPageCommand());
         commands.put("addusertoblocklist", new AddUserToBlockList());
+        commands.put("removeuserfromblocklist", new RemoveUserFromBlockList());
         commands.put("userregistration", new UserRegistrtionCommand());
         commands.put("userlogout", new UserLogOutCommand());
 
