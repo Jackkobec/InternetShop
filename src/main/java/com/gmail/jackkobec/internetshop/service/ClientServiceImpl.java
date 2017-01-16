@@ -30,7 +30,7 @@ public class ClientServiceImpl implements IClientService{
      */
     public static ClientServiceImpl getClientServiceImpl() {
 
-        LOGGER.info("getPageManager");
+        LOGGER.info("getClientServiceImpl");
         return (clientServiceImpl == null)
                 ? clientServiceImpl = new ClientServiceImpl()
                 : clientServiceImpl;

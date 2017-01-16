@@ -2,6 +2,7 @@ package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
+import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,7 +79,10 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public List<User> getAll() {
-        return null;
+
+        String sqlQuery = "SELECT * FROM user";
+
+        return getListOfUsersBySqlQuery(sqlQuery);
     }
 
     @Override
@@ -95,7 +100,7 @@ public class UserDaoJdbcImpl implements UserDao {
             sqlQuery = "SELECT * FROM user WHERE user.email = " + "'" + email + "'";
         } else throw new NullPointerException("Передано значение null");
 
-        return getGroupBySQLquery(sqlQuery);
+        return getUserBySqlQuery(sqlQuery);
     }
 
     @Override
@@ -107,10 +112,46 @@ public class UserDaoJdbcImpl implements UserDao {
             sqlQuery = "SELECT * FROM user WHERE user.email = " + "'" + email + "'" + " AND " + "user.password = " + "'" + password + "'";
         } else throw new NullPointerException("Передано значение null");
 
-        return getGroupBySQLquery(sqlQuery);
+        return getUserBySqlQuery(sqlQuery);
     }
 
-    private User getGroupBySQLquery(String sqlQuery) {
+    @Override
+    public List<User> getAllNotBannedUsers() {
+
+        String sqlQuery = "SELECT * FROM user WHERE user.userType != 3";
+
+        return getListOfUsersBySqlQuery(sqlQuery);
+    }
+
+    @Override
+    public List<User> getAllBannedUsers() {
+
+        String sqlQuery = "SELECT * FROM user WHERE user.userType = 3";
+
+        return getListOfUsersBySqlQuery(sqlQuery);
+    }
+
+    @Override
+    public boolean addUserToBlockListById(Integer id) {
+
+        String sqlQuery = "UPDATE user SET user.userType = 3 WHERE user.id = " + id;
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+
+            preparedStatement.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    private User getUserBySqlQuery(String sqlQuery) {
 
         if (null == sqlQuery) {
             throw new NullPointerException("Передан пустой sqlQuery");
@@ -142,6 +183,38 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
+    private List<User> getListOfUsersBySqlQuery(String sqlQuery) {
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+             ResultSet resultSet = preparedStatement.executeQuery(sqlQuery)) {
+
+            List<User> users = new ArrayList<>();
+
+            while (resultSet.next()) {
+
+                User user = new User();
+
+                user.setId(resultSet.getInt("id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setName(resultSet.getString("name"));
+                user.setLanguage(resultSet.getString("language"));
+                user.setUserType(resultSet.getInt("userType"));
+
+                users.add(user);
+            }
+
+            return users;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
     private boolean executeQueryInPreparedStatement(User entity, String sqlQuery) {
 
         if (sqlQuery == null || entity == null) {
@@ -158,13 +231,13 @@ public class UserDaoJdbcImpl implements UserDao {
 
             preparedStatement.execute();
 
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
             closeConnection(connection);
         }
-
-        return true;
     }
 }

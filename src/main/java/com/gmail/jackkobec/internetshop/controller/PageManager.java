@@ -24,6 +24,7 @@ public class PageManager {
     public static final String ITEM_PAGE = "ITEM_PAGE";
     public static final String ORDER_PAGE = "ORDER_PAGE";
     public static final String PAYMENT_PAGE = "PAYMENT_PAGE";
+    public static final String USER_MANAGEMENT_PAGE = "USER_MANAGEMENT_PAGE";
     public static final String ERROR_PAGE = "ERROR_PAGE";
 
 
