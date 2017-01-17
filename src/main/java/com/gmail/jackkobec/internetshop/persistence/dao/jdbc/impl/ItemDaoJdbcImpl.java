@@ -73,7 +73,10 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
     @Override
     public boolean deleteEntityById(Integer id) {
-        return false;
+
+        String sqlQuery = "DELETE FROM item WHERE item.id = " + id;
+
+        return executeSimpleQueryInThePreparedStatement(sqlQuery);
     }
 
     @Override
@@ -145,6 +148,23 @@ public class ItemDaoJdbcImpl implements ItemDao {
             preparedStatement.setInt(1, itemId);
             preparedStatement.setInt(2, userId);
             preparedStatement.execute();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    private boolean executeSimpleQueryInThePreparedStatement(String sqlQuery) {
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+
+            preparedStatement.executeUpdate();
 
             return true;
 

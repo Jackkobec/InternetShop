@@ -28,7 +28,7 @@ public class ClientServiceImpl implements IClientService{
     /**
      * @return ClientServiceImpl instance.
      */
-    public static ClientServiceImpl getClientServiceImpl() {
+    public static synchronized ClientServiceImpl getClientServiceImpl() {
 
         LOGGER.info("getClientServiceImpl");
         return (clientServiceImpl == null)

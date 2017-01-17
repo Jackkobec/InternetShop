@@ -23,9 +23,6 @@ import java.math.BigDecimal;
 public class UpdateItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(UpdateItemCommand.class);
 
-    private static final String FORM_ACTION = "formAction";
-    private static final String UPDATE_ACTION = "Controller?command=updateitem";
-
     private static final String ITEM_ID = "item_id";
     private static final String ITEM_NAME = "itemName";
     private static final String ITEM_SMALL_DESCRIPTION = "itemSmallDescription";
@@ -39,6 +36,7 @@ public class UpdateItemCommand implements ICommand {
     private static final String ITEM_STATUS = "itemStatus";
 
     private static final String ITEM_FOR_EDIT = "itemForEdit";
+    private static final String ITEM_MANAGEMENT_MESSAGE = "itemManagementMessage";
     private static final String ERROR_INFO = "errorInfo";
 
     private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();

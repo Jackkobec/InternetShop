@@ -28,7 +28,7 @@ public class AdminServiceImpl implements IAdminService {
     /**
      * @return ClientServiceImpl instance.
      */
-    public static AdminServiceImpl getAdminServiceImpl() {
+    public static synchronized AdminServiceImpl getAdminServiceImpl() {
 
         LOGGER.info("AdminServiceImpl");
         return (adminServiceImpl == null)
@@ -76,5 +76,11 @@ public class AdminServiceImpl implements IAdminService {
     public boolean updateItemInfo(Item item) {
 
         return itemDao.updateEntityInfo(item);
+    }
+
+    @Override
+    public boolean deleteItemById(final Integer id) {
+
+        return itemDao.deleteEntityById(id);
     }
 }

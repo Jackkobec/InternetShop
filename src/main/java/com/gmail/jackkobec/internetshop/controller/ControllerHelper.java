@@ -38,6 +38,7 @@ public class ControllerHelper {
         commands.put("edititem", new EditItemCommand());
         commands.put("updateitem", new UpdateItemCommand());
         commands.put("additem", new AddNewItemCommand());
+        commands.put("deleteitem", new DeleteItemCommand());
         commands.put("addusertoblocklist", new AddUserToBlockList());
         commands.put("removeuserfromblocklist", new RemoveUserFromBlockList());
         commands.put("userregistration", new UserRegistrtionCommand());

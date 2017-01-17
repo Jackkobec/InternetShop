@@ -275,6 +275,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td>${item.itemCategory}</td>
                         <td>${item.itemStatus}</td>
 
+                        <c:set var="varid" value="${item.id}"/>
+
             <%--<form action="Controller?command=edititem" method="POST">--%>
                 <%--<input type="hidden" name="item_id" value="${item.id}"> </input>--%>
                         <%--<td><p data-placement="top" data-toggle="tooltip" title="Edit">--%>
@@ -284,14 +286,44 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <%--<td><p data-placement="top" data-toggle="tooltip" title="Delete">--%>
                             <%--<button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" >--%>
                                 <%--<span class="glyphicon glyphicon-trash"></span></button></p></td>--%>
-                        <td><p data-placement="top" data-toggle="tooltip" title="Edit">
-                            <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" >
-                                <span class="glyphicon glyphicon-pencil"></span></button></p></td>
 
+
+                        <td><p data-placement="top" data-toggle="tooltip" title="Edit">
+                            <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-content="${item.id}">
+                                <span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                        <%--data-content="${item.id}  - в data-conten сохраняем id текущего item чтобы через java script передать его в hiden parameter в форму
+                        к примеру:
+                        <form action="Controller?command=edititem" method="POST">
+                                                <input type="hidden" name="item_id" id="itemForUpdate" value="">
+                         Чтобы просетить value в input с помоззью java script извлечем значение  data-content="${item.id}" и пропишем его по id элемента страницы:
+
+                             <script>
+                        // при открытии модального окна
+                        $('#delete').on('show.bs.modal', function (event) {
+                            // получить кнопку, которая его открыло
+                            var button = $(event.relatedTarget)
+                            // извлечь информацию из атрибута data-content
+                            var content = button.data('content')
+                            // вытягившаем из этой страницы элементы с id: itemForUpdate и itemForCloneId
+                            var itemForUpdate = document.getElementById('itemForUpdate');
+                            var itemForCloneId = document.getElementById('itemForCloneId');
+                            var itemForDeleteId = document.getElementById('itemForDeleteId');
+                            // записываем в их value данные из переменной content
+                            itemForUpdate.value = content;
+                            itemForCloneId.value = content;
+                            itemForDeleteId.value = content;
+
+                            // вывести эту информацию в элемент, имеющий id="content"
+                            $(this).find('#content').text(content);
+                        })
+                    </script>
+
+                       Это делается дя передачи правильного item id в форму.--%>
                         <td><p data-placement="top" data-toggle="tooltip" title="Delete">
-                            <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" >
+                            <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" data-content="${item.id}">
                                 <span class="glyphicon glyphicon-trash"></span></button></p></td>
                     </tr>
+
 
                     <%--test edit model--%>
                     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -306,7 +338,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                     <div class="row">
                                         <div class="col-xs-4 col-sm-3 col-md-4">
                                             <form action="Controller?command=edititem" method="POST">
-                                                <input type="hidden" name="item_id" value="${item.id}">
+                                                <input type="hidden" name="item_id" id="itemForUpdate" value="">
                                                 <input type="hidden" name="itemEditMode" value="updateitem">
                                                 <button type="submit" class="btn btn-warning btn-lg">
                                                     <span class="glyphicon glyphicon-ok-sign"></span>Update</button>
@@ -325,7 +357,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <div class="row">
                                                 <div class="col-xs-4 col-sm-3 col-md-4">
                                                     <form action="Controller?command=edititem" method="POST">
-                                                        <input type="hidden" name="item_id" value="${item.id}">
+                                                        <input type="hidden" name="item_id" id="itemForCloneId" value="">
                                                         <input type="hidden" name="itemEditMode" value="additem">
                                                         <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>New like this</button>
                                                     </form>
@@ -340,7 +372,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <%----%>
                                 </div>
                                 <div class="modal-footer ">
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                             <!-- /.modal-content -->
@@ -348,6 +380,79 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <!-- /.modal-dialog -->
                     </div>
                     <%--test edit model--%>
+
+                    <%--test delete modal--%>
+                    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                    <%----%>
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                            <h4 class="modal-title custom_align">Delete item?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-3 col-md-4">
+                                        <form action="Controller?command=deleteitem" method="POST">
+                                            <input type="text" name="for_delete_item_id" id="itemForDeleteId" value="">
+                                            <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span>Delete item</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-xs-8 col-sm-9 col-md-8">
+                                        <br>
+                                        <h4 class="modal-title custom_align">
+                                            By clicking <strong class="label label-primary">Delete item</strong>, delete item from database.
+                                        </h4>
+                                    </div>
+                                </div>
+                                            </div>
+                                        <div class="modal-footer ">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    <%----%>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <%--/test delete modal--%>
+
+                    <%--test data read--%>
+                    <script>
+                        // при открытии модального окна
+                        $('#edit').on('show.bs.modal', function (event) {
+                            // получить кнопку, которая его открыло
+                            var button = $(event.relatedTarget)
+                            // извлечь информацию из атрибута data-content
+                            var content = button.data('content')
+                            // вытягившаем из этой страницы элементы с id: itemForUpdate и itemForCloneId
+                            var itemForUpdate = document.getElementById('itemForUpdate');
+                            var itemForCloneId = document.getElementById('itemForCloneId');
+                            var itemForDeleteId = document.getElementById('itemForDeleteId');
+                            // записываем в их value данные из переменной content
+                            itemForUpdate.value = content;
+                            itemForCloneId.value = content;
+                            itemForDeleteId.value = content;
+
+                            // вывести эту информацию в элемент, имеющий id="content"
+                            $(this).find('#content').text(content);
+                        })
+                    </script>
+                    <script>
+                        // при открытии модального окна
+                        $('#delete').on('show.bs.modal', function (event) {
+                            // получить кнопку, которая его открыло
+                            var button = $(event.relatedTarget)
+                            // извлечь информацию из атрибута data-content
+                            var content = button.data('content')
+                            // вытягившаем из этой страницы элементы с id: itemForUpdate и itemForCloneId
+                            var itemForDeleteId = document.getElementById('itemForDeleteId');
+                            // записываем в их value данные из переменной content
+                            itemForDeleteId.value = content;
+                        })
+                    </script>
+                    <%--/test data read--%>
                 </c:forEach>
                     <%--<tr>--%>
                         <%--<td><input type="checkbox" class="checkthis" /></td>--%>
@@ -448,27 +553,27 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
 
 
-<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
-            </div>
-            <div class="modal-body">
+<%--<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">--%>
+    <%--<div class="modal-dialog">--%>
+        <%--<div class="modal-content">--%>
+            <%--<div class="modal-header">--%>
+                <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>--%>
+                <%--<h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>--%>
+            <%--</div>--%>
+            <%--<div class="modal-body">--%>
 
-                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+                <%--<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>--%>
 
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
+            <%--</div>--%>
+            <%--<div class="modal-footer ">--%>
+                <%--<button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>--%>
+                <%--<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<!-- /.modal-content -->--%>
+    <%--</div>--%>
+    <%--<!-- /.modal-dialog -->--%>
+<%--</div>--%>
 
 
 

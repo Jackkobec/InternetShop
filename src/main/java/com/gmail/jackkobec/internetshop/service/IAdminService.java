@@ -23,4 +23,6 @@ public interface IAdminService {
     boolean addNewItem(Item item);
 
     boolean updateItemInfo(Item item);
+
+    boolean deleteItemById(final Integer id);
 }

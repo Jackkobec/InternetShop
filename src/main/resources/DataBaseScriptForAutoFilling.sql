@@ -192,7 +192,7 @@ CREATE TABLE order_item (
 );
 
 CREATE TABLE six_item_carousel (
-  item_id INT(11) NOT NULL,
+  item_id INT(11),
   FOREIGN KEY(item_id) REFERENCES item(id)
 );
 
@@ -204,9 +204,13 @@ INSERT INTO six_item_carousel(item_id) VAlUES (5);
 INSERT INTO six_item_carousel(item_id) VAlUES (6);
 
 CREATE TABLE cart (
-  item_id INT(11) NOT NULL,
-  user_id INT(11) NOT NULL
+  item_id INT(11),
+  user_id INT(11)
 );
 
 INSERT INTO cart(item_id, user_id) VAlUES (2, 2);
 
+--
+CREATE TABLE six_item_carousel (
+  item_id INT(11)
+ );

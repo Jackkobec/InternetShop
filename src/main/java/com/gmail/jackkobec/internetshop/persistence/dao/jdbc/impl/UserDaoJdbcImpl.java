@@ -32,7 +32,7 @@ public class UserDaoJdbcImpl implements UserDao {
      * @return UserDaoJdbcImpl instance.
      */
     public static synchronized UserDaoJdbcImpl getUserDaoJdbc(ConnectionManager connectionManager) {
-        //worked with init in the constructor
+
         return (userDaoJdbc == null)
                 ? userDaoJdbc = new UserDaoJdbcImpl(connectionManager)
                 : userDaoJdbc;
@@ -151,7 +151,7 @@ public class UserDaoJdbcImpl implements UserDao {
         connection = getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
             return true;
 
@@ -241,7 +241,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setString(3, entity.getName());
             preparedStatement.setString(4, entity.getLanguage());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
             return true;
 
