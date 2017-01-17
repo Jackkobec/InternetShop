@@ -264,6 +264,9 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <div class="col-md-7">
                     <div class="modal-body">
                         <div class="form-group">
+                            <div class="alert alert-warning" role="alert">Current Item Id: ${itemForEdit.id}</div>
+                        </div>
+                        <div class="form-group">
                             <label >Item Name</label>
                             <input class="form-control " name="itemName" type="text" placeholder="Item Name" value="${itemForEdit.itemName}">
                         </div>

@@ -186,7 +186,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button type="button" class="btn btn-default">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                             </button></td>
                                         <c:choose>
@@ -247,11 +247,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <div class="modal-body">
                     <form action="Controller?command=gotousermanagementpage" method="post">
                     <%--<input type="hidden" name="user_id" value="${banedUser.id}"> </input>--%>
-                <button type="submit" class="btn btn-warning btn-lg btn-block">User Management</button>
+                <button type="submit" class="btn btn-warning btn-lg btn-block">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>User Management</button>
                     </form>
                 <br><br>
                     <form action="Controller?command=gotoitemmanagementpage" method="post">
-                <button type="submit" class="btn btn-success btn-lg btn-block">Item Management</button>
+                <button type="submit" class="btn btn-success btn-lg btn-block">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Item Management</button>
                     </form>
             </div>
             <div class="modal-footer">

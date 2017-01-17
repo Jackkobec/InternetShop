@@ -5,8 +5,14 @@ package com.gmail.jackkobec.internetshop.persistence.model;
  */
 public enum OrderStatus {
 
-    NEW, DONE, CANCELED;
+    NEW(1), DONE(2), CANCELED(3);
+    private Integer orderStatusId;
 
-    OrderStatus() {
+    OrderStatus(Integer orderStatusId) {
+        this.orderStatusId = orderStatusId;
+    }
+
+    public Integer getOrderStatusId() {
+        return orderStatusId;
     }
 }
