@@ -372,14 +372,14 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             </c:when>
                         </c:choose>
                         <div class="modal-footer ">
-                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="submit" class="btn ${buttonAddOrUpdateClass} btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>${buttonAddOrUpdate}</button>
 
                             <%--<form action="Controller?command=addnewitem" method="POST">--%>
                                 <%--<input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>--%>
                             <%--<button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Add New</button>--%>
                                 <%--</form>--%>
-                        </div>
+                            </div>
                         </div>
                     </div>
                 </div></form>

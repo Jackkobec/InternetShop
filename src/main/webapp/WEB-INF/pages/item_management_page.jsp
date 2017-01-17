@@ -234,16 +234,54 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
 <div class="container">
     <div class="row">
-
         <div class="col-md-12">
 
             <h1>${itemManagementMessage}</h1>
                 <br>
 
+            <%--category choose--%>
+            <form action="Controller?command=gotoitemmanagementpage" method="POST">
+            <c:choose>
+                <c:when test="${itemListByCategory.get(0).getItemCategory() == 'FOR_SELF_DEFENSE'}">
+                    <c:set var="isOneSelected" value="selected"/>
+                </c:when>
+                <c:when test="${itemListByCategory.get(0).getItemCategory() == 'FOR_RESPECT'}">
+                    <c:set var="isTwoSelected" value="selected"/>
+                </c:when>
+                <c:when test="${itemListByCategory.get(0).getItemCategory() == 'ULTIMATE_SOLUTIONS'}">
+                    <c:set var="isThreeSelected" value="selected"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="isOneSelected" value="selected"/>
+                </c:otherwise>
+            </c:choose>
+            <div class="form-group">
+               <h2>Select Item Category</h2>
+                <select class="form-control" id="itemCategoryId" name="itemCategoryId">
+                    <option value="1" ${isOneSelected}>FOR_SELF_DEFENSE</option>
+                    <option value="2" ${isTwoSelected}>FOR_RESPECT</option>
+                    <option value="3" ${isThreeSelected}>ULTIMATE_SOLUTIONS</option>
+                </select>
+            </div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-th-list"></span>Show items</button>
+                </div>
+            </form>
+            <%--/category choose--%>
+
+            <%--add new item--%>
+            <h2>Add new Item</h2>
+            <form action="Controller?command=edititem" method="POST">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span>Add new item</button>
+            </div>
+                </form>
+            <%--/add new item--%>
+
+            <br>
+
             <h4>Category items.</h4>
             <div class="table-responsive">
-
-
                 <table id="mytable" class="table table-bordred table-striped">
 
                     <thead>
@@ -275,7 +313,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td>${item.itemCategory}</td>
                         <td>${item.itemStatus}</td>
 
-                        <c:set var="varid" value="${item.id}"/>
 
             <%--<form action="Controller?command=edititem" method="POST">--%>
                 <%--<input type="hidden" name="item_id" value="${item.id}"> </input>--%>
@@ -288,9 +325,39 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 <%--<span class="glyphicon glyphicon-trash"></span></button></p></td>--%>
 
 
+
+
+                            <%--data-content="${item.id}  - в data-conten сохраняем id текущего item чтобы через java script передать его в hiden parameter в форму
+                                                    к примеру:
+                                                    <form action="Controller?command=edititem" method="POST">
+                                                                            <input type="hidden" name="item_id" id="itemForUpdate" value="">
+                                                     Чтобы просетить value в input с помоззью java script извлечем значение  data-content="${item.id}" и пропишем его по id элемента страницы:
+
+                                                         <script>
+                                                    // при открытии модального окна
+                     <script>
+                        // при открытии модального окна
+                        $('#edit').on('show.bs.modal', function (event) {
+                            // получить кнопку, которая его открыло
+                            var button = $(event.relatedTarget)
+                            // извлечь информацию из атрибута data-content
+                            var content = button.data('content')
+                            // вытягившаем из этой страницы элементы с id: itemForUpdate и itemForCloneId
+                            var itemForUpdate = document.getElementById('itemForUpdate');
+                            var itemForCloneId = document.getElementById('itemForCloneId');
+                            // записываем в их value данные из переменной content
+                            itemForUpdate.value = content;
+                            itemForCloneId.value = content;
+                            // вывести эту информацию в элемент, имеющий id="content"
+                            $(this).find('#content').text(content);
+                        })
+                    </script>
+
+                        Это делается дя передачи правильного item id в форму.--%>
                         <td><p data-placement="top" data-toggle="tooltip" title="Edit">
                             <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-content="${item.id}">
                                 <span class="glyphicon glyphicon-pencil"></span></button></p></td>
+
                         <%--data-content="${item.id}  - в data-conten сохраняем id текущего item чтобы через java script передать его в hiden parameter в форму
                         к примеру:
                         <form action="Controller?command=edititem" method="POST">
@@ -299,22 +366,17 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                              <script>
                         // при открытии модального окна
+                        <script>
+                        // при открытии модального окна
                         $('#delete').on('show.bs.modal', function (event) {
                             // получить кнопку, которая его открыло
                             var button = $(event.relatedTarget)
                             // извлечь информацию из атрибута data-content
                             var content = button.data('content')
                             // вытягившаем из этой страницы элементы с id: itemForUpdate и itemForCloneId
-                            var itemForUpdate = document.getElementById('itemForUpdate');
-                            var itemForCloneId = document.getElementById('itemForCloneId');
                             var itemForDeleteId = document.getElementById('itemForDeleteId');
                             // записываем в их value данные из переменной content
-                            itemForUpdate.value = content;
-                            itemForCloneId.value = content;
                             itemForDeleteId.value = content;
-
-                            // вывести эту информацию в элемент, имеющий id="content"
-                            $(this).find('#content').text(content);
                         })
                     </script>
 
@@ -418,7 +480,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     </div>
                     <%--/test delete modal--%>
 
-                    <%--test data read--%>
+                    <%--test data read for data-target="#edit" data-content="${item.id}"--%>
                     <script>
                         // при открытии модального окна
                         $('#edit').on('show.bs.modal', function (event) {
@@ -429,16 +491,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             // вытягившаем из этой страницы элементы с id: itemForUpdate и itemForCloneId
                             var itemForUpdate = document.getElementById('itemForUpdate');
                             var itemForCloneId = document.getElementById('itemForCloneId');
-                            var itemForDeleteId = document.getElementById('itemForDeleteId');
                             // записываем в их value данные из переменной content
                             itemForUpdate.value = content;
                             itemForCloneId.value = content;
-                            itemForDeleteId.value = content;
-
                             // вывести эту информацию в элемент, имеющий id="content"
                             $(this).find('#content').text(content);
                         })
                     </script>
+                    <%--/test data read for data-target="#edit" data-content="${item.id}"--%>
+
+                    <%--test data read for data-target="#delete" data-content="${item.id}"--%>
                     <script>
                         // при открытии модального окна
                         $('#delete').on('show.bs.modal', function (event) {
@@ -452,7 +514,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             itemForDeleteId.value = content;
                         })
                     </script>
-                    <%--/test data read--%>
+                    <%--/test data read for data-target="#delete" data-content="${item.id}"--%>
                 </c:forEach>
                     <%--<tr>--%>
                         <%--<td><input type="checkbox" class="checkthis" /></td>--%>

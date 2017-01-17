@@ -27,17 +27,22 @@ public class DeleteItemCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
         final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
 
-        if(iAdminService.deleteItemById(itemId)){
+        if (iAdminService.deleteItemById(itemId)) {
 
             request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item with id: " + itemId + " was delete.");
 
             return "/WEB-INF/pages/item_management_page.jsp";
-        }
 
-        return errorPage;
+        } else {
+            LOGGER.warn("Item not delete. AdminService response = false.");
+            request.setAttribute(ERROR_INFO, "Error during item deleting. AdminService response = false.");
+
+            return errorPage;
+        }
     }
 }

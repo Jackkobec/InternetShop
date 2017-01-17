@@ -17,25 +17,36 @@ import java.io.IOException;
 public class EditItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(EditItemCommand.class);
 
+    private static final String ITEM_ID = "item_id";
     private static final String ITEM_EDIT_MODE = "itemEditMode";
+
+    private static final String ITEM_FOR_EDIT = "itemForEdit";
     private static final String FORM_ACTION = "formAction";
 
-    private static final String ITEM_ID = "item_id";
-    private static final String ITEM_FOR_EDIT = "itemForEdit";
+    private static final String DEFAULT_FORM_ACTION = "additem";
 
-    IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
+    private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
-        final String itemEditMode = request.getParameter(ITEM_EDIT_MODE);
 
-        Item itemForEdit = iClientService.getItemById(itemId);
-        System.out.println(itemForEdit);
-        request.setAttribute(ITEM_FOR_EDIT, itemForEdit);
+        String itemForEditParameter = request.getParameter(ITEM_ID);
+        String itemEditModeParameter = request.getParameter(ITEM_EDIT_MODE);
 
-        request.setAttribute(FORM_ACTION, itemEditMode);
+        if (itemForEditParameter != null && itemEditModeParameter != null) {
+
+            final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
+            final String itemEditMode = request.getParameter(ITEM_EDIT_MODE);
+
+            Item itemForEdit = iClientService.getItemById(itemId);
+
+            request.setAttribute(ITEM_FOR_EDIT, itemForEdit);
+            request.setAttribute(FORM_ACTION, itemEditMode);
+        } else {
+
+            request.setAttribute(FORM_ACTION, DEFAULT_FORM_ACTION);
+        }
 
         return "/WEB-INF/pages/edit_item_page.jsp";
     }

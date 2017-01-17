@@ -57,12 +57,13 @@ public class AddNewItemCommand implements ICommand {
         Item forCreate = new Item(itemName, itemSmallDescription, itemFullDescription, itemProductInfo,
                 itemPrice, itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus);
 
-        if(iAdminService.addNewItem(forCreate)){
+        if (iAdminService.addNewItem(forCreate)) {
 
             request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item " + itemName + " added successfully.");
             return "/WEB-INF/pages/item_management_page.jsp";
-        }
+        } else {
 
-        return null;
+            return errorPage;
+        }
     }
 }

@@ -315,7 +315,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <%--/Modal -   #myModalNotification--%>
 
                 </div>
-                </div>
+            </div>
         </div>
         <div class="container-fluid">
             <div class="col-md-12 product-info">

@@ -192,9 +192,8 @@ CREATE TABLE order_item (
 );
 
 CREATE TABLE six_item_carousel (
-  item_id INT(11),
-  FOREIGN KEY(item_id) REFERENCES item(id)
-);
+  item_id INT(11)
+ );
 
 INSERT INTO six_item_carousel(item_id) VAlUES (1);
 INSERT INTO six_item_carousel(item_id) VAlUES (2);
@@ -210,7 +209,3 @@ CREATE TABLE cart (
 
 INSERT INTO cart(item_id, user_id) VAlUES (2, 2);
 
---
-CREATE TABLE six_item_carousel (
-  item_id INT(11)
- );

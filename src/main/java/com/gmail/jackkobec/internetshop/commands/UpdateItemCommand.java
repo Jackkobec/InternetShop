@@ -45,6 +45,7 @@ public class UpdateItemCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String itemManagementPage;
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
         final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
@@ -75,7 +76,7 @@ public class UpdateItemCommand implements ICommand {
             return "/WEB-INF/pages/item_management_page.jsp";
 
         }else {
-            LOGGER.warn("Item not update. Service response = false.");
+            LOGGER.warn("Item not update. AdminService response = false.");
             request.setAttribute(ERROR_INFO, "Error during item update. Service response = false.");
 
             return errorPage;
