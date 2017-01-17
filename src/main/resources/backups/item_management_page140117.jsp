@@ -235,12 +235,9 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <div class="container">
     <div class="row">
 
+
         <div class="col-md-12">
-
-            <h1>${itemManagementMessage}</h1>
-                <br>
-
-            <h4>Category items.</h4>
+            <h4>Bootstrap Snipp for Datatable</h4>
             <div class="table-responsive">
 
 
@@ -292,62 +289,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" >
                                 <span class="glyphicon glyphicon-trash"></span></button></p></td>
                     </tr>
-
-                    <%--test edit model--%>
-                    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                    <h4 class="modal-title custom_align" id="Heading">Select Edit Model</h4>
-                                </div>
-                                <div class="modal-body">
-                                        <%----%>
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-3 col-md-4">
-                                            <form action="Controller?command=edititem" method="POST">
-                                                <input type="hidden" name="item_id" value="${item.id}">
-                                                <input type="hidden" name="itemEditMode" value="updateitem">
-                                                <button type="submit" class="btn btn-warning btn-lg">
-                                                    <span class="glyphicon glyphicon-ok-sign"></span>Update</button>
-                                            </form>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-9 col-md-8">
-                                            <br>
-                                            <h4 class="modal-title custom_align">
-                                                By clicking <strong class="label label-primary">Update</strong>, update current item mode.
-                                                </h4>
-                                        </div>
-                                    </div>
-                                    <%----%>
-                                            <br>
-                                            <%----%>
-                                            <div class="row">
-                                                <div class="col-xs-4 col-sm-3 col-md-4">
-                                                    <form action="Controller?command=edititem" method="POST">
-                                                        <input type="hidden" name="item_id" value="${item.id}">
-                                                        <input type="hidden" name="itemEditMode" value="additem">
-                                                        <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>New like this</button>
-                                                    </form>
-                                                </div>
-                                                <div class="col-xs-8 col-sm-9 col-md-8">
-                                                    <br>
-                                                    <h4 class="modal-title custom_align">
-                                                        By clicking <strong class="label label-primary">New like this</strong>, copy current item mode.
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                            <%----%>
-                                </div>
-                                <div class="modal-footer ">
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
-                    <%--test edit model--%>
                 </c:forEach>
                     <%--<tr>--%>
                         <%--<td><input type="checkbox" class="checkthis" /></td>--%>
@@ -423,29 +364,49 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div>
 
 
-<%--<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">--%>
-    <%--<div class="modal-dialog">--%>
-        <%--<div class="modal-content">--%>
-            <%--<div class="modal-header">--%>
-                <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>--%>
-                <%--<h4 class="modal-title custom_align" id="Heading">Select Edit Model</h4>--%>
-            <%--</div>--%>
-            <%--<div class="modal-body">--%>
-                <%--<h4 class="modal-title custom_align">Edit - edit current item mode.</h4>--%>
-                <%--<br>--%>
-                <%--<h4 class="modal-title custom_align">Add - copy current item mode.</h4>--%>
-            <%--</div>--%>
-            <%--<div class="modal-footer ">--%>
-                <%----%>
-                <%--<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>--%>
-                <%--<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <%--<!-- /.modal-content -->--%>
-    <%--</div>--%>
-    <%--<!-- /.modal-dialog -->--%>
-<%--</div>--%>
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control " type="text"><p id="content"></p><%----%>
+                    <%--<p id="content"></p>&lt;%&ndash;&ndash;%&gt;--%>
+                </div>
+                <div class="form-group">
 
+                    <input class="form-control " type="text" placeholder="Irshad">
+                </div>
+                <div class="form-group">
+                    <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+
+
+                </div>
+                <div class="modal-footer ">
+                <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+            </div>
+            </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<%--test data read--%>
+<script>
+    // при открытии модального окна
+    $('#edit').on('show.bs.modal', function (event) {
+        // получить кнопку, которая его открыло
+        var button = $(event.relatedTarget)
+        // извлечь информацию из атрибута data-content
+        var content = button.data('content')
+        // вывести эту информацию в элемент, имеющий id="content"
+        $(this).find('#content').text(content);
+    })
+</script>
+<%--/test data read--%>
 
 
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -469,6 +430,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     </div>
     <!-- /.modal-dialog -->
 </div>
+<%--/Item management form--%>
 
 
 

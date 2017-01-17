@@ -54,7 +54,11 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
     @Override
     public boolean addNewEntity(Item entity) {
-        return false;
+
+        String sqlQuery = "INSERT INTO item (itemName, itemSmallDescription, itemFullDescription, itemProductInfo, itemPrice, " +
+                "itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
     @Override

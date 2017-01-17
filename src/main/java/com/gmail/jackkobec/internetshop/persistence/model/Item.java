@@ -39,6 +39,19 @@ public class Item {
         this.itemStatus = itemStatus;
     }
 
+    public Item(String itemName, String itemSmallDescription, String itemFullDescription, String itemProductInfo, BigDecimal itemPrice, String itemBigPicturePath800x600, String itemSmallPicturePath350x260, Integer itemRating, ItemCategory itemCategory, ItemStatus itemStatus) {
+        this.itemName = itemName;
+        this.itemSmallDescription = itemSmallDescription;
+        this.itemFullDescription = itemFullDescription;
+        this.itemProductInfo = itemProductInfo;
+        this.itemPrice = itemPrice;
+        this.itemBigPicturePath800x600 = itemBigPicturePath800x600;
+        this.itemSmallPicturePath350x260 = itemSmallPicturePath350x260;
+        this.itemRating = itemRating;
+        this.itemCategory = itemCategory;
+        this.itemStatus = itemStatus;
+    }
+
     public Integer getId() {
         return id;
     }

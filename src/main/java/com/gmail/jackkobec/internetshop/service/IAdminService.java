@@ -20,5 +20,7 @@ public interface IAdminService {
 
     boolean removeUserFromBlockListById(final Integer id);
 
+    boolean addNewItem(Item item);
+
     boolean updateItemInfo(Item item);
 }

@@ -5,9 +5,7 @@ import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.ItemCategory;
 import com.gmail.jackkobec.internetshop.persistence.model.ItemStatus;
 import com.gmail.jackkobec.internetshop.service.AdminServiceImpl;
-import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IAdminService;
-import com.gmail.jackkobec.internetshop.service.IClientService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -18,13 +16,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * Created by Jack on 16.01.2017.
+ * Created by Jack on 17.01.2017.
  */
-public class UpdateItemCommand implements ICommand {
-    public static final Logger LOGGER = LogManager.getLogger(UpdateItemCommand.class);
-
-    private static final String FORM_ACTION = "formAction";
-    private static final String UPDATE_ACTION = "Controller?command=updateitem";
+public class AddNewItemCommand implements ICommand {
+    public static final Logger LOGGER = LogManager.getLogger(AddNewItemCommand.class);
 
     private static final String ITEM_ID = "item_id";
     private static final String ITEM_NAME = "itemName";
@@ -38,18 +33,16 @@ public class UpdateItemCommand implements ICommand {
     private static final String iTEM_CATEGOTY = "itemCategory";
     private static final String ITEM_STATUS = "itemStatus";
 
-    private static final String ITEM_FOR_EDIT = "itemForEdit";
+    private static final String ITEM_MANAGEMENT_MESSAGE = "itemManagementMessage";
     private static final String ERROR_INFO = "errorInfo";
 
     private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
-    private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
-        final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
         final String itemName = request.getParameter(ITEM_NAME);
         final String itemSmallDescription = request.getParameter(ITEM_SMALL_DESCRIPTION);
         final String itemFullDescription = request.getParameter(ITEM_FULL_DESCRIPTION);
@@ -61,28 +54,15 @@ public class UpdateItemCommand implements ICommand {
         final ItemCategory itemCategory = ItemCategory.getItemCategoryByID(Integer.valueOf(request.getParameter(iTEM_CATEGOTY)));
         final ItemStatus itemStatus = ItemStatus.getItemStatus(Integer.valueOf(request.getParameter(ITEM_STATUS)));
 
-
-        Item forUpdate = new Item(itemId, itemName, itemSmallDescription, itemFullDescription, itemProductInfo,
+        Item forCreate = new Item(itemName, itemSmallDescription, itemFullDescription, itemProductInfo,
                 itemPrice, itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus);
 
-        if(forUpdate.getId() == null){
-            LOGGER.warn("Item not update. No item.");
-            request.setAttribute(ERROR_INFO, "Error during item update. No item.");
+        if(iAdminService.addNewItem(forCreate)){
 
-            return errorPage;
-        }
-
-        if (iAdminService.updateItemInfo(forUpdate)) {
-
+            request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item " + itemName + " added successfully.");
             return "/WEB-INF/pages/item_management_page.jsp";
-
-        }else {
-            LOGGER.warn("Item not update. Service response = false.");
-            request.setAttribute(ERROR_INFO, "Error during item update. Service response = false.");
-
-            return errorPage;
         }
 
-        //return "/WEB-INF/pages/item_management_page.jsp";
+        return null;
     }
 }

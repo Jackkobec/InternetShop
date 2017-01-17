@@ -259,7 +259,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     </div>
                 </div>
 
-                <form action="Controller?command=updateitem" method="POST">
+                <form action="Controller?command=${formAction}" method="POST">
                     <input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>
                 <div class="col-md-7">
                     <div class="modal-body">
@@ -361,9 +361,19 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 <option value="2" ${isSecondStatusSelected}>NOT_PRESENT</option>
                             </select>
                         </div>
+                        <c:choose>
+                            <c:when test="${formAction == 'updateitem'}">
+                                <c:set var="buttonAddOrUpdate" value="Update item"/>
+                                <c:set var="buttonAddOrUpdateClass" value="btn-warning"/>
+                            </c:when>
+                            <c:when test="${formAction == 'additem'}">
+                                <c:set var="buttonAddOrUpdate" value="Add item "/>
+                                <c:set var="buttonAddOrUpdateClass" value="btn-danger"/>
+                            </c:when>
+                        </c:choose>
                         <div class="modal-footer ">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="submit" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Update</button>
+                            <button type="submit" class="btn ${buttonAddOrUpdateClass} btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>${buttonAddOrUpdate}</button>
 
                             <%--<form action="Controller?command=addnewitem" method="POST">--%>
                                 <%--<input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>--%>

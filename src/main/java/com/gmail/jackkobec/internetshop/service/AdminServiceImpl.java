@@ -67,6 +67,12 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
+    public boolean addNewItem(Item item) {
+
+        return itemDao.addNewEntity(item);
+    }
+
+    @Override
     public boolean updateItemInfo(Item item) {
 
         return itemDao.updateEntityInfo(item);
