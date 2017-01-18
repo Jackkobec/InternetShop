@@ -1,11 +1,13 @@
 package com.gmail.jackkobec.internetshop.service;
 
 import com.gmail.jackkobec.internetshop.persistence.dao.ItemDao;
+import com.gmail.jackkobec.internetshop.persistence.dao.OrderDao;
 import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
 import com.gmail.jackkobec.internetshop.persistence.factory.ConnectionManagerMode;
 import com.gmail.jackkobec.internetshop.persistence.factory.DaoType;
 import com.gmail.jackkobec.internetshop.persistence.factory.JdbcDaoFactory;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
+import com.gmail.jackkobec.internetshop.persistence.model.Order;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -15,12 +17,13 @@ import java.util.List;
 /**
  * Created by Jack on 28.12.2016.
  */
-public class ClientServiceImpl implements IClientService{
+public class ClientServiceImpl implements IClientService {
     public static final Logger LOGGER = LogManager.getLogger(ClientServiceImpl.class);
 
     private static ClientServiceImpl clientServiceImpl;
     private UserDao userDao = (UserDao) JdbcDaoFactory.getJdbcDaoFactory(ConnectionManagerMode.FROM_JNDI).getDao(DaoType.USER_DAO);
     private ItemDao itemDao = (ItemDao) JdbcDaoFactory.getJdbcDaoFactory(ConnectionManagerMode.FROM_JNDI).getDao(DaoType.ITEM_DAO);
+    private OrderDao orderDao = (OrderDao) JdbcDaoFactory.getJdbcDaoFactory(ConnectionManagerMode.FROM_JNDI).getDao(DaoType.ORDER_DAO);
 
     private ClientServiceImpl() {
     }
@@ -36,7 +39,7 @@ public class ClientServiceImpl implements IClientService{
                 : clientServiceImpl;
     }
 
-    public User findByEmail(String email){
+    public User findByEmail(String email) {
 
         return userDao.findByEmail(email);
     }
@@ -86,5 +89,23 @@ public class ClientServiceImpl implements IClientService{
     public Item getItemById(final Integer id) {
 
         return itemDao.getItemById(id);
+    }
+
+    @Override
+    public Integer createNewOrder(Order order) {
+
+        return orderDao.addNewOrder(order);
+    }
+
+    @Override
+    public boolean addItemToOrder(final Integer orderId, final Integer itemId) {
+
+        return orderDao.addItemToOrder(orderId, itemId);
+    }
+
+    @Override
+    public boolean removeItemFromOrder(final Integer orderId, final Integer itemId) {
+
+        return orderDao.removeItemFromOrder(orderId, itemId);
     }
 }

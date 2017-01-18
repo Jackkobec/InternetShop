@@ -171,8 +171,6 @@ public class UserDaoJdbcImpl implements UserDao {
 
         connection = getConnection();
         try (ResultSet resultSet = connection.prepareStatement(sqlQuery).executeQuery(sqlQuery)) {
-//             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-//             ResultSet resultSet = preparedStatement.executeQuery(sqlQuery)) {
 
             User user = new User();
             while (resultSet.next()) {

@@ -245,14 +245,14 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <tbody>
 
 
-                <h1>h1. Bootstrap heading</h1>
+                <h1>Новый заказ от ${currentOrderFormattedDate}  Id: ${currentUserOrder.id}</h1>
                 <br>
-                <h2>h2. Bootstrap heading</h2>
+                <h2>Список товаров</h2>
                 <br>
                 <c:if test="${currentUserCart.size() == 0}">
                 <p><h4>Order is empty</h4><p>
                     </c:if>
-                    <c:forEach var="item" items="${currentUserCart}">
+                    <c:forEach var="item" items="${currentUserOrder.itemList}">
                     <tr>
                         <td class="col-sm-8 col-md-6">
                             <div class="media">
@@ -286,7 +286,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td></td>
                         <td></td>
                         <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>$${summaryCartPrice}</strong></h5></td>
+                        <td class="text-right"><h5><strong>$${currentUserOrder.summaryPrice}</strong></h5></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -300,7 +300,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td></td>
                         <td></td>
                         <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>$${summaryCartPrice}</strong></h3></td>
+                        <td class="text-right"><h3><strong>$${currentUserOrder.summaryPrice}</strong></h3></td>
                     </tr>
                     <tr>
                         <td></td>

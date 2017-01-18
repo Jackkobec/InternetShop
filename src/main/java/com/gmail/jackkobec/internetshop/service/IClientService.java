@@ -1,7 +1,9 @@
 package com.gmail.jackkobec.internetshop.service;
 
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
+import com.gmail.jackkobec.internetshop.persistence.model.Order;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.List;
 
@@ -27,4 +29,10 @@ public interface IClientService {
     boolean removeItemFromCart(final Integer itemId, final Integer userId);
 
     Item getItemById(final Integer id);
+
+    Integer createNewOrder(Order order);
+
+    boolean addItemToOrder(final Integer orderId, final Integer itemId);
+
+    boolean removeItemFromOrder(final Integer orderId, final Integer itemId);
 }

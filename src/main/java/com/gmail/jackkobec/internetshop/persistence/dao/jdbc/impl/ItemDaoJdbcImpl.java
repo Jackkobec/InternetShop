@@ -147,7 +147,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
             preparedStatement.setInt(1, itemId);
             preparedStatement.setInt(2, userId);
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
             return true;
 
