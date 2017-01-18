@@ -31,7 +31,7 @@ public class MakeOrderCommand implements ICommand {
     private static final String CURRENT_ORDER_FORMATTED_DATE = "currentOrderFormattedDate";
     private static final String CURRENT_USER_ORDER = "currentUserOrder";
 
-    IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
+    private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,6 +56,7 @@ public class MakeOrderCommand implements ICommand {
 
             Integer newOrderId = iClientService.createNewOrder(newOrder);
             newOrder.setId(newOrderId);
+            System.out.println("newOrder" + newOrder);
             itemsInOrder.forEach(i -> iClientService.addItemToOrder(newOrderId, i.getId()));
 
             request.setAttribute(CURRENT_ORDER_FORMATTED_DATE, currentOrderFormattedDate);

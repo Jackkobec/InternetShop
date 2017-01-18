@@ -20,4 +20,6 @@ public interface ItemDao extends CommonDao<Item, Integer> {
     boolean addItemToCart(final Integer itemId, final Integer userId);
 
     boolean removeItemFromCart(final Integer itemId, final Integer userId);
+
+    List<Item> getItemsFromOrderByOrderId(final Integer orderId);
 }

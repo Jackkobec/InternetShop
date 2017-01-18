@@ -270,9 +270,10 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
 
-                        <form action="Controller?command=removeitemfromcart" method="POST">
-                            <input type="hidden" name="item_id" value="${item.id}"> </input>
-                            <input type="hidden" name="from_page" value="ORDER_PAGE"> </input>
+                        <form action="Controller?command=removeitemfromorder" method="POST">
+                            <input type="hidden" name="currentUserOrderId" value="${currentUserOrder.id}">
+                            <input type="text" name="currentUserOrderId" value="${currentUserOrder.id}">
+                                <input type="hidden" name="itemForRemoveId" value="${item.id}">
                             <td class="col-sm-1 col-md-1">
                                 <button type="submit" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-remove"></span> Remove
@@ -306,11 +307,15 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td></td>
                         <td></td>
                         <td></td>
+                        <form action="Controller?command=cancelorder" method="POST">
                         <td>
                             <button type="button" class="btn btn-danger">
+                                <input type="hidden" name="item_id" value="${currentUserOrder.id}">
                                 <span class="glyphicon glyphicon-remove-circle"></span> Cancel order
                             </button></td>
+                            </form>
                         <form action="Controller?command=payorder" method="POST">
+                            <input type="hidden" name="item_id" value="${currentUserOrder.id}">
                         <td>
                             <button type="submit" class="btn btn-success">
                                 Pay order <span class="glyphicon glyphicon-usd"></span>

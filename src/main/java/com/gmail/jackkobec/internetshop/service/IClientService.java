@@ -35,4 +35,8 @@ public interface IClientService {
     boolean addItemToOrder(final Integer orderId, final Integer itemId);
 
     boolean removeItemFromOrder(final Integer orderId, final Integer itemId);
+
+    Order getOrderById(final Integer orderId);
+
+    List<Item> getItemsFromOrderByOrderId(final Integer orderId);
 }

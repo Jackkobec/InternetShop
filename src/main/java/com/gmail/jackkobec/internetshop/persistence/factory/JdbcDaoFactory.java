@@ -2,9 +2,8 @@ package com.gmail.jackkobec.internetshop.persistence.factory;
 
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.dao.CommonDao;
-import com.gmail.jackkobec.internetshop.persistence.dao.UserDao;
 import com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl.ItemDaoJdbcImpl;
-import com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl.OrderDaoImpl;
+import com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl.OrderDaoJdbcImpl;
 import com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl.UserDaoJdbcImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -52,7 +51,7 @@ public class JdbcDaoFactory implements IDaoFactory {
             case ITEM_DAO:
                 return ItemDaoJdbcImpl.getItemDaoJdbc(connectionManager);
             case ORDER_DAO:
-                return OrderDaoImpl.getOrderDaoImpl(connectionManager);
+                return OrderDaoJdbcImpl.getOrderDaoImpl(connectionManager);
         }
 
         return null;

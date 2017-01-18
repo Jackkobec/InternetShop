@@ -30,15 +30,20 @@ public class ControllerHelper {
         commands.put("gotomainpage", new GoToMainPageCommand());
         commands.put("showitem", new ShowItemCommand());
         commands.put("addtocart", new AddToCartCommand());
-        commands.put("makeorder", new MakeOrderCommand());
-        commands.put("payorder", new PayOrderCommand());
         commands.put("removeitemfromcart", new RemoveItemFromCartCommand());
+
+        commands.put("makeorder", new MakeOrderCommand());
+        commands.put("removeitemfromorder", new RemoveItemFromOrderCommand());
+        commands.put("payorder", new PayOrderCommand());
+
         commands.put("gotousermanagementpage", new GoToUserManagementPageCommand());
         commands.put("gotoitemmanagementpage", new GoToItemManagementPage());
+
         commands.put("edititem", new EditItemCommand());
         commands.put("updateitem", new UpdateItemCommand());
         commands.put("additem", new AddNewItemCommand());
         commands.put("deleteitem", new DeleteItemCommand());
+
         commands.put("addusertoblocklist", new AddUserToBlockList());
         commands.put("removeuserfromblocklist", new RemoveUserFromBlockList());
         commands.put("userregistration", new UserRegistrtionCommand());

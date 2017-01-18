@@ -3,7 +3,6 @@ package com.gmail.jackkobec.internetshop.persistence.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class Order {
 
     private Integer id;
-    private Integer user_id;
+    private Integer userId;
 
     private Date orderDateAndTime;
     private BigDecimal summaryPrice;
@@ -25,8 +24,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer user_id, Date orderDateAndTime, BigDecimal summaryPrice, Integer orderStatus, List<Item> itemList) {
-        this.user_id = user_id;
+    public Order(Integer userId, Date orderDateAndTime, BigDecimal summaryPrice, Integer orderStatus, List<Item> itemList) {
+        this.userId = userId;
         this.orderDateAndTime = orderDateAndTime;
         this.summaryPrice = summaryPrice;
         this.orderStatus = orderStatus;
@@ -43,12 +42,12 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Date getOrderDateAndTime() {

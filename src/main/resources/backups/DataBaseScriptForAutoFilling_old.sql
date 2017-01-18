@@ -32,9 +32,9 @@ CREATE TABLE orders (
   id INT PRIMARY KEY AUTO_INCREMENT,
   orderDateAndTime DATETIME NOT NULL,
   summaryPrice DECIMAL(7,2) NOT NULL,
-  user_id INT(11) NOT NULL,
+  userId INT(11) NOT NULL,
   orderStatus INT(11) NOT NULL,
-  FOREIGN KEY(user_id) REFERENCES user(id),
+  FOREIGN KEY(userId) REFERENCES user(id),
   FOREIGN KEY(orderStatus) REFERENCES order_status(id)
 );
 

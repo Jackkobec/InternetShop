@@ -246,7 +246,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             </div>
             <div class="modal-body">
                     <form action="Controller?command=gotousermanagementpage" method="post">
-                    <%--<input type="hidden" name="user_id" value="${banedUser.id}"> </input>--%>
+                    <%--<input type="hidden" name="userId" value="${banedUser.id}"> </input>--%>
                 <button type="submit" class="btn btn-warning btn-lg btn-block">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>User Management</button>
                     </form>

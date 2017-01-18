@@ -32,11 +32,11 @@ INSERT INTO order_status(orderStatusName) VAlUES ('CANCELED');
 
 CREATE TABLE orders (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  user_id INT(11) NOT NULL,
+  userId INT(11) NOT NULL,
   orderDateAndTime DATETIME,
   summaryPrice DECIMAL(7,2) NOT NULL,
   orderStatus INT(11) NOT NULL,
-  FOREIGN KEY(user_id) REFERENCES user(id),
+  FOREIGN KEY(userId) REFERENCES user(id),
   FOREIGN KEY(orderStatus) REFERENCES order_status(id)
 );
 
@@ -204,8 +204,8 @@ INSERT INTO six_item_carousel(item_id) VAlUES (6);
 
 CREATE TABLE cart (
   item_id INT(11),
-  user_id INT(11)
+  userId INT(11)
 );
 
-INSERT INTO cart(item_id, user_id) VAlUES (2, 2);
+INSERT INTO cart(item_id, userId) VAlUES (2, 2);
 

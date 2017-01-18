@@ -262,12 +262,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                     </form>
                                     <c:if test="${notBanedUser.getUserType() == 'BANNED'}">
                                         <form action="Controller?command=removeuserfromblocklist" method="post">
-                                            <input type="hidden" name="user_id" value="${notBanedUser.id}"> </input>
+                                            <input type="hidden" name="userId" value="${notBanedUser.id}"> </input>
                                         <button class="btn btn-success" type="submit">Unblock user</button>
                                         </form>
                                     </c:if>
                                     <form action="Controller?command=addusertoblocklist" method="post">
-                                        <input type="hidden" name="user_id" value="${notBanedUser.id}"> </input>
+                                        <input type="hidden" name="userId" value="${notBanedUser.id}"> </input>
                                         <button class="btn btn-danger" type="submit">Block user</button>
                                     </form>
                                 </div>
@@ -321,12 +321,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 </form>
                                 <c:if test="${banedUser.getUserType() != 'BANNED'}">
                                     <form action="Controller?command=addusertoblocklist" method="post">
-                                        <input type="hidden" name="user_id" value="${banedUser.id}"> </input>
+                                        <input type="hidden" name="userId" value="${banedUser.id}"> </input>
                                         <button class="btn btn-danger" type="submit">Block user</button>
                                     </form>
                                 </c:if>
                                 <form action="Controller?command=removeuserfromblocklist" method="post">
-                                    <input type="hidden" name="user_id" value="${banedUser.id}"> </input>
+                                    <input type="hidden" name="userId" value="${banedUser.id}"> </input>
                                     <button class="btn btn-success" type="submit">Unblock user</button>
                                 </form>
                             </div>

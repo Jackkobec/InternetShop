@@ -140,6 +140,16 @@ public class ItemDaoJdbcImpl implements ItemDao {
         return executeQueryInPreparedStatementForCart(itemId, userId, sqlQuery);
     }
 
+    @Override
+    public List<Item> getItemsFromOrderByOrderId(Integer orderId) {
+
+        String sqlQuery = "SELECT * FROM item " +
+                "LEFT JOIN order_item ON item.id = order_item.item_id " +
+                "WHERE order_item.order_id = " + orderId;
+
+        return getListOfItemBySqlQuery(sqlQuery);
+    }
+
     private boolean executeQueryInPreparedStatementForCart(Integer itemId, Integer userId, String sqlQuery) {
 
         connection = getConnection();
@@ -216,8 +226,6 @@ public class ItemDaoJdbcImpl implements ItemDao {
             Item item = new Item();
 
             while (resultSet.next()) {
-
-                item = new Item();
 
                 item.setId(resultSet.getInt("id"));
                 item.setItemName(resultSet.getString("itemName"));

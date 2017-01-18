@@ -108,4 +108,16 @@ public class ClientServiceImpl implements IClientService {
 
         return orderDao.removeItemFromOrder(orderId, itemId);
     }
+
+    @Override
+    public Order getOrderById(final Integer orderId) {
+
+        return orderDao.getOneByID(orderId);
+    }
+
+    @Override
+    public List<Item> getItemsFromOrderByOrderId(final Integer orderId) {
+
+        return itemDao.getItemsFromOrderByOrderId(orderId);
+    }
 }

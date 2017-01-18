@@ -3,7 +3,6 @@ package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.dao.OrderDao;
 import com.gmail.jackkobec.internetshop.persistence.model.Order;
-import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -13,25 +12,25 @@ import java.util.List;
 /**
  * Created by Jack on 28.12.2016.
  */
-public class OrderDaoImpl implements OrderDao {
-    public static final Logger LOGGER = LogManager.getLogger(OrderDaoImpl.class);
+public class OrderDaoJdbcImpl implements OrderDao {
+    public static final Logger LOGGER = LogManager.getLogger(OrderDaoJdbcImpl.class);
 
-    private static OrderDaoImpl orderDaoImpl;
+    private static OrderDaoJdbcImpl orderDaoJdbcImpl;
     private ConnectionManager connectionManager;
     private Connection connection;
 
-    private OrderDaoImpl(ConnectionManager connectionManager) {
+    private OrderDaoJdbcImpl(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
     /**
-     * @return ItemDaoJdbcImpl instance.
+     * @return OrderDaoJdbcImpl instance.
      */
-    public static synchronized OrderDaoImpl getOrderDaoImpl(ConnectionManager connectionManager) {
+    public static synchronized OrderDaoJdbcImpl getOrderDaoImpl(ConnectionManager connectionManager) {
         //worked with init in the constructor
-        return (orderDaoImpl == null)
-                ? orderDaoImpl = new OrderDaoImpl(connectionManager)
-                : orderDaoImpl;
+        return (orderDaoJdbcImpl == null)
+                ? orderDaoJdbcImpl = new OrderDaoJdbcImpl(connectionManager)
+                : orderDaoJdbcImpl;
     }
 
     private Connection getConnection() {
@@ -70,7 +69,10 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getOneByID(Integer id) {
-        return null;
+
+        String sqlQuery = "SELECT * FROM orders WHERE orders.id = " + id;
+
+        return getOrderBySqlQuery(sqlQuery);
     }
 
     @Override
@@ -92,7 +94,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public boolean removeItemFromOrder(Integer orderId, Integer itemId) {
 
-        String sqlQuery = "DELETE FROM orders WHERE orders.order_id = ? AND orders.item_id = ? LIMIT 1";
+        String sqlQuery = "DELETE FROM order_item WHERE order_item.order_id = ? AND order_item.item_id = ? LIMIT 1";
 
         return executeQueryInPreparedStatementForOrder(orderId,  itemId, sqlQuery);
     }
@@ -106,7 +108,7 @@ public class OrderDaoImpl implements OrderDao {
         connection = getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
 
-            preparedStatement.setInt(1, entity.getUser_id());
+            preparedStatement.setInt(1, entity.getUserId());
             preparedStatement.setObject(2, entity.getOrderDateAndTime());
             preparedStatement.setBigDecimal(3, entity.getSummaryPrice());
             preparedStatement.setInt(4, entity.getOrderStatus());
@@ -127,6 +129,35 @@ public class OrderDaoImpl implements OrderDao {
         } finally {
             closeConnection(connection);
         }
+    }
+
+    private Order getOrderBySqlQuery(String sqlQuery) {
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+             ResultSet resultSet = preparedStatement.executeQuery(sqlQuery)) {
+
+            Order order = new Order();
+
+            while (resultSet.next()) {
+
+                order.setId(resultSet.getInt("id"));
+                order.setUserId(resultSet.getInt("user_id"));
+                order.setOrderDateAndTime((java.util.Date) resultSet.getObject("orderDateAndTime"));
+                order.setSummaryPrice(resultSet.getBigDecimal("summaryPrice"));
+                order.setOrderStatus(resultSet.getInt("orderStatus"));
+
+            }
+            System.out.println("getOrderBySqlQuery" + order);
+            return order;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeConnection(connection);
+        }
+
     }
 
     private boolean executeQueryInPreparedStatementForOrder(Integer orderId, Integer itemId, String sqlQuery) {
