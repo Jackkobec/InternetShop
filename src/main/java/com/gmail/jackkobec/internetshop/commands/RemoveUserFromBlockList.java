@@ -21,7 +21,7 @@ import java.util.List;
 public class RemoveUserFromBlockList implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(RemoveUserFromBlockList.class);
 
-    private static final String USER_ID = "user_id";
+    private static final String USER_ID = "userId";
     private static final String ALL_NOT_BANNED_USERS = "notBannedUsers";
     private static final String ALL_BANNED_USERS = "bannedUsers";
     private static final String ERROR_INFO = "errorInfo";

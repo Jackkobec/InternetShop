@@ -20,7 +20,9 @@ public class GoCategoryCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(GoCategoryCommand.class);
 
     private static final String CATEGORY_ID = "category_id";
-    IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
+    private static final String ERROR_INFO = "errorInfo";
+
+    private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

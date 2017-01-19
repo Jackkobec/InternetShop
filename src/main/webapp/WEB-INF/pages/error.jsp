@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="include.jsp" %>
+<%@ taglib uri="/WEB-INF/alertTag.tld" prefix="ctg"%>
 
 <!DOCTYPE html>
 <html>
@@ -23,11 +24,9 @@
     <h2 class="font-bold">Oops 404! That page not found.</h2>
 
     <div class="error-desc">
-        <%--<%=(request.getAttribute("errorInfo").toString()!=null)?request.getAttribute("errorInfo").toString():""%>--%>
-        <h2>${errorInfo}</h2>
-        <div><br/>
-            <!-- <a class=" login-detail-panel-button btn" href="http://vultus.de/"> -->
-            <a href="/" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Go back to Homepage</a>
+        <ctg:alertTag alertClass="alert alert-danger" alertMessage="${errorInfo}"/>
+            <div><br/>
+                <a href="/" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Go back to Homepage</a>
         </div>
     </div>
 </div>
