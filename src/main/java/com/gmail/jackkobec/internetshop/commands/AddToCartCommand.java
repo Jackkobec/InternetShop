@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,6 +23,11 @@ public class AddToCartCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(AddToCartCommand.class);
 
     private static final String ITEM_ID = "item_id";
+    private static final String CURRENT_USER_IN_SYSTEM = "currentUserInSystem";
+    private static final String CURRENT_ITEM_FOR_SHOW = "currentItemForShow";
+    private static final String SUMMARY_CART_PRICE = "summaryCartPrice";
+    private static final String CURRENT_USER_CART = "currentUserCart";
+
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
@@ -32,10 +38,11 @@ public class AddToCartCommand implements ICommand {
 
         final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
 
-        User currentUserInSystem = (User) request.getSession(false).getAttribute("currentUserInSystem");
+        HttpSession session = request.getSession(false);
 
-        List<Item> currentUserCart = (List<Item>) request.getSession(false).getAttribute("currentUserCart");
-        Item currentItemForShow = (Item) request.getSession(false).getAttribute("currentItemForShow");
+        User currentUserInSystem = (User) session.getAttribute(CURRENT_USER_IN_SYSTEM);
+        List<Item> currentUserCart = (List<Item>) session.getAttribute("currentUserCart");
+        Item currentItemForShow = (Item) session.getAttribute(CURRENT_ITEM_FOR_SHOW);
 
         BigDecimal summaryCartPrice = currentItemForShow.getItemPrice();
 
@@ -45,15 +52,15 @@ public class AddToCartCommand implements ICommand {
                 summaryCartPrice = summaryCartPrice.add(item.getItemPrice());
             }
 
-            request.getSession(false).setAttribute("summaryCartPrice", summaryCartPrice);
+            session.setAttribute(SUMMARY_CART_PRICE, summaryCartPrice);
         } else if (currentUserCart.size() == 0) {
 
-            request.getSession(false).setAttribute("summaryCartPrice", currentItemForShow.getItemPrice());
+            session.setAttribute(SUMMARY_CART_PRICE, currentItemForShow.getItemPrice());
         }
 
         currentUserCart.add(currentItemForShow);
         iClientService.addItemToCart(itemId, currentUserInSystem.getId());
-        request.getSession(false).setAttribute("currentUserCart", currentUserCart);
+        session.setAttribute(CURRENT_USER_CART, currentUserCart);
 
         return itemPage;
     }

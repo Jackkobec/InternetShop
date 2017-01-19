@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * Created by Jack on 17.01.2017.
+ * <p>AddNewItemCommand class execute command for add new item.
  */
 public class AddNewItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(AddNewItemCommand.class);
@@ -38,9 +38,19 @@ public class AddNewItemCommand implements ICommand {
 
     private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
 
+    /**
+     * Method execute command for add new item.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String itemManagementPage = PageManager.getPageManager().getPage(PageManager.ITEM_MANAGEMENT_PAGE);
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
         final String itemName = request.getParameter(ITEM_NAME);
@@ -60,8 +70,12 @@ public class AddNewItemCommand implements ICommand {
         if (iAdminService.addNewItem(forCreate)) {
 
             request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item " + itemName + " added successfully.");
-            return "/WEB-INF/pages/item_management_page.jsp";
+            LOGGER.info("Added new item with name: " + itemName);
+
+            return itemManagementPage;
         } else {
+            request.setAttribute(ERROR_INFO, "Item not add. AdminService response false.");
+            LOGGER.error("Item not add. AdminService response false.");
 
             return errorPage;
         }

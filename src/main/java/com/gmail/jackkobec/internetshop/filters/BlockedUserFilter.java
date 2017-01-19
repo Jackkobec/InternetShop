@@ -20,6 +20,8 @@ import static com.gmail.jackkobec.internetshop.persistence.model.UserType.BANNED
 @WebFilter(urlPatterns = {"/*"})
 public class BlockedUserFilter implements Filter {
 
+    private static final String ERROR_INFO = "errorInfo";
+
     private IClientService iClientService;
 
     @Override
@@ -46,7 +48,7 @@ public class BlockedUserFilter implements Filter {
 
             if (finded.getUserType().equals(BANNED)) {
 
-                request.setAttribute("errorInfo", "You are in the black list!");
+                request.setAttribute(ERROR_INFO, "You are in the black list!");
                 RequestDispatcher dispatcher = request.getServletContext().
                         getRequestDispatcher(PageManager.getPageManager().getPage(PageManager.ERROR_PAGE));
                 dispatcher.forward(request, response);
