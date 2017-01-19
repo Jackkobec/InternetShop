@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 19.01.2017.
+ * <p>CancelOrderCommand class execute command for cancel order.
  */
 public class CancelOrderCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(CancelOrderCommand.class);
@@ -23,6 +23,15 @@ public class CancelOrderCommand implements ICommand {
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
+    /**
+     * Method execute command for cancel order.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -32,10 +41,11 @@ public class CancelOrderCommand implements ICommand {
 
         Order orderForCancel = iClientService.getOrderById(currentUserOrderId);
 
-        if(iClientService.cancelOrder(orderForCancel.getId())){
+        if (iClientService.cancelOrder(orderForCancel.getId())) {
+            LOGGER.info("Order with id: " + currentUserOrderId + " canceled!");
 
             return PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
-        }else {
+        } else {
             request.setAttribute(ERROR_INFO, "Order not canceled!");
             LOGGER.error("Order not canceled! ClientService response false.");
 

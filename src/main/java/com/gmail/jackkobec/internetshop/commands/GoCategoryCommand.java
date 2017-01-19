@@ -14,16 +14,25 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Jack on 12.01.2017.
+ * <p>GoCategoryCommand class execute command for move to the selected category.
  */
 public class GoCategoryCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(GoCategoryCommand.class);
 
     private static final String CATEGORY_ID = "category_id";
-    private static final String ERROR_INFO = "errorInfo";
+    private static final String CURRENT_CATEGORY_ITEM_LIST = "currentCategoryItemList";
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
+    /**
+     * Method execute command for move to the selected category.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -32,7 +41,8 @@ public class GoCategoryCommand implements ICommand {
         final Integer categoryId = Integer.valueOf(request.getParameter(CATEGORY_ID));
 
         List<Item> currentCategoryItemList = iClientService.getItemsByCategoryId(categoryId);
-        request.setAttribute("currentCategoryItemList", currentCategoryItemList);
+        request.setAttribute(CURRENT_CATEGORY_ITEM_LIST, currentCategoryItemList);
+        LOGGER.info("GoCategoryCommand, categoryId: " + categoryId);
 
         return chosenCategoryPage;
     }

@@ -5,7 +5,6 @@ import com.gmail.jackkobec.internetshop.exceptions.UserNotFoundException;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.service.AdminServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IAdminService;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -17,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Jack on 16.01.2017.
+ * <p>AddUserToBlockList class execute command for add user to the block list.
  */
 public class AddUserToBlockList implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(AddUserToBlockList.class);
@@ -29,6 +28,15 @@ public class AddUserToBlockList implements ICommand {
 
     private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
 
+    /**
+     * Method execute command for add user to the block list.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -47,7 +55,7 @@ public class AddUserToBlockList implements ICommand {
             forBlockList = notBannedUsers.stream().filter(user -> user.getId().equals(userId)).findFirst().orElseThrow(UserNotFoundException::new);
             forBlockList.setUserType(3);
         } catch (UserNotFoundException e) {
-            LOGGER.warn("Повторная отправка формы или пользователя с id " + userId + " отсуствует в списке notBannedUsers!");
+            LOGGER.warn("Repeat form send or user with id " + userId + " not in the notBannedUsers!");
 
             return userManagementPage;
         }
@@ -58,11 +66,13 @@ public class AddUserToBlockList implements ICommand {
 
             session.setAttribute(ALL_NOT_BANNED_USERS, notBannedUsers);
             session.setAttribute(ALL_BANNED_USERS, bannedUsers);
+            LOGGER.info("User id: " + userId + " added to the block list.");
 
             return userManagementPage;
 
         } else {
-            request.setAttribute(ERROR_INFO, "Cat't add to the blocklist user with id = " + userId);
+            request.setAttribute(ERROR_INFO, "Cat't add to the block list user with id = " + userId);
+            LOGGER.error("User id: " + userId + " error during to the block list.");
 
             return errorPage;
         }

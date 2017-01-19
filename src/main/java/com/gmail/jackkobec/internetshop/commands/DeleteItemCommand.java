@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 17.01.2017.
+ * <p>DeleteItemCommand class execute command for delete item.
  */
 public class DeleteItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(DeleteItemCommand.class);
@@ -24,22 +24,31 @@ public class DeleteItemCommand implements ICommand {
 
     private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
 
+    /**
+     * Method execute command for delete item.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
+        String itemManagementPage = PageManager.getPageManager().getPage(PageManager.ITEM_MANAGEMENT_PAGE);
 
         final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
 
         if (iAdminService.deleteItemById(itemId)) {
-
+            LOGGER.info("Item with id: " + itemId + " was delete.");
             request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item with id: " + itemId + " was delete.");
 
-            return "/WEB-INF/pages/item_management_page.jsp";
+            return itemManagementPage;
 
         } else {
-            LOGGER.warn("Item not delete. AdminService response = false.");
+            LOGGER.error("Item with id: " + itemId + " not delete. AdminService response = false.");
             request.setAttribute(ERROR_INFO, "Error during item deleting. AdminService response = false.");
 
             return errorPage;

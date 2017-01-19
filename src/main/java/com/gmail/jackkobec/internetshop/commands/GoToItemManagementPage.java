@@ -1,5 +1,6 @@
 package com.gmail.jackkobec.internetshop.commands;
 
+import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IClientService;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Jack on 16.01.2017.
+ * <p>AddNewItemCommand class execute command for management items by category.
  */
 public class GoToItemManagementPage implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(GoToItemManagementPage.class);
@@ -24,7 +25,15 @@ public class GoToItemManagementPage implements ICommand {
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
-
+    /**
+     * Method execute command for management items by category.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,17 +42,20 @@ public class GoToItemManagementPage implements ICommand {
         if (itemCategoryIdParameter != null) {
 
             final Integer itemCategoryId = Integer.valueOf(itemCategoryIdParameter);
+
             List<Item> itemListByCategory = iClientService.getItemsByCategoryId(itemCategoryId);
 
             if (itemListByCategory.size() != 0) {
 
                 request.setAttribute(ITEM_LIST_BY_CATEGORY, itemListByCategory);
+                LOGGER.info("Show items by category with id " + itemCategoryId);
 
-            } else{
+            } else {
                 request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "No items.");
+                LOGGER.warn("No items in category with id " + itemCategoryId);
             }
         }
 
-        return "/WEB-INF/pages/item_management_page.jsp";
+        return PageManager.getPageManager().getPage(PageManager.ITEM_MANAGEMENT_PAGE);
     }
 }

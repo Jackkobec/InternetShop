@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by Jack on 14.01.2017.
+ * <p>AddToCartCommand class execute command for add new item to the cart.
  */
 public class AddToCartCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(AddToCartCommand.class);
@@ -28,9 +28,16 @@ public class AddToCartCommand implements ICommand {
     private static final String SUMMARY_CART_PRICE = "summaryCartPrice";
     private static final String CURRENT_USER_CART = "currentUserCart";
 
-
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
+    /**
+     * Method execute command for add new item to the cart.
+     * @param request
+     * @param response
+     * @return page for Controller.
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -61,6 +68,7 @@ public class AddToCartCommand implements ICommand {
         currentUserCart.add(currentItemForShow);
         iClientService.addItemToCart(itemId, currentUserInSystem.getId());
         session.setAttribute(CURRENT_USER_CART, currentUserCart);
+        LOGGER.info("Item id: " + itemId + " added to the cart.");
 
         return itemPage;
     }

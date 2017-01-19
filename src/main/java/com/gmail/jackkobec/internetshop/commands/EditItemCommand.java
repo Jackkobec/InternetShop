@@ -1,5 +1,6 @@
 package com.gmail.jackkobec.internetshop.commands;
 
+import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IClientService;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 16.01.2017.
+ * <p>EditItemCommand class execute command for edit/add new item.
  */
 public class EditItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(EditItemCommand.class);
@@ -27,9 +28,17 @@ public class EditItemCommand implements ICommand {
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
+    /**
+     * Method execute command for edit/add new item.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
         String itemForEditParameter = request.getParameter(ITEM_ID);
         String itemEditModeParameter = request.getParameter(ITEM_EDIT_MODE);
@@ -43,11 +52,13 @@ public class EditItemCommand implements ICommand {
 
             request.setAttribute(ITEM_FOR_EDIT, itemForEdit);
             request.setAttribute(FORM_ACTION, itemEditMode);
+            LOGGER.info("Item edit mode: " + itemEditMode);
         } else {
 
             request.setAttribute(FORM_ACTION, DEFAULT_FORM_ACTION);
+            LOGGER.info("Item edit mode: additem");
         }
 
-        return "/WEB-INF/pages/edit_item_page.jsp";
+        return PageManager.getPageManager().getPage(PageManager.EDIT_ITEM_PAGE);
     }
 }
