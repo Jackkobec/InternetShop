@@ -120,4 +120,10 @@ public class ClientServiceImpl implements IClientService {
 
         return itemDao.getItemsFromOrderByOrderId(orderId);
     }
+
+    @Override
+    public boolean cancelOrder(final Integer orderId) {
+
+        return orderDao.cancelOrder(orderId);
+    }
 }

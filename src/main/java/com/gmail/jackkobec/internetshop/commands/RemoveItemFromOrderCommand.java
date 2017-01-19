@@ -26,6 +26,7 @@ public class RemoveItemFromOrderCommand implements ICommand {
     private static final String CURRENT_USER_IN_SYSTEM = "currentUserInSystem";
     private static final String CURRENT_USER_ORDER_ID = "currentUserOrderId";
     private static final String ITEM_FOR_REMOVE_ID = "itemForRemoveId";
+    private static final String CURRENT_ORDER_FORMATTED_DATE = "currentOrderFormattedDate";
     private static final String CURRENT_USER_ORDER = "currentUserOrder";
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
@@ -48,6 +49,10 @@ public class RemoveItemFromOrderCommand implements ICommand {
         order.setItemList(itemsInOrder);
         order.setSummaryPrice(summaryOrderPrice);
 
+        String currentOrderFormattedDate = String.format(
+                "Date %1$td.%1$tm.%1$ty Time %1$tH:%1$tM:%1$tS", order.getOrderDateAndTime());
+
+        request.setAttribute(CURRENT_ORDER_FORMATTED_DATE, currentOrderFormattedDate);
         request.setAttribute(CURRENT_USER_ORDER, order);
 
 

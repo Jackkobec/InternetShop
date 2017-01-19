@@ -49,7 +49,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
     }
 
     @Override
-    public boolean addNewEntity(Order entity) {return false;
+    public boolean addNewEntity(Order entity) {
+        return false;
     }
 
     @Override
@@ -88,7 +89,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
         String sqlQuery = "INSERT INTO order_item (order_id, item_id) VALUES(?, ?)";
 
-        return executeQueryInPreparedStatementForOrder(orderId,  itemId, sqlQuery);
+        return executeQueryInPreparedStatementForOrder(orderId, itemId, sqlQuery);
     }
 
     @Override
@@ -96,7 +97,66 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
         String sqlQuery = "DELETE FROM order_item WHERE order_item.order_id = ? AND order_item.item_id = ? LIMIT 1";
 
-        return executeQueryInPreparedStatementForOrder(orderId,  itemId, sqlQuery);
+        return executeQueryInPreparedStatementForOrder(orderId, itemId, sqlQuery);
+    }
+
+    @Override
+    public boolean cancelOrder(Integer orderId) {
+
+        String sqlQuery = "DELETE FROM orders WHERE orders.id = " + orderId;
+        String sqlQuery2 = "DELETE FROM order_item WHERE order_item.order_id = " + orderId;
+
+
+        connection = getConnection();
+
+        startTransaction(connection);
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+
+            preparedStatement.executeUpdate();
+
+            try (PreparedStatement preparedStatement2 = connection.prepareStatement(sqlQuery2)) {
+
+                preparedStatement2.executeUpdate();
+                commitTransaction(connection);
+
+                return true;
+            }
+
+        } catch (SQLException e) {
+            rollbackTransaction(connection);
+            return false;
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    private void startTransaction(Connection connection) {
+
+        try {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        } catch (SQLException e) {
+            LOGGER.error("Transaction not started", e);
+        }
+    }
+
+    private void commitTransaction(Connection connection) {
+
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            LOGGER.error("Transaction not commit", e);
+        }
+    }
+
+    private void rollbackTransaction(Connection connection) {
+
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            LOGGER.error("Transaction don'n rollback", e);
+        }
     }
 
     private Integer executeQueryInPreparedStatement(Order entity, String sqlQuery) {

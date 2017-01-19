@@ -39,4 +39,6 @@ public interface IClientService {
     Order getOrderById(final Integer orderId);
 
     List<Item> getItemsFromOrderByOrderId(final Integer orderId);
+
+    boolean cancelOrder (final Integer orderId);
 }

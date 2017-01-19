@@ -18,8 +18,6 @@ public class GoToMainPageCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String mainPage = PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
-
-        return mainPage;
+        return PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
     }
 }

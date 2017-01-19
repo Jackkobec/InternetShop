@@ -34,6 +34,7 @@ public class ControllerHelper {
 
         commands.put("makeorder", new MakeOrderCommand());
         commands.put("removeitemfromorder", new RemoveItemFromOrderCommand());
+        commands.put("cancelorder", new CancelOrderCommand());
         commands.put("payorder", new PayOrderCommand());
 
         commands.put("gotousermanagementpage", new GoToUserManagementPageCommand());

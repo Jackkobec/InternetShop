@@ -12,4 +12,6 @@ public interface OrderDao extends CommonDao<Order, Integer> {
     boolean addItemToOrder(final Integer orderId, final Integer itemId);
 
     boolean removeItemFromOrder(final Integer orderId, final Integer itemId);
+
+    boolean cancelOrder (final Integer orderId);
 }

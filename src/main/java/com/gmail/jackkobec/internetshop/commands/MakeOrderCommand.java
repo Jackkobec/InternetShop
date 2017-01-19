@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +46,7 @@ public class MakeOrderCommand implements ICommand {
             itemsInOrder.addAll(currentUserCart);
             Date orderDateAndTime = new Date();
             String currentOrderFormattedDate = String.format(
-                    "year %1$ty, month %1$tm, day %1$td, time %1$tH:%1$tM", orderDateAndTime);
+                    "Date %1$td.%1$tm.%1$ty Time %1$tH:%1$tM:%1$tS", orderDateAndTime);
 
             BigDecimal summaryOrderPrice = itemsInOrder.stream().map(Item::getItemPrice).reduce(BigDecimal::add).get();
 

@@ -244,10 +244,11 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 </thead>
                 <tbody>
 
-
-                <h1>Новый заказ от ${currentOrderFormattedDate}  Id: ${currentUserOrder.id}</h1>
+                <div class="alert alert-warning" role="alert">
+                    <h1>New Order Id: ${currentUserOrder.id}, from: ${currentOrderFormattedDate}</h1>
+                </div>
                 <br>
-                <h2>Список товаров</h2>
+                <h2>Items list</h2>
                 <br>
                 <c:if test="${currentUserCart.size() == 0}">
                 <p><h4>Order is empty</h4><p>
@@ -272,7 +273,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                         <form action="Controller?command=removeitemfromorder" method="POST">
                             <input type="hidden" name="currentUserOrderId" value="${currentUserOrder.id}">
-                            <input type="text" name="currentUserOrderId" value="${currentUserOrder.id}">
                                 <input type="hidden" name="itemForRemoveId" value="${item.id}">
                             <td class="col-sm-1 col-md-1">
                                 <button type="submit" class="btn btn-danger">
@@ -309,13 +309,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td></td>
                         <form action="Controller?command=cancelorder" method="POST">
                         <td>
-                            <button type="button" class="btn btn-danger">
-                                <input type="hidden" name="item_id" value="${currentUserOrder.id}">
+                            <button type="submit" class="btn btn-danger">
+                                <input type="hidden" name="currentUserOrderId" value="${currentUserOrder.id}">
                                 <span class="glyphicon glyphicon-remove-circle"></span> Cancel order
                             </button></td>
                             </form>
                         <form action="Controller?command=payorder" method="POST">
-                            <input type="hidden" name="item_id" value="${currentUserOrder.id}">
+                            <input type="hidden" name="currentUserOrderId" value="${currentUserOrder.id}">
                         <td>
                             <button type="submit" class="btn btn-success">
                                 Pay order <span class="glyphicon glyphicon-usd"></span>
