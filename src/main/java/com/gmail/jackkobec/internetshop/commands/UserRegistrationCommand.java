@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -27,10 +28,14 @@ public class UserRegistrationCommand implements ICommand {
     private static final String NAME = "name";
     private static final String LANGUAGE_SELECTION = "language_selection";
     private static final String CURRENT_USER_IN_SYSTEM = "currentUserInSystem";
+    private static final String SIX_ITEM_CAROUSEL = "sixItemCarousel";
+    private static final String CURRENT_USER_CART = "currentUserCart";
+    private static final String SUMMARY_CART_PRICE = "summaryCartPrice";
     private static final String ERROR_INFO = "errorInfo";
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
+    private AppDataInitializer appDataInitializer = AppDataInitializer.getAppDataInitializer();
 
     /**
      * Method execute command for register new user.
@@ -70,9 +75,18 @@ public class UserRegistrationCommand implements ICommand {
                     validationFeedbackManager.USER_WITH_THIS_EMAIL_ALREADY_EXIST);
 
             return registrationPage;
+        }
 
-        } else if (iClientService.userRegistration(forRegister)) {
-            request.getSession(true).setAttribute(CURRENT_USER_IN_SYSTEM, forRegister);
+        Integer newRegisteredUserId = iClientService.userRegistration(forRegister);
+
+        if (newRegisteredUserId != null) {
+
+            HttpSession session = request.getSession(true);
+            forRegister.setId(newRegisteredUserId);
+            session.setAttribute(CURRENT_USER_IN_SYSTEM, forRegister);
+
+            appDataInitializer.initItemCarousel(session);
+            appDataInitializer.initUserCart(session, newRegisteredUserId);
             LOGGER.info("Registered user with email: " + email);
 
             return mainPage;

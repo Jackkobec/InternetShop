@@ -50,9 +50,9 @@ public class ClientServiceImpl implements IClientService {
         return userDao.findByEmailAndPassword(email, password);
     }
 
-    public boolean userRegistration(User user) {
+    public Integer userRegistration(User user) {
 
-        return userDao.addNewEntity(user);
+        return userDao.addUser(user);
     }
 
     @Override

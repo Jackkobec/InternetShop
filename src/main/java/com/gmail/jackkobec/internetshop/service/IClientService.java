@@ -16,7 +16,7 @@ public interface IClientService {
 
     User findByEmailAndPassword(final String email, final String password);
 
-    boolean userRegistration(User user);
+    Integer userRegistration(User user);
 
     List<Item> getItemsByCategoryId(final Integer categoryId);
 

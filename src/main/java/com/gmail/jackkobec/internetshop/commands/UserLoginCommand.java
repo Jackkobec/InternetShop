@@ -1,7 +1,6 @@
 package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
-import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.persistence.model.UserType;
 import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
@@ -17,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * <p>UserLoginCommand class execute command for user sign in.
@@ -40,6 +37,7 @@ public class UserLoginCommand implements ICommand {
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
+    private AppDataInitializer appDataInitializer = AppDataInitializer.getAppDataInitializer();
 
     /**
      * Method execute command for user sign in.
@@ -80,8 +78,8 @@ public class UserLoginCommand implements ICommand {
             cookie.setMaxAge(3600);
             response.addCookie(cookie);
 
-            initItemCarousel(request);
-            initUserCart(request, finded.getId());
+            appDataInitializer.initItemCarousel(session);
+            appDataInitializer.initUserCart(session, finded.getId());
             LOGGER.info("Sign in user with email: " + email);
 
             return mainPage;
@@ -98,26 +96,5 @@ public class UserLoginCommand implements ICommand {
     private boolean isUserInTheBlockList(User user) {
 
         return user.getUserType() != null && user.getUserType().equals(UserType.BANNED);
-    }
-
-    private void initItemCarousel(HttpServletRequest request) {
-
-        List<Item> carouselItems = iClientService.initSixItemCarousel();
-        request.getSession(false).setAttribute(SIX_ITEM_CAROUSEL, carouselItems);
-    }
-
-    private void initUserCart(HttpServletRequest request, final Integer userId) {
-
-        HttpSession session = request.getSession(false);
-
-        List<Item> currentUserCart = iClientService.initUserCart(userId);
-        BigDecimal summaryCartPrice = new BigDecimal(0.00);
-
-        for (Item item : currentUserCart) {
-            summaryCartPrice = summaryCartPrice.add(item.getItemPrice());
-        }
-
-        session.setAttribute(CURRENT_USER_CART, currentUserCart);
-        session.setAttribute(SUMMARY_CART_PRICE, summaryCartPrice);
     }
 }

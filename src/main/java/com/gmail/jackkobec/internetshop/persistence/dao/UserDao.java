@@ -20,4 +20,6 @@ public interface UserDao extends CommonDao<User, Integer> {
     boolean addUserToBlockListById(final Integer id);
 
     boolean removeUserFromBlockListById(final Integer id);
+
+    Integer addUser(User user);
 }

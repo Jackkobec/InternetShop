@@ -79,7 +79,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public Integer addNewOrder(Order entity) {
 
-        String sqlQuery = "INSERT INTO orders (user_id, orderDateAndTime, summaryPrice, orderStatus) VALUES(?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO orders (userId, orderDateAndTime, summaryPrice, orderStatus) VALUES(?, ?, ?, ?)";
 
         return executeQueryInPreparedStatement(entity, sqlQuery);
     }
@@ -202,7 +202,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             while (resultSet.next()) {
 
                 order.setId(resultSet.getInt("id"));
-                order.setUserId(resultSet.getInt("user_id"));
+                order.setUserId(resultSet.getInt("userId"));
                 order.setOrderDateAndTime((java.util.Date) resultSet.getObject("orderDateAndTime"));
                 order.setSummaryPrice(resultSet.getBigDecimal("summaryPrice"));
                 order.setOrderStatus(resultSet.getInt("orderStatus"));

@@ -56,13 +56,14 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean addNewEntity(User entity) {
-        String sqlQuery;
+//        String sqlQuery;
+//
+//        if (entity != null) {
+//            sqlQuery = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
+//        } else return false;
 
-        if (entity != null) {
-            sqlQuery = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
-        } else return false;
-
-        return executeQueryInPreparedStatement(entity, sqlQuery);
+//        return executeQueryInPreparedStatement(entity, sqlQuery);
+        return false;
     }
 
 
@@ -146,6 +147,17 @@ public class UserDaoJdbcImpl implements UserDao {
         return executeSimpleQueryInThePreparedStatement(sqlQuery);
     }
 
+    @Override
+    public Integer addUser(User user) {
+        String sqlQuery;
+
+        if (user != null) {
+            sqlQuery = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
+        } else return null;
+
+        return executeQueryInPreparedStatement(user, sqlQuery);
+    }
+
     private boolean executeSimpleQueryInThePreparedStatement(String sqlQuery) {
 
         connection = getConnection();
@@ -182,7 +194,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 user.setLanguage(resultSet.getString("language"));
                 user.setUserType(resultSet.getInt("userType"));
             }
-            System.out.println(user);
+
             return user;
 
         } catch (SQLException e) {
@@ -225,7 +237,7 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
-    private boolean executeQueryInPreparedStatement(User entity, String sqlQuery) {
+    private Integer executeQueryInPreparedStatement(User entity, String sqlQuery) {
 
         if (sqlQuery == null || entity == null) {
             throw new NullPointerException("Передан пустой sqlQuery / entity");
@@ -241,11 +253,17 @@ public class UserDaoJdbcImpl implements UserDao {
 
             preparedStatement.executeUpdate();
 
-            return true;
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            while (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return null;
         } finally {
             closeConnection(connection);
         }
