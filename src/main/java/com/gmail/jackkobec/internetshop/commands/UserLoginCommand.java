@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by Jack on 04.01.2017.
+ * <p>UserLoginCommand class execute command for user sign in.
  */
 public class UserLoginCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(UserLoginCommand.class);
@@ -30,10 +30,26 @@ public class UserLoginCommand implements ICommand {
     private static final String PASSWORD = "password";
     private static final String LANGUAGE_SELECTION = "language_selection";
     private static final String CHECKBOX = "remember_me";
-    
-    private  IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
+    private static final String SELECTED_LOCALE = "selectedLocale";
+
+    private static final String CURRENT_USER_IN_SYSTEM = "currentUserInSystem";
+    private static final String SIX_ITEM_CAROUSEL = "sixItemCarousel";
+    private static final String CURRENT_USER_CART = "currentUserCart";
+    private static final String SUMMARY_CART_PRICE = "summaryCartPrice";
+    private static final String USER_EMAIL_COOKIE = "userEmail";
+
+    private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
+    /**
+     * Method execute command for user sign in.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -44,11 +60,9 @@ public class UserLoginCommand implements ICommand {
         final String password = request.getParameter(PASSWORD);
         final String languageSelection = request.getParameter(LANGUAGE_SELECTION);
         final String checkbox = request.getParameter(CHECKBOX);
-
-        System.out.println(languageSelection);
         final String selectedLanguage = new LanguageService().getLanguageBySelect(Integer.parseInt(languageSelection));
 
-        request.setAttribute("selectedLocale", selectedLanguage);
+        request.setAttribute(SELECTED_LOCALE, selectedLanguage);
 
         if (validationFeedbackManager.preValidation(request, email, password, null)) return loginPage;
 
@@ -59,15 +73,16 @@ public class UserLoginCommand implements ICommand {
             finded.setLanguage(selectedLanguage);
 
             HttpSession session = request.getSession(true);
-            session.setAttribute("currentUserInSystem", finded);
-            session.setAttribute("selectedLocale", selectedLanguage);
+            session.setAttribute(CURRENT_USER_IN_SYSTEM, finded);
+            session.setAttribute(SELECTED_LOCALE, selectedLanguage);
 
-            Cookie cookie = new Cookie("userEmail", finded.getEmail());
+            Cookie cookie = new Cookie(USER_EMAIL_COOKIE, finded.getEmail());
             cookie.setMaxAge(3600);
             response.addCookie(cookie);
 
             initItemCarousel(request);
             initUserCart(request, finded.getId());
+            LOGGER.info("Sign in user with email: " + email);
 
             return mainPage;
 
@@ -88,10 +103,12 @@ public class UserLoginCommand implements ICommand {
     private void initItemCarousel(HttpServletRequest request) {
 
         List<Item> carouselItems = iClientService.initSixItemCarousel();
-        request.getSession(false).setAttribute("sixItemCarousel", carouselItems);
+        request.getSession(false).setAttribute(SIX_ITEM_CAROUSEL, carouselItems);
     }
 
     private void initUserCart(HttpServletRequest request, final Integer userId) {
+
+        HttpSession session = request.getSession(false);
 
         List<Item> currentUserCart = iClientService.initUserCart(userId);
         BigDecimal summaryCartPrice = new BigDecimal(0.00);
@@ -100,7 +117,7 @@ public class UserLoginCommand implements ICommand {
             summaryCartPrice = summaryCartPrice.add(item.getItemPrice());
         }
 
-        request.getSession(false).setAttribute("currentUserCart", currentUserCart);
-        request.getSession(false).setAttribute("summaryCartPrice", summaryCartPrice);
+        session.setAttribute(CURRENT_USER_CART, currentUserCart);
+        session.setAttribute(SUMMARY_CART_PRICE, summaryCartPrice);
     }
 }

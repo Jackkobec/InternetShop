@@ -30,7 +30,7 @@ public class AddNewItemCommand implements ICommand {
     private static final String ITEM_BIG_PICTURE_PATH = "itemBigPicturePath800x600";
     private static final String ITEM_SMALL_PICTURE_PATH = "itemSmallPicturePath350x260";
     private static final String ITEM_RATING = "itemRating";
-    private static final String iTEM_CATEGOTY = "itemCategory";
+    private static final String ITEM_CATEGORY = "itemCategory";
     private static final String ITEM_STATUS = "itemStatus";
 
     private static final String ITEM_MANAGEMENT_MESSAGE = "itemManagementMessage";
@@ -61,7 +61,7 @@ public class AddNewItemCommand implements ICommand {
         final String itemBigPicturePath800x600 = request.getParameter(ITEM_BIG_PICTURE_PATH);
         final String itemSmallPicturePath350x260 = request.getParameter(ITEM_SMALL_PICTURE_PATH);
         final Integer itemRating = Integer.valueOf(request.getParameter(ITEM_RATING));
-        final ItemCategory itemCategory = ItemCategory.getItemCategoryByID(Integer.valueOf(request.getParameter(iTEM_CATEGOTY)));
+        final ItemCategory itemCategory = ItemCategory.getItemCategoryByID(Integer.valueOf(request.getParameter(ITEM_CATEGORY)));
         final ItemStatus itemStatus = ItemStatus.getItemStatus(Integer.valueOf(request.getParameter(ITEM_STATUS)));
 
         Item forCreate = new Item(itemName, itemSmallDescription, itemFullDescription, itemProductInfo,

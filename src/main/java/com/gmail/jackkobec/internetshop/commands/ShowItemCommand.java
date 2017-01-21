@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 12.01.2017.
+ * <p>ShowItemCommand class execute command for show current item.
  */
 public class ShowItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(ShowItemCommand.class);
@@ -21,8 +21,20 @@ public class ShowItemCommand implements ICommand {
     private static final String ITEM_ID = "item_id";
     private static final String ITEM_COUNT = "item_count";
 
+    private static final String CURRENT_ITEM_FOR_SHOW = "currentItemForShow";
+    private static final String ERROR_INFO = "errorInfo";
+
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
+    /**
+     * Method execute command for show current item.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -34,12 +46,14 @@ public class ShowItemCommand implements ICommand {
         Item currentItemForShow = iClientService.getItemById(itemId);
 
         if (currentItemForShow != null) {
-            request.getSession(false).setAttribute("currentItemForShow", currentItemForShow);
+            request.getSession(false).setAttribute(CURRENT_ITEM_FOR_SHOW, currentItemForShow);
+            LOGGER.info("Show item with id: " + itemId);
 
             return itemPage;
 
         } else {
-            request.setAttribute("errorInfo", "Item with " + itemId + " doesn't exist!");
+            request.setAttribute(ERROR_INFO, "Item with " + itemId + " doesn't exist!");
+            LOGGER.error("Item with " + itemId + " doesn't exist!");
 
             return errorPage;
         }

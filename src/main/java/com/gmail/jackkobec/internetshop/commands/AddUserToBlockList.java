@@ -3,6 +3,7 @@ package com.gmail.jackkobec.internetshop.commands;
 import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.exceptions.UserNotFoundException;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
+import com.gmail.jackkobec.internetshop.persistence.model.UserType;
 import com.gmail.jackkobec.internetshop.service.AdminServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IAdminService;
 import org.apache.log4j.LogManager;
@@ -52,8 +53,9 @@ public class AddUserToBlockList implements ICommand {
         User forBlockList = null;
 
         try {
+
             forBlockList = notBannedUsers.stream().filter(user -> user.getId().equals(userId)).findFirst().orElseThrow(UserNotFoundException::new);
-            forBlockList.setUserType(3);
+            forBlockList.setUserType(UserType.BANNED.getUserTypeId());
         } catch (UserNotFoundException e) {
             LOGGER.warn("Repeat form send or user with id " + userId + " not in the notBannedUsers!");
 
@@ -72,7 +74,7 @@ public class AddUserToBlockList implements ICommand {
 
         } else {
             request.setAttribute(ERROR_INFO, "Cat't add to the block list user with id = " + userId);
-            LOGGER.error("User id: " + userId + " error during to the block list.");
+            LOGGER.error("Cat't add to the block list user with id = " + userId);
 
             return errorPage;
         }

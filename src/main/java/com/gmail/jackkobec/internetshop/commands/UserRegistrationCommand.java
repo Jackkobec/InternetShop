@@ -16,20 +16,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 02.01.2017.
+ * <p>UserRegistrationCommand class execute command for register new user.
  */
-public class UserRegistrtionCommand implements ICommand {
-    public static final Logger LOGGER = LogManager.getLogger(UserRegistrtionCommand.class);
+public class UserRegistrationCommand implements ICommand {
+    public static final Logger LOGGER = LogManager.getLogger(UserRegistrationCommand.class);
 
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
     private static final String PASSWORD_CONFIRMATION = "password_confirmation";
     private static final String NAME = "name";
     private static final String LANGUAGE_SELECTION = "language_selection";
-    
+    private static final String CURRENT_USER_IN_SYSTEM = "currentUserInSystem";
+    private static final String ERROR_INFO = "errorInfo";
+
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
     private ValidationFeedbackManager validationFeedbackManager = ValidationFeedbackManager.getValidationFeedbackManager();
 
+    /**
+     * Method execute command for register new user.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -47,26 +58,30 @@ public class UserRegistrtionCommand implements ICommand {
                 .getLanguageBySelect(Integer.parseInt(request.getParameter(LANGUAGE_SELECTION)));
 
         if (validationFeedbackManager.preValidation(request, email, password, passwordConfirmation))
-            
+
             return registrationPage;
 
-       
         User forRegister = new User(email, password, name, language);
         User finded = iClientService.findByEmail(email);
 
         if (finded.getEmail() != null) {
 
-            validationFeedbackManager.createFeedBack(request, true, true, true, validationFeedbackManager.USER_WITH_THIS_EMAIL_ALREADY_EXIST);
-            
+            validationFeedbackManager.createFeedBack(request, true, true, true,
+                    validationFeedbackManager.USER_WITH_THIS_EMAIL_ALREADY_EXIST);
+
             return registrationPage;
-            
+
+        } else if (iClientService.userRegistration(forRegister)) {
+            request.getSession(true).setAttribute(CURRENT_USER_IN_SYSTEM, forRegister);
+            LOGGER.info("Registered user with email: " + email);
+
+            return mainPage;
+
         } else {
-            request.getSession(true).setAttribute("currentUserInSystem", forRegister);
+            request.setAttribute(ERROR_INFO, "User with email: " + email + " not register.");
+            LOGGER.error("User with email: " + email + " not register. ClientService response false.");
 
-            return (iClientService.userRegistration(forRegister))
-                    ? mainPage
-                    : errorPage;
-
+            return errorPage;
         }
     }
 }

@@ -10,11 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 15.01.2017.
+ * <p>PayOrderCommand class execute command for pay order.
  */
 public class PayOrderCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(PayOrderCommand.class);
 
+    /**
+     * Method execute command for pay order.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

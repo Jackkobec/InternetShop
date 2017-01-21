@@ -10,11 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 13.01.2017.
+ * <p>GoToMainPageCommand class execute command for go to the main page.
  */
 public class GoToMainPageCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(GoToMainPageCommand.class);
 
+    /**
+     * Method execute command for go to the main page.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

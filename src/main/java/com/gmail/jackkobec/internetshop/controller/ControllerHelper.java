@@ -47,7 +47,7 @@ public class ControllerHelper {
 
         commands.put("addusertoblocklist", new AddUserToBlockList());
         commands.put("removeuserfromblocklist", new RemoveUserFromBlockList());
-        commands.put("userregistration", new UserRegistrtionCommand());
+        commands.put("userregistration", new UserRegistrationCommand());
         commands.put("userlogout", new UserLogOutCommand());
 
 

@@ -5,9 +5,7 @@ import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.ItemCategory;
 import com.gmail.jackkobec.internetshop.persistence.model.ItemStatus;
 import com.gmail.jackkobec.internetshop.service.AdminServiceImpl;
-import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IAdminService;
-import com.gmail.jackkobec.internetshop.service.IClientService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -18,7 +16,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * Created by Jack on 16.01.2017.
+ * <p>UpdateItemCommand class execute command for update item.
  */
 public class UpdateItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(UpdateItemCommand.class);
@@ -32,7 +30,7 @@ public class UpdateItemCommand implements ICommand {
     private static final String ITEM_BIG_PICTURE_PATH = "itemBigPicturePath800x600";
     private static final String ITEM_SMALL_PICTURE_PATH = "itemSmallPicturePath350x260";
     private static final String ITEM_RATING = "itemRating";
-    private static final String iTEM_CATEGOTY = "itemCategory";
+    private static final String ITEM_CATEGORY = "itemCategory";
     private static final String ITEM_STATUS = "itemStatus";
 
     private static final String ITEM_FOR_EDIT = "itemForEdit";
@@ -40,12 +38,20 @@ public class UpdateItemCommand implements ICommand {
     private static final String ERROR_INFO = "errorInfo";
 
     private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
-    private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
+    /**
+     * Method execute command for update item.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String itemManagementPage;
+        String itemManagementPage = PageManager.getPageManager().getPage(PageManager.ITEM_MANAGEMENT_PAGE);
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
         final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
@@ -57,31 +63,30 @@ public class UpdateItemCommand implements ICommand {
         final String itemBigPicturePath800x600 = request.getParameter(ITEM_BIG_PICTURE_PATH);
         final String itemSmallPicturePath350x260 = request.getParameter(ITEM_SMALL_PICTURE_PATH);
         final Integer itemRating = Integer.valueOf(request.getParameter(ITEM_RATING));
-        final ItemCategory itemCategory = ItemCategory.getItemCategoryByID(Integer.valueOf(request.getParameter(iTEM_CATEGOTY)));
+        final ItemCategory itemCategory = ItemCategory.getItemCategoryByID(Integer.valueOf(request.getParameter(ITEM_CATEGORY)));
         final ItemStatus itemStatus = ItemStatus.getItemStatus(Integer.valueOf(request.getParameter(ITEM_STATUS)));
-
 
         Item forUpdate = new Item(itemId, itemName, itemSmallDescription, itemFullDescription, itemProductInfo,
                 itemPrice, itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus);
 
-        if(forUpdate.getId() == null){
-            LOGGER.warn("Item not update. No item.");
+        if (forUpdate.getId() == null) {
             request.setAttribute(ERROR_INFO, "Error during item update. No item.");
+            LOGGER.error("Item not update. No item.");
 
             return errorPage;
         }
 
         if (iAdminService.updateItemInfo(forUpdate)) {
+            request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item with id: " + itemId + " was updated.");
+            LOGGER.info("Item with id: " + itemId + " was updated.");
 
-            return "/WEB-INF/pages/item_management_page.jsp";
+            return itemManagementPage;
 
-        }else {
-            LOGGER.warn("Item not update. AdminService response = false.");
-            request.setAttribute(ERROR_INFO, "Error during item update. Service response = false.");
+        } else {
+            request.setAttribute(ERROR_INFO, "Error during update item with id: " + itemId + " AdminService response = false.");
+            LOGGER.error("Error during update item with id: " + itemId + " AdminService response = false.");
 
             return errorPage;
         }
-
-        //return "/WEB-INF/pages/item_management_page.jsp";
     }
 }

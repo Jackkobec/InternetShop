@@ -6,11 +6,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * <p>interface ICommand.
- * Created by Jack on 28.12.2016.
+ * <p>Interface ICommand for provide executeCommand method.
  */
 public interface ICommand {
 
+    /**
+     * Method for execute commands.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     String executeCommand(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException;
 }

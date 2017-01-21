@@ -3,6 +3,7 @@ package com.gmail.jackkobec.internetshop.commands;
 import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.exceptions.UserNotFoundException;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
+import com.gmail.jackkobec.internetshop.persistence.model.UserType;
 import com.gmail.jackkobec.internetshop.service.AdminServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IAdminService;
 import org.apache.log4j.LogManager;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Jack on 16.01.2017.
+ * <p>RemoveUserFromBlockList class execute command for remove user from block list.
  */
 public class RemoveUserFromBlockList implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(RemoveUserFromBlockList.class);
@@ -28,6 +29,15 @@ public class RemoveUserFromBlockList implements ICommand {
 
     private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
 
+    /**
+     * Method execute command for remove user from block list.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -43,10 +53,11 @@ public class RemoveUserFromBlockList implements ICommand {
         User forRemoveFromBlockList = null;
 
         try {
+
             forRemoveFromBlockList = bannedUsers.stream().filter(user -> user.getId().equals(userId)).findFirst().orElseThrow(UserNotFoundException::new);
-            forRemoveFromBlockList.setUserType(1);
+            forRemoveFromBlockList.setUserType(UserType.CLIENT.getUserTypeId());
         } catch (UserNotFoundException e) {
-            LOGGER.warn("Повторная отправка формы или пользователя с id " + userId + " отсуствует в списке bannedUsers!");
+            LOGGER.warn("Repeat form send or user with id " + userId + " not in the bannedUsers!");
 
             return userManagementPage;
         }
@@ -58,11 +69,13 @@ public class RemoveUserFromBlockList implements ICommand {
 
             session.setAttribute(ALL_NOT_BANNED_USERS, notBannedUsers);
             session.setAttribute(ALL_BANNED_USERS, bannedUsers);
+            LOGGER.info("User id: " + userId + " removed from block list.");
 
             return userManagementPage;
 
         } else {
-            request.setAttribute(ERROR_INFO, "Cat't remove from the blocklist user with id = " + userId);
+            request.setAttribute(ERROR_INFO, "Cat't remove from the block list user with id = " + userId);
+            LOGGER.error("Cat't remove from the block list user with id = " + userId);
 
             return errorPage;
         }

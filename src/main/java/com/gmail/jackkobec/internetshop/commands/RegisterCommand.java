@@ -10,16 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Jack on 30.12.2016.
+ * <p>RegisterCommand class execute command for go to the registration form page.
  */
 public class RegisterCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(RegisterCommand.class);
 
+    /**
+     * Method execute command for go to the registration form page.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String registrationPage = PageManager.getPageManager().getPage(PageManager.REGISTRATION_PAGE);
-        LOGGER.info("RegisterCommand");
+        LOGGER.info("RegisterCommand command.");
 
         return registrationPage;
     }

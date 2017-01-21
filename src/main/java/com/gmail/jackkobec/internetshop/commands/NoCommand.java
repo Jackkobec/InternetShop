@@ -21,6 +21,7 @@ public class NoCommand implements ICommand {
     private static final String ERROR_INFO = "errorInfo";
 
     /**
+     * Method execute command if command is incorrect or does't exist.
      *
      * @param request
      * @param response

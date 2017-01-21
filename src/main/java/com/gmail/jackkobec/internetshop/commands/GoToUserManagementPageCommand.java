@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Jack on 15.01.2017.
+ * <p>GoToUserManagementPageCommand class execute command for go to the user management page.
  */
 public class GoToUserManagementPageCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(GoToUserManagementPageCommand.class);
@@ -27,31 +27,40 @@ public class GoToUserManagementPageCommand implements ICommand {
     private static final String ALL_NOT_BANNED_USERS = "notBannedUsers";
     private static final String ALL_BANNED_USERS = "bannedUsers";
 
-    IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
+    private IAdminService iAdminService = AdminServiceImpl.getAdminServiceImpl();
 
-
+    /**
+     * Method execute command for go to the user management page.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String userManagementPage = PageManager.getPageManager().getPage(PageManager.USER_MANAGEMENT_PAGE);
         String errorPage = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
 
-        User currentUserInSystem  = (User) request.getSession(false).getAttribute(CURRENT_USER_IN_SYSTEM);
+        HttpSession session = request.getSession(false);
+        User currentUserInSystem = (User) session.getAttribute(CURRENT_USER_IN_SYSTEM);
 
-        if(!currentUserInSystem.getUserType().equals(UserType.ADMIN)){
+        if (!currentUserInSystem.getUserType().equals(UserType.ADMIN)) {
             request.setAttribute(ERROR_INFO, "User is not Admin.");
+            LOGGER.error("User is not Admin.");
 
             return errorPage;
         }
 
         List<User> notBannedUsers = iAdminService.getAllNotBannedUsers();
-        System.out.println("notBannedUsers" + notBannedUsers);
         List<User> bannedUsers = iAdminService.getAllBannedUsers();
 
-        HttpSession session = request.getSession(false);
         session.setAttribute(ALL_NOT_BANNED_USERS, notBannedUsers);
         session.setAttribute(ALL_BANNED_USERS, bannedUsers);
+        LOGGER.info("GoToUserManagementPageCommand command.");
 
-
-        return "/WEB-INF/pages/user_management_page.jsp";
+        return userManagementPage;
     }
 }
