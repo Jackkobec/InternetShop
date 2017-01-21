@@ -49,13 +49,16 @@ public class OrderDaoJdbcImpl implements OrderDao {
     }
 
     @Override
-    public boolean addNewEntity(Order entity) {
-        return false;
+    public Integer addNewEntity(Order entity) {
+
+        String sqlQuery = "INSERT INTO orders (userId, orderDateAndTime, summaryPrice, orderStatus) VALUES(?, ?, ?, ?)";
+
+        return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
     @Override
-    public boolean updateEntityInfo(Order entity) {
-        return false;
+    public Integer updateEntityInfo(Order entity) {
+        return null;
     }
 
     @Override
@@ -181,7 +184,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 return resultSet.getInt(1);
             }
 
-            return null;
+            return entity.getId();
 
         } catch (SQLException e) {
             e.printStackTrace();

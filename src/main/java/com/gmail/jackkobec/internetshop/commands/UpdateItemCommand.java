@@ -76,15 +76,15 @@ public class UpdateItemCommand implements ICommand {
             return errorPage;
         }
 
-        if (iAdminService.updateItemInfo(forUpdate)) {
+        if (iAdminService.updateItemInfo(forUpdate).equals(itemId)) {
             request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item with id: " + itemId + " was updated.");
             LOGGER.info("Item with id: " + itemId + " was updated.");
 
             return itemManagementPage;
 
         } else {
-            request.setAttribute(ERROR_INFO, "Error during update item with id: " + itemId + " AdminService response = false.");
-            LOGGER.error("Error during update item with id: " + itemId + " AdminService response = false.");
+            request.setAttribute(ERROR_INFO, "Error during update item with id: " + itemId + " AdminService response = null.");
+            LOGGER.error("Error during update item with id: " + itemId + " AdminService response = null.");
 
             return errorPage;
         }

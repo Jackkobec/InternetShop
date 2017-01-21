@@ -5,11 +5,11 @@ import java.util.List;
 /**
  * Created by Jack on 28.12.2016.
  */
-public interface  CommonDao<E, K> {
+public interface CommonDao<E, K> {
 
-    boolean addNewEntity(E entity);
+    Integer addNewEntity(E entity);
 
-    boolean updateEntityInfo(E entity);
+    Integer updateEntityInfo(E entity);
 
     boolean deleteEntityById(K id);
 

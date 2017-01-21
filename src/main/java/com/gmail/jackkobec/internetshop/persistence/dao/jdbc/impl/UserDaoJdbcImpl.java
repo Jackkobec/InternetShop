@@ -55,21 +55,21 @@ public class UserDaoJdbcImpl implements UserDao {
 
 
     @Override
-    public boolean addNewEntity(User entity) {
-//        String sqlQuery;
-//
-//        if (entity != null) {
-//            sqlQuery = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
-//        } else return false;
+    public Integer addNewEntity(User entity) {
 
-//        return executeQueryInPreparedStatement(entity, sqlQuery);
-        return false;
+        String sqlQuery;
+
+        if (entity != null) {
+            sqlQuery = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
+        } else return null;
+
+        return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
 
     @Override
-    public boolean updateEntityInfo(User entity) {
-        return false;
+    public Integer updateEntityInfo(User entity) {
+        return null;
     }
 
     @Override
@@ -259,7 +259,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 return resultSet.getInt(1);
             }
 
-            return null;
+            return entity.getId();
 
         } catch (SQLException e) {
             e.printStackTrace();

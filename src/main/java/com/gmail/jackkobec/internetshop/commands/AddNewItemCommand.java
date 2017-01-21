@@ -67,15 +67,17 @@ public class AddNewItemCommand implements ICommand {
         Item forCreate = new Item(itemName, itemSmallDescription, itemFullDescription, itemProductInfo,
                 itemPrice, itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus);
 
-        if (iAdminService.addNewItem(forCreate)) {
+        Integer newItemId = iAdminService.addNewItem(forCreate);
 
-            request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item " + itemName + " added successfully.");
-            LOGGER.info("Added new item with name: " + itemName);
+        if (newItemId != null) {
+
+            request.setAttribute(ITEM_MANAGEMENT_MESSAGE, "Item with id: " + newItemId + " added successfully.");
+            LOGGER.info("Added new item with name: " + newItemId);
 
             return itemManagementPage;
         } else {
-            request.setAttribute(ERROR_INFO, "Item not add. AdminService response false.");
-            LOGGER.error("Item not add. AdminService response false.");
+            request.setAttribute(ERROR_INFO, "Item not add. AdminService response null.");
+            LOGGER.error("Item not add. AdminService response null.");
 
             return errorPage;
         }

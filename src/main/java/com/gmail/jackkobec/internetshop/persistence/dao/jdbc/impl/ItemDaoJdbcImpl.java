@@ -53,7 +53,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
     }
 
     @Override
-    public boolean addNewEntity(Item entity) {
+    public Integer addNewEntity(Item entity) {
 
         String sqlQuery = "INSERT INTO item (itemName, itemSmallDescription, itemFullDescription, itemProductInfo, itemPrice, " +
                 "itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -62,7 +62,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
     }
 
     @Override
-    public boolean updateEntityInfo(Item entity) {
+    public Integer updateEntityInfo(Item entity) {
 
         String sqlQuery = "UPDATE item SET item.itemName = ?, item.itemSmallDescription = ?, item.itemFullDescription = ?, item.itemProductInfo = ?, " +
                 "item.itemPrice = ?, item.itemBigPicturePath800x600 = ?, item.itemSmallPicturePath350x260 = ?, item.itemRating = ?, item.itemCategory = ?, " +
@@ -186,7 +186,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
         }
     }
 
-    private boolean executeQueryInPreparedStatement(Item entity, String sqlQuery) {
+    private Integer executeQueryInPreparedStatement(Item entity, String sqlQuery) {
 
         if (null == sqlQuery || entity == null) {
             throw new NullPointerException("Передан пустой sqlQuery / entity");
@@ -207,11 +207,17 @@ public class ItemDaoJdbcImpl implements ItemDao {
             preparedStatement.setInt(10, entity.getItemStatus().getItemStatusId());
             preparedStatement.execute();
 
-            return true;
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            while (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+
+            return entity.getId();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return null;
         } finally {
             closeConnection(connection);
         }

@@ -52,7 +52,7 @@ public class ClientServiceImpl implements IClientService {
 
     public Integer userRegistration(User user) {
 
-        return userDao.addUser(user);
+        return userDao.addNewEntity(user);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ClientServiceImpl implements IClientService {
     @Override
     public Integer createNewOrder(Order order) {
 
-        return orderDao.addNewOrder(order);
+        return orderDao.addNewEntity(order);
     }
 
     @Override

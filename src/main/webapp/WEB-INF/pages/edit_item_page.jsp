@@ -280,7 +280,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         </div>
                         <div class="form-group">
                             <label >Product Info</label>
-                            <textarea rows="7" class="form-control" name="itemProductInfo" placeholder="Product Info" value="${itemForEdit.itemProductInfo}"></textarea>
+                            <textarea rows="7" class="form-control" name="itemProductInfo" placeholder="Product Info">${itemForEdit.itemProductInfo}</textarea>
                         </div>
                         <div class="form-group">
                             <label >Price</label>
