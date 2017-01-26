@@ -141,7 +141,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
     }
 
     @Override
-    public List<Item> getItemsFromOrderByOrderId(Integer orderId) {
+    public List<Item> getItemsFromOrderByOrderId(final Integer orderId) {
 
         String sqlQuery = "SELECT * FROM item " +
                 "LEFT JOIN order_item ON item.id = order_item.item_id " +
@@ -150,7 +150,15 @@ public class ItemDaoJdbcImpl implements ItemDao {
         return getListOfItemBySqlQuery(sqlQuery);
     }
 
-    private boolean executeQueryInPreparedStatementForCart(Integer itemId, Integer userId, String sqlQuery) {
+    @Override
+    public boolean removeAllItemsFromUserCart(final Integer userId) {
+
+        String sqlQuery = "DELETE FROM cart WHERE cart.user_id = " + userId;
+
+        return executeSimpleQueryInThePreparedStatement(sqlQuery);
+    }
+
+    private boolean executeQueryInPreparedStatementForCart(final Integer itemId, final Integer userId, String sqlQuery) {
 
         connection = getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {

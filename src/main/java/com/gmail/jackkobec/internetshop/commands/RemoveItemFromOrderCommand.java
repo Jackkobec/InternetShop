@@ -66,15 +66,17 @@ public class RemoveItemFromOrderCommand implements ICommand {
 
         List<Item> itemsInOrder = iClientService.getItemsFromOrderByOrderId(order.getId());
 
-        if(itemsInOrder.size() == 0){
+        if (itemsInOrder.size() == 0) {
 
             return new CancelOrderCommand().executeCommand(request, response);
         }
 
         BigDecimal summaryOrderPrice = itemsInOrder.stream().map(Item::getItemPrice).reduce(BigDecimal::add)
                 .orElseGet(() -> new BigDecimal(0.00));
+        System.out.println("summaryOrderPrice : " + summaryOrderPrice);
         order.setItemList(itemsInOrder);
         order.setSummaryPrice(summaryOrderPrice);
+        iClientService.updateOrderInfo(order);
 
         String currentOrderFormattedDate = String.format(
                 DATE_AND_TIME_FORMAT_PATTERN, order.getOrderDateAndTime());

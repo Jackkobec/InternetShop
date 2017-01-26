@@ -43,4 +43,6 @@ public interface IClientService {
     boolean cancelOrder (final Integer orderId);
 
     Integer updateOrderInfo(Order order);
+
+    boolean removeAllItemsFromUserCart(final Integer userId);
 }

@@ -22,6 +22,8 @@ public class CancelOrderCommand implements ICommand {
     private static final String ERROR_INFO = "errorInfo";
     private static final String MAIN_PAGE_ALERT_CLASS = "mainPageAlertClass";
     private static final String ALERT_ALERT_WARNING_CLASS = "alert alert-warning alert-dismissible";
+    private static final String MAIN_PAGE_ALERT_FLAG = "mainPageAlertFlag";
+    private static final String MAIN_PAGE_ALERT_MESSAGE = "mainPageAlertMessage";
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
@@ -45,9 +47,9 @@ public class CancelOrderCommand implements ICommand {
 
         if (iClientService.cancelOrder(orderForCancel.getId())) {
 
-            request.setAttribute("mainPageAlertFlag", true);
+            request.setAttribute(MAIN_PAGE_ALERT_FLAG, true);
             request.setAttribute(MAIN_PAGE_ALERT_CLASS, ALERT_ALERT_WARNING_CLASS);
-            request.setAttribute("mainPageAlertMessage", "Order with id: " + orderForCancel.getId() + " canceled.");
+            request.setAttribute(MAIN_PAGE_ALERT_MESSAGE, "Order with id: " + orderForCancel.getId() + " canceled.");
 
             LOGGER.info("Order with id: " + currentUserOrderId + " canceled!");
 

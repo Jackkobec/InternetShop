@@ -1,8 +1,10 @@
 package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
+import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import com.gmail.jackkobec.internetshop.persistence.model.Order;
 import com.gmail.jackkobec.internetshop.persistence.model.OrderStatus;
+import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IClientService;
 import org.apache.log4j.LogManager;
@@ -11,7 +13,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by Jack on 26.01.2017.
@@ -27,6 +32,13 @@ public class ConfirmPaymentCommand implements ICommand {
 
     private static final String DATE_AND_TIME_FORMAT_PATTERN = "Date %1$td.%1$tm.%1$ty Time %1$tH:%1$tM:%1$tS";
     private static final String ALERT_ALERT_SUCCESS_CLASS = "alert alert-success alert-dismissible";
+    private static final String MAIN_PAGE_ALERT_FLAG = "mainPageAlertFlag";
+    private static final String MAIN_PAGE_ALERT_MESSAGE = "mainPageAlertMessage";
+
+    private static final String CURRENT_USER_IN_SYSTEM = "currentUserInSystem";
+
+    private static final String SUMMARY_CART_PRICE = "summaryCartPrice";
+    private static final String CURRENT_USER_CART = "currentUserCart";
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
@@ -37,6 +49,10 @@ public class ConfirmPaymentCommand implements ICommand {
 
         final Integer currentUserOrderForPaymentId = Integer.valueOf(request.getParameter(CURRENT_USER_ORDER_FOR_PAYMENT_ID));
 
+        HttpSession session = request.getSession(false);
+        User currentUserInSystem = (User) session.getAttribute(CURRENT_USER_IN_SYSTEM);
+        List<Item> currentUserCart = (List<Item>) session.getAttribute(CURRENT_USER_CART);
+
         Order paidOrder = iClientService.getOrderById(currentUserOrderForPaymentId);
         paidOrder.setOrderStatus(OrderStatus.DONE.getOrderStatusId());
 
@@ -44,9 +60,19 @@ public class ConfirmPaymentCommand implements ICommand {
 
         if (paidOrderId.equals(paidOrder.getId())) {
 
-            request.setAttribute("mainPageAlertFlag", true);
+            request.setAttribute(MAIN_PAGE_ALERT_FLAG, true);
             request.setAttribute(MAIN_PAGE_ALERT_CLASS, ALERT_ALERT_SUCCESS_CLASS);
-            request.setAttribute("mainPageAlertMessage", "Order with id: " + paidOrderId + " paid.");
+            request.setAttribute(MAIN_PAGE_ALERT_MESSAGE, "Order with id: " + paidOrderId + " paid.");
+
+            //clean cart
+            if(iClientService.removeAllItemsFromUserCart(currentUserInSystem.getId())){
+
+                currentUserCart.removeAll(currentUserCart);
+                BigDecimal summaryCartPrice = new BigDecimal(0.00);
+
+                session.setAttribute(SUMMARY_CART_PRICE, summaryCartPrice);
+                session.setAttribute(CURRENT_USER_CART, currentUserCart);
+            }
 
             LOGGER.info("Order with id: " + paidOrderId + " paid!");
 

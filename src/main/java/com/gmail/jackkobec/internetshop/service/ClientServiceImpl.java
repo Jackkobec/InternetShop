@@ -132,4 +132,10 @@ public class ClientServiceImpl implements IClientService {
 
         return orderDao.updateEntityInfo(order);
     }
+
+    @Override
+    public boolean removeAllItemsFromUserCart(final Integer userId) {
+
+        return itemDao.removeAllItemsFromUserCart(userId);
+    }
 }
