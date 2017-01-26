@@ -340,9 +340,21 @@ THE SOFTWARE.
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12">
-                                <button class="subscribe btn btn-success btn-lg btn-block" type="button">Start Subscription</button>
+                            <%--<div class="col-xs-12">--%>
+                                <%--<button class="subscribe btn btn-success btn-lg btn-block" type="button">Start Subscription</button>--%>
+                            <%--</div>--%>
+                                <form action="Controller?command=confirmpayment" method="POST">
+                                    <input type="hidden" name="currentUserOrderForPayment" value="${currentUserOrderForPayment.id}">
+                            <div class="col-xs-6">
+                                <button class="subscribe btn btn-success btn-lg btn-block" type="button">Pay order</button>
                             </div>
+                                    </form>
+                                <form action="Controller?command=cancelpayment" method="POST">
+                                    <input type="hidden" name="currentUserOrderForPayment" value="${currentUserOrderForPayment.id}">
+                                <div class="col-xs-6">
+                                    <button class="subscribe btn btn-danger btn-lg btn-block" type="button">Cancel payment</button>
+                                </div>
+                                    </form>
                         </div>
                         <div class="row" style="display:none;">
                             <div class="col-xs-12">
@@ -358,21 +370,29 @@ THE SOFTWARE.
         </div>
 
         <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
-            <p><h1>Features:</h1>
+            <p><h1>Payment details:</h1>
+
+            <div class="alert alert-warning" role="alert">
+                <h1>Order Id: ${currentUserOrderForPayment.id}, from: ${currentOrderForPaymentFormattedDate}</h1>
+            </div>
+
+            <p><h2>You pay for ${currentUserOrderForPayment.itemList.size()} items:</h2>
             <ul>
-                <li>As-you-type, input formatting</li>
-                <li>Form field validation (also as you type)</li>
-                <li>Graceful error feedback for declined card, etc</li>
-                <li>AJAX form submission w/ visual feedback</li>
-                <li>Creates a Stripe credit card token</li>
+                <c:forEach var="item" items="${currentUserOrderForPayment.itemList}">
+                <li><h4 class="media-heading"><a href="Controller?command=showitem&item_id=${item.id}">${item.itemName}</a>
+                       <span class="text-success"><strong>${item.itemStatus}</strong></span>    <strong>$${item.itemPrice}</strong></h4>
+                </li>
+                </c:forEach>
             </ul>
+            <p><h2>Summary price: ${currentUserOrderForPayment.summaryPrice}$</h2>
             </p>
             <p>Be sure to replace the dummy API key with a valid Stripe API key.</p>
 
-            <p>Built upon: Bootstrap, jQuery,
-                <a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a>,
-                <a href="https://github.com/stripe/jquery.payment">jQuery.payment library</a>,
-                and <a href="https://stripe.com/docs/stripe.js">Stripe.js</a>
+            <p>
+            <form action="Controller?command=editorder" method="POST">
+                <input type="hidden" name="currentUserOrderForPayment" value="${currentUserOrderForPayment.id}">
+                <button type="button" class="btn btn-warning btn-lg">Edit order</button>
+            </form>
             </p>
         </div>
 
