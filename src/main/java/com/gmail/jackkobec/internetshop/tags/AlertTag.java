@@ -12,6 +12,7 @@ public class AlertTag extends TagSupport {
 
     private static final String ALERT_SUCCESS_CLASS = "alert alert-success";
     private static final String ALERT_DANGER_CLASS = "alert alert-danger";
+    private static final String ALERT_WARNING_DISMISSIBLE_CLASS = "alert alert-warning alert-dismissible";
 
     private String alertClass;
     private String alertMessage;
@@ -41,8 +42,14 @@ public class AlertTag extends TagSupport {
                 jspWriter.print("<div class=" + "\"" + ALERT_DANGER_CLASS + "\"" + "role =\"alert\">\n" +
                         "<h1>" + alertMessage + "</h1>\n" +
                         "</div>");
+            } else if (ALERT_WARNING_DISMISSIBLE_CLASS.equals(alertClass)) {
 
+                jspWriter.print("<div class=" + "\"" + ALERT_WARNING_DISMISSIBLE_CLASS + "\"" + "role=\"alert\">\n" +
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n"
+                        + alertMessage +
+                        "</div>");
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

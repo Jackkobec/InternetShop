@@ -6,6 +6,7 @@
 вы можете заставить его это делать, удалив файл класса главной страницы.--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="/WEB-INF/alertTag.tld" prefix="ctg"%>
 
 <fmt:setLocale value="${selectedLocale}" scope="session"/>
 <fmt:setBundle basename="language" var="rb"/>
@@ -96,6 +97,14 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <div class="row"><a data-toggle="modal" href="#myAdminModal"></span>Admin</a></div>
                     </li>
                 </c:if>
+
+                <%--Main Page Alert--%>
+                <c:if test="${mainPageAlertFlag}">
+                    <li2>
+                        <ctg:alertTag alertClass="alert alert-warning alert-dismissible" alertMessage="${mainPageAlertMessage}"/>
+                    </li2>
+                </c:if>
+                <%--/Main Page Alert--%>
             </ul>
         </div>
     </div>

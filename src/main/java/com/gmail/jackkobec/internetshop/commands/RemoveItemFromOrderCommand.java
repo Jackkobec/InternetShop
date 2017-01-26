@@ -65,6 +65,12 @@ public class RemoveItemFromOrderCommand implements ICommand {
         }
 
         List<Item> itemsInOrder = iClientService.getItemsFromOrderByOrderId(order.getId());
+
+        if(itemsInOrder.size() == 0){
+
+            return new CancelOrderCommand().executeCommand(request, response);
+        }
+
         BigDecimal summaryOrderPrice = itemsInOrder.stream().map(Item::getItemPrice).reduce(BigDecimal::add)
                 .orElseGet(() -> new BigDecimal(0.00));
         order.setItemList(itemsInOrder);

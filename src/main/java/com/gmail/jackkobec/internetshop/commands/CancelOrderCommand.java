@@ -42,6 +42,10 @@ public class CancelOrderCommand implements ICommand {
         Order orderForCancel = iClientService.getOrderById(currentUserOrderId);
 
         if (iClientService.cancelOrder(orderForCancel.getId())) {
+
+            request.setAttribute("mainPageAlertFlag", true);
+            request.setAttribute("mainPageAlertMessage", "Order with id: " + orderForCancel.getId() + " canceled.");
+
             LOGGER.info("Order with id: " + currentUserOrderId + " canceled!");
 
             return PageManager.getPageManager().getPage(PageManager.MAIN_PAGE);
