@@ -36,6 +36,8 @@ public class ControllerHelper {
         commands.put("removeitemfromorder", new RemoveItemFromOrderCommand());
         commands.put("cancelorder", new CancelOrderCommand());
         commands.put("payorder", new PayOrderCommand());
+        commands.put("editorder", new EditOrderCommand());
+        commands.put("confirmpayment", new ConfirmPaymentCommand());
 
         commands.put("gotousermanagementpage", new GoToUserManagementPageCommand());
         commands.put("gotoitemmanagementpage", new GoToItemManagementPage());

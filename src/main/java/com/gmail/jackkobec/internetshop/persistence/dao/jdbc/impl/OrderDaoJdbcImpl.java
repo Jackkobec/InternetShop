@@ -58,7 +58,10 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Integer updateEntityInfo(Order entity) {
-        return null;
+
+        String sqlQuery = "UPDATE orders SET userId = ?, orderDateAndTime = ?, summaryPrice = ?, orderStatus = ? WHERE orders.id = " + entity.getId();
+
+        return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
     @Override

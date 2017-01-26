@@ -126,4 +126,10 @@ public class ClientServiceImpl implements IClientService {
 
         return orderDao.cancelOrder(orderId);
     }
+
+    @Override
+    public Integer updateOrderInfo(Order order) {
+
+        return orderDao.updateEntityInfo(order);
+    }
 }

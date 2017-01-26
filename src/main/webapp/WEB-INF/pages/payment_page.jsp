@@ -259,12 +259,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <!-- Vendor libraries -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
+<%--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">--%>
+<%--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>--%>
+<%--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>--%>
 
 <!-- If you're using Stripe for payments -->
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<%--<script type="text/javascript" src="https://js.stripe.com/v2/"></script>--%>
 
 <div class="container">
     <div class="row">
@@ -284,8 +284,7 @@ THE SOFTWARE.
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
-                        <div class="row">
+                    <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label for="cardNumber">CARD NUMBER</label>
@@ -344,15 +343,15 @@ THE SOFTWARE.
                                 <%--<button class="subscribe btn btn-success btn-lg btn-block" type="button">Start Subscription</button>--%>
                             <%--</div>--%>
                                 <form action="Controller?command=confirmpayment" method="POST">
-                                    <input type="hidden" name="currentUserOrderForPayment" value="${currentUserOrderForPayment.id}">
+                                    <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
                             <div class="col-xs-6">
-                                <button class="subscribe btn btn-success btn-lg btn-block" type="button">Pay order</button>
+                                <button class="btn btn-success btn-lg btn-block" type="submit">Pay order</button>
                             </div>
                                     </form>
-                                <form action="Controller?command=cancelpayment" method="POST">
-                                    <input type="hidden" name="currentUserOrderForPayment" value="${currentUserOrderForPayment.id}">
+                                <form action="Controller?command=editorder" method="POST">
+                                    <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
                                 <div class="col-xs-6">
-                                    <button class="subscribe btn btn-danger btn-lg btn-block" type="button">Cancel payment</button>
+                                    <button class="btn btn-danger btn-lg btn-block" type="submit">Cancel payment</button>
                                 </div>
                                     </form>
                         </div>
@@ -361,7 +360,6 @@ THE SOFTWARE.
                                 <p class="payment-errors"></p>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
             <!-- CREDIT CARD FORM ENDS HERE -->
@@ -390,8 +388,8 @@ THE SOFTWARE.
 
             <p>
             <form action="Controller?command=editorder" method="POST">
-                <input type="hidden" name="currentUserOrderForPayment" value="${currentUserOrderForPayment.id}">
-                <button type="button" class="btn btn-warning btn-lg">Edit order</button>
+                <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
+                <button type="submit" class="btn btn-warning btn-lg">Edit order</button>
             </form>
             </p>
         </div>
@@ -482,7 +480,7 @@ THE SOFTWARE.
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
 <!-- Добавляем свой скрипт -->
-<script src="../../view.components/js/forpayment.js"></script>
+<%--<script src="../../view.components/js/forpayment.js"></script>--%>
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>

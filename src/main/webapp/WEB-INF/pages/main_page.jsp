@@ -100,8 +100,11 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                 <%--Main Page Alert--%>
                 <c:if test="${mainPageAlertFlag}">
+                    <c:if test="${mainPageAlertClass == ''}">
+                        <c:set var="mainPageAlertClass" value="alert alert-warning alert-dismissible"/>
+                        </c:if>
                     <li2>
-                        <ctg:alertTag alertClass="alert alert-warning alert-dismissible" alertMessage="${mainPageAlertMessage}"/>
+                        <ctg:alertTag alertClass="${mainPageAlertClass}" alertMessage="${mainPageAlertMessage}"/>
                     </li2>
                 </c:if>
                 <%--/Main Page Alert--%>
