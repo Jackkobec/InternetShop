@@ -45,4 +45,6 @@ public interface IClientService {
     Integer updateOrderInfo(Order order);
 
     boolean removeAllItemsFromUserCart(final Integer userId);
+
+    List<Order> getAllUserOrders(final Integer userId);
 }

@@ -3,10 +3,12 @@ package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.dao.OrderDao;
 import com.gmail.jackkobec.internetshop.persistence.model.Order;
+import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -137,6 +139,14 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    @Override
+    public List<Order> getAllUserOrders(final Integer userId) {
+
+        String sqlQuery = "SELECT * FROM orders WHERE orders.userId = " + userId;
+
+        return getListOfOrdersBySqlQuery(sqlQuery);
+    }
+
     private void startTransaction(Connection connection) {
 
         try {
@@ -223,7 +233,37 @@ public class OrderDaoJdbcImpl implements OrderDao {
         } finally {
             closeConnection(connection);
         }
+    }
 
+    private List<Order> getListOfOrdersBySqlQuery(String sqlQuery) {
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+             ResultSet resultSet = preparedStatement.executeQuery(sqlQuery)) {
+
+            List<Order> orders = new ArrayList<>();
+
+            while (resultSet.next()) {
+
+                Order order = new Order();
+
+                order.setId(resultSet.getInt("id"));
+                order.setUserId(resultSet.getInt("userId"));
+                order.setOrderDateAndTime((java.util.Date) resultSet.getObject("orderDateAndTime"));
+                order.setSummaryPrice(resultSet.getBigDecimal("summaryPrice"));
+                order.setOrderStatus(resultSet.getInt("orderStatus"));
+
+                orders.add(order);
+            }
+
+            return orders;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeConnection(connection);
+        }
     }
 
     private boolean executeQueryInPreparedStatementForOrder(Integer orderId, Integer itemId, String sqlQuery) {

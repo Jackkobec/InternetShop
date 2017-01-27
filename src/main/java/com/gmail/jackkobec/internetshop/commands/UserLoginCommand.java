@@ -80,6 +80,7 @@ public class UserLoginCommand implements ICommand {
 
             appDataInitializer.initItemCarousel(session);
             appDataInitializer.initUserCart(session, finded.getId());
+            appDataInitializer.initUserOrders(session, finded.getId());
             LOGGER.info("Sign in user with email: " + email);
 
             return mainPage;

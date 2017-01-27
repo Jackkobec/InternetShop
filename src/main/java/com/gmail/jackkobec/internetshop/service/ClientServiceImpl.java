@@ -138,4 +138,10 @@ public class ClientServiceImpl implements IClientService {
 
         return itemDao.removeAllItemsFromUserCart(userId);
     }
+
+    @Override
+    public List<Order> getAllUserOrders(final Integer userId) {
+
+        return orderDao.getAllUserOrders(userId);
+    }
 }

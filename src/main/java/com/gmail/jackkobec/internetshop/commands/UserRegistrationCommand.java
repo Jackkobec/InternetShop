@@ -87,6 +87,7 @@ public class UserRegistrationCommand implements ICommand {
 
             appDataInitializer.initItemCarousel(session);
             appDataInitializer.initUserCart(session, newRegisteredUserId);
+            appDataInitializer.initUserOrders(session, finded.getId());
             LOGGER.info("Registered user with email: " + email);
 
             return mainPage;

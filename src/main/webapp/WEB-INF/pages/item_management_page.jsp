@@ -583,7 +583,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
                 </ul>
 
-            </div>
+            </div><%--table end--%>
+
 
         </div>
     </div>
