@@ -1,9 +1,11 @@
 package com.gmail.jackkobec.internetshop.persistence.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Jack on 27.12.2016.
  */
-public enum ItemCategory {
+public enum ItemCategory implements Serializable {
 
     FOR_SELF_DEFENSE("FOR SELF-DEFENSE" , 1), FOR_RESPECT("FOR RESPECT", 2), ULTIMATE_SOLUTIONS("ULTIMATE SOLUTIONS", 3);
     private final String categoryName;

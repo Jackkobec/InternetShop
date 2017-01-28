@@ -171,4 +171,10 @@ public class ValidationFeedbackManager {
 
         return false;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
+    }
 }

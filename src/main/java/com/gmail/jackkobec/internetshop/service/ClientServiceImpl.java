@@ -144,4 +144,22 @@ public class ClientServiceImpl implements IClientService {
 
         return orderDao.getAllUserOrders(userId);
     }
+
+    @Override
+    public boolean removeAllNotPaidOrders(final Integer userId) {
+
+        return orderDao.removeAllNotPaidOrders(userId);
+    }
+
+    @Override
+    public Integer updateUser(User user) {
+
+        return userDao.updateEntityInfo(user);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
+    }
 }

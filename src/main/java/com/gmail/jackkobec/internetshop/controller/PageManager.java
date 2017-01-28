@@ -64,4 +64,9 @@ public class PageManager {
         return resourceBundle.getString(pageName);
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
+    }
 }

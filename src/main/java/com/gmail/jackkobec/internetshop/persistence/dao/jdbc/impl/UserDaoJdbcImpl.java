@@ -69,7 +69,14 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public Integer updateEntityInfo(User entity) {
-        return null;
+
+        String sqlQuery;
+
+        if (entity != null) {
+            sqlQuery = "UPDATE user SET user.email = ?, user.password = ?, user.name = ?, user.language = ? WHERE user.id = " + entity.getId();
+        } else return null;
+
+        return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
     @Override
@@ -267,5 +274,11 @@ public class UserDaoJdbcImpl implements UserDao {
         } finally {
             closeConnection(connection);
         }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
     }
 }

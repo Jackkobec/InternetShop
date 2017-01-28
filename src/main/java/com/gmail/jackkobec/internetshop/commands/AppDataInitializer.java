@@ -61,4 +61,10 @@ public class AppDataInitializer {
 
         session.setAttribute(CURRENT_USER_ORDERS, userOrders);
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
+    }
 }

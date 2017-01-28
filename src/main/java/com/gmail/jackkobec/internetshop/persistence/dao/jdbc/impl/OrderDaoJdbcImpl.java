@@ -147,6 +147,14 @@ public class OrderDaoJdbcImpl implements OrderDao {
         return getListOfOrdersBySqlQuery(sqlQuery);
     }
 
+    @Override
+    public boolean removeAllNotPaidOrders(final Integer userId) {
+
+        String sqlQuery = "DELETE FROM orders WHERE orders.orderStatus = 1 AND orders.userId = " + userId;
+
+        return executeSimpleQueryInThePreparedStatement(sqlQuery);
+    }
+
     private void startTransaction(Connection connection) {
 
         try {
@@ -283,5 +291,28 @@ public class OrderDaoJdbcImpl implements OrderDao {
         } finally {
             closeConnection(connection);
         }
+    }
+
+    private boolean executeSimpleQueryInThePreparedStatement(String sqlQuery) {
+
+        connection = getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+
+            preparedStatement.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
     }
 }

@@ -1,9 +1,11 @@
 package com.gmail.jackkobec.internetshop.persistence.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Jack on 27.12.2016.
  */
-public enum ItemStatus {
+public enum ItemStatus implements Serializable {
 
     PRESENT(1), NOT_PRESENT(2);
     private Integer itemStatusId;

@@ -38,6 +38,7 @@ public class ControllerHelper {
         commands.put("payorder", new PayOrderCommand());
         commands.put("editorder", new EditOrderCommand());
         commands.put("confirmpayment", new ConfirmPaymentCommand());
+        commands.put("removeallnotpaidorders", new RemoveAllNotPaidOrders());
 
         commands.put("gotousermanagementpage", new GoToUserManagementPageCommand());
         commands.put("gotoitemmanagementpage", new GoToItemManagementPage());
@@ -51,8 +52,8 @@ public class ControllerHelper {
         commands.put("removeuserfromblocklist", new RemoveUserFromBlockList());
         commands.put("userregistration", new UserRegistrationCommand());
         commands.put("userlogout", new UserLogOutCommand());
-
-
+        commands.put("userupdate", new UserUpdateCommand());
+        commands.put("changeuserpassword", new ChangeUserPassword());
 
     }
 
@@ -84,6 +85,12 @@ public class ControllerHelper {
         }
 
         return command;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
     }
 }
  

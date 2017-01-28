@@ -47,4 +47,8 @@ public interface IClientService {
     boolean removeAllItemsFromUserCart(final Integer userId);
 
     List<Order> getAllUserOrders(final Integer userId);
+
+    boolean removeAllNotPaidOrders(final Integer userId);
+
+    Integer updateUser(User user);
 }

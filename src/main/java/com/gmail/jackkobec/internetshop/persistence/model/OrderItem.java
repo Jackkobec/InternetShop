@@ -1,9 +1,11 @@
 package com.gmail.jackkobec.internetshop.persistence.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Jack on 27.12.2016.
  */
-public class OrderItem {
+public class OrderItem implements Serializable {
 
     private Integer orderId;
     private Integer itemId;

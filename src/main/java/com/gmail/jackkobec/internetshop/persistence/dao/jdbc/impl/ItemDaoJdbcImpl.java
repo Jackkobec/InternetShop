@@ -302,4 +302,10 @@ public class ItemDaoJdbcImpl implements ItemDao {
             closeConnection(connection);
         }
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
+    }
 }

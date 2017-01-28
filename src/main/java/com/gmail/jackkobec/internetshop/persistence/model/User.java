@@ -39,6 +39,23 @@ public class User implements Serializable {
         this.language = language;
     }
 
+    public User(Integer id, String email, String password, String name, String language) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.language = language;
+    }
+
+    public User(Integer id, String email, String password, String name, String language, UserType userType) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.language = language;
+        this.userType = userType;
+    }
+
     public Integer getId() {
         return id;
     }

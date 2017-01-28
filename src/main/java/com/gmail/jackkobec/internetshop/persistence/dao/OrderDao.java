@@ -18,4 +18,6 @@ public interface OrderDao extends CommonDao<Order, Integer> {
     boolean cancelOrder (final Integer orderId);
 
     List<Order> getAllUserOrders(final Integer userId);
+
+    boolean removeAllNotPaidOrders(final Integer userId);
 }
