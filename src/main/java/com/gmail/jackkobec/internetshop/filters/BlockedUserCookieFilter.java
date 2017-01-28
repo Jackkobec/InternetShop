@@ -37,18 +37,21 @@ public class BlockedUserCookieFilter implements Filter {
 
         Cookie[] cookies = req.getCookies();
 
-        for (int i = 0; i < cookies.length; i++) {
+        if (cookies != null) {
 
-            Cookie cookie = cookies[i];
+            for (int i = 0; i < cookies.length; i++) {
 
-            if (bannedUsers.stream().anyMatch(el -> el.getEmail().equals(cookie.getValue()))) {
+                Cookie cookie = cookies[i];
 
-                request.setAttribute(ERROR_INFO, "You are in the black list!");
-                RequestDispatcher dispatcher = request.getServletContext().
-                        getRequestDispatcher(PageManager.getPageManager().getPage(PageManager.ERROR_PAGE));
-                dispatcher.forward(request, response);
+                if (bannedUsers.stream().anyMatch(el -> el.getEmail().equals(cookie.getValue()))) {
+
+                    request.setAttribute(ERROR_INFO, "You are in the black list!");
+                    RequestDispatcher dispatcher = request.getServletContext().
+                            getRequestDispatcher(PageManager.getPageManager().getPage(PageManager.ERROR_PAGE));
+                    dispatcher.forward(request, response);
+                }
+                System.out.println("cookie " + i + " " + cookie.getValue());
             }
-            System.out.println("cookie " + i + " " + cookie.getValue());
         }
 
         chain.doFilter(request, response);

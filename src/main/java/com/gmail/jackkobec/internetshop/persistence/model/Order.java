@@ -2,6 +2,7 @@ package com.gmail.jackkobec.internetshop.persistence.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by Jack on 18.12.2016.
  */
 @Data
-public class Order {
+public class Order implements Serializable {
 
     private Integer id;
     private Integer userId;

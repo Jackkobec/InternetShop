@@ -41,6 +41,7 @@ public class ConfirmPaymentCommand implements ICommand {
     private static final String CURRENT_USER_CART = "currentUserCart";
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
+    private AppDataInitializer appDataInitializer = AppDataInitializer.getAppDataInitializer();
 
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,6 +64,8 @@ public class ConfirmPaymentCommand implements ICommand {
             request.setAttribute(MAIN_PAGE_ALERT_FLAG, true);
             request.setAttribute(MAIN_PAGE_ALERT_CLASS, ALERT_ALERT_SUCCESS_CLASS);
             request.setAttribute(MAIN_PAGE_ALERT_MESSAGE, "Order with id: " + paidOrderId + " paid.");
+
+            appDataInitializer.initUserOrders(session, currentUserInSystem.getId());
 
             //clean cart
             if(iClientService.removeAllItemsFromUserCart(currentUserInSystem.getId())){

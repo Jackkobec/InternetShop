@@ -2,11 +2,13 @@ package com.gmail.jackkobec.internetshop.persistence.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by Jack on 17.12.2016.
  */
 @Data
-public class User {
+public class User implements Serializable {
 
     private Integer id;
     private String email;

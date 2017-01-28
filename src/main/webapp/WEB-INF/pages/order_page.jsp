@@ -289,8 +289,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                     <th>Summary price</th>
                                                     <th>Order status</th>
 
-                                                    <th>Edit</th>
-                                                    <th>Delete</th>
+                                                    <th>Actions</th>
+                                                    <%--<th>Delete</th>--%>
                                                     </thead>
                                                     <tbody>
 
@@ -300,8 +300,18 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                             <td>${order.id}</td>
                                                             <td>${order.orderDateAndTime}</td>
                                                             <td>n/a</td>
-                                                            <td>${order.summaryPrice}</td>
-                                                            <td>${order.orderStatus.getOrderStatusId}</td>
+                                                            <td><span class="text-info"><strong>${order.summaryPrice}</strong></span></td>
+                                                            <c:choose>
+                                                                <c:when test="${order.orderStatus == 1}">
+                                                                    <c:set var="orderStatusName" value="NOT PAID"/>
+                                                                    <c:set var="spanClass" value="text-danger"/>
+                                                                </c:when>
+                                                                <c:when test="${order.orderStatus == 2}">
+                                                                    <c:set var="orderStatusName" value="DONE"/>
+                                                                    <c:set var="spanClass" value="text-success"/>
+                                                                </c:when>
+                                                            </c:choose>
+                                                            <td><span class="${spanClass}"><strong>${orderStatusName}</strong></span></td>
 
                                                                 <%--data-content="${item.id}  - в data-conten сохраняем id текущего item чтобы через java script передать его в hiden parameter в форму
                                                                                         к примеру:
@@ -330,10 +340,25 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                         </script>
 
                                                             Это делается дя передачи правильного item id в форму.--%>
-                                                            <td><p data-placement="top" data-toggle="tooltip" title="Edit">
-                                                                <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-content="${item.id}">
-                                                                    <span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                                            <c:if test="${order.orderStatus == 1}">
+                                                            <form action="Controller" method="POST">
+                                                                <input type="hidden" name="command" value="payorder">
+                                                                <input type="hidden" name="currentUserOrderId" value="${order.id}">
+                                                                <td><p data-placement="top" data-toggle="tooltip" title="Pay">
+                                                                    <button class="btn btn-success btn-sm" data-title="Edit" data-toggle="modal" data-target="#edit" data-content="${item.id}">
+                                                                        <span class="glyphicon glyphicon-play"></span></button></p></td>
+                                                                </form>
+                                                            </c:if>
 
+                                                            <c:if test="${order.orderStatus == 1}">
+                                                            <form action="Controller" method="POST">
+                                                                <input type="hidden" name="command" value="editorder">
+                                                                <input type="hidden" name="currentUserOrderForPaymentId" value="${order.id}">
+                                                            <td><p data-placement="top" data-toggle="tooltip" title="Edit">
+                                                                <button class="btn btn-primary btn-sm" data-title="Edit" data-toggle="modal" data-target="#edit" data-content="${item.id}">
+                                                                    <span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                                                </form>
+                                                                            </c:if>
                                                                 <%--data-content="${item.id}  - в data-conten сохраняем id текущего item чтобы через java script передать его в hiden parameter в форму
                                                                 к примеру:
                                                                 <form action="Controller?command=edititem" method="POST">
@@ -357,104 +382,14 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                             </script>
 
                                                                Это делается дя передачи правильного item id в форму.--%>
+                                                            <form action="Controller" method="POST">
+                                                                <input type="hidden" name="command" value="cancelorder">
+                                                                <input type="hidden" name="currentUserOrderId" value="${order.id}">
                                                             <td><p data-placement="top" data-toggle="tooltip" title="Delete">
-                                                                <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" data-content="${item.id}">
+                                                                <button class="btn btn-danger btn-sm" data-title="Delete" data-toggle="modal" data-target="#delete" data-content="${item.id}">
                                                                     <span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                                                </form>
                                                         </tr>
-
-
-                                                        <%--test edit model--%>
-                                                        <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                                                        <h4 class="modal-title custom_align" id="Heading">Select Edit Model</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                            <%----%>
-                                                                        <div class="row">
-                                                                            <div class="col-xs-4 col-sm-3 col-md-4">
-                                                                                <form action="Controller?command=edititem" method="POST">
-                                                                                    <input type="hidden" name="item_id" id="itemForUpdate" value="">
-                                                                                    <input type="hidden" name="itemEditMode" value="updateitem">
-                                                                                    <button type="submit" class="btn btn-warning btn-lg">
-                                                                                        <span class="glyphicon glyphicon-ok-sign"></span>Update</button>
-                                                                                </form>
-                                                                            </div>
-                                                                            <div class="col-xs-8 col-sm-9 col-md-8">
-                                                                                <br>
-                                                                                <h4 class="modal-title custom_align">
-                                                                                    By clicking <strong class="label label-primary">Update</strong>, update current item mode.
-                                                                                </h4>
-                                                                            </div>
-                                                                        </div>
-                                                                            <%----%>
-                                                                        <br>
-                                                                            <%----%>
-                                                                        <div class="row">
-                                                                            <div class="col-xs-4 col-sm-3 col-md-4">
-                                                                                <form action="Controller?command=edititem" method="POST">
-                                                                                    <input type="hidden" name="item_id" id="itemForCloneId" value="">
-                                                                                    <input type="hidden" name="itemEditMode" value="additem">
-                                                                                    <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>New like this</button>
-                                                                                </form>
-                                                                            </div>
-                                                                            <div class="col-xs-8 col-sm-9 col-md-8">
-                                                                                <br>
-                                                                                <h4 class="modal-title custom_align">
-                                                                                    By clicking <strong class="label label-primary">New like this</strong>, copy current item mode.
-                                                                                </h4>
-                                                                            </div>
-                                                                        </div>
-                                                                            <%----%>
-                                                                    </div>
-                                                                    <div class="modal-footer ">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- /.modal-content -->
-                                                            </div>
-                                                            <!-- /.modal-dialog -->
-                                                        </div>
-                                                        <%--test edit model--%>
-
-                                                        <%--test delete modal--%>
-                                                        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-
-                                                                        <%----%>
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                                                        <h4 class="modal-title custom_align">Delete item?</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-                                                                            <div class="col-xs-4 col-sm-3 col-md-4">
-                                                                                <form action="Controller?command=deleteitem" method="POST">
-                                                                                    <input type="text" name="for_delete_item_id" id="itemForDeleteId" value="">
-                                                                                    <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span>Delete item</button>
-                                                                                </form>
-                                                                            </div>
-                                                                            <div class="col-xs-8 col-sm-9 col-md-8">
-                                                                                <br>
-                                                                                <h4 class="modal-title custom_align">
-                                                                                    By clicking <strong class="label label-primary">Delete item</strong>, delete item from database.
-                                                                                </h4>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer ">
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                        <%----%>
-                                                                </div>
-                                                                <!-- /.modal-content -->
-                                                            </div>
-                                                            <!-- /.modal-dialog -->
-                                                        </div>
-                                                        <%--/test delete modal--%>
 
                                                         <%--test data read for data-target="#edit" data-content="${item.id}"--%>
                                                         <script>
@@ -838,6 +773,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_user_profile.js"></script>
+<!-- Добавляем свой скрипт for tooltips -->
+<script src="../../view.components/js/for_item_management_page.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="view.components/js/forlogin.js"></script>
 <!-- Добавляем свой скрипт -->

@@ -83,4 +83,10 @@ public class AdminServiceImpl implements IAdminService {
 
         return itemDao.deleteEntityById(id);
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+
+        throw new CloneNotSupportedException("Singleton cloning not supported.");
+    }
 }

@@ -1,11 +1,12 @@
 package com.gmail.jackkobec.internetshop.persistence.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by Jack on 27.12.2016.
  */
-public class Item {
+public class Item implements Serializable {
 
     private Integer id;
     private String itemName;
