@@ -345,13 +345,15 @@ THE SOFTWARE.
                                 <form action="Controller?command=confirmpayment" method="POST">
                                     <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
                             <div class="col-xs-6">
-                                <button class="btn btn-success btn-lg btn-block" type="submit"><fmt:message key="pay_order_button" bundle="${rb}"/></button>
+                                <button class="btn btn-success btn-lg btn-block" type="submit">
+                                    <span class="glyphicon glyphicon-play"></span><fmt:message key="confirm_pay_button" bundle="${rb}"/></button>
                             </div>
                                     </form>
                                 <form action="Controller?command=editorder" method="POST">
                                     <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
                                 <div class="col-xs-6">
-                                    <button class="btn btn-danger btn-lg btn-block" type="submit"><fmt:message key="cancel_payment_button" bundle="${rb}"/></button>
+                                    <button class="btn btn-danger btn-lg btn-block" type="submit">
+                                        <span class="glyphicon glyphicon-remove-circle"></span><fmt:message key="cancel_payment_button" bundle="${rb}"/></button>
                                 </div>
                                     </form>
                         </div>
@@ -390,7 +392,8 @@ THE SOFTWARE.
             <form action="Controller" method="POST">
                 <input type="hidden" name="command" value="editorder">
                 <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
-                <button type="submit" class="btn btn-warning btn-lg"><fmt:message key="edit_order_button" bundle="${rb}"/></button>
+                <button type="submit" class="btn btn-warning btn-lg">
+                    <span class="glyphicon glyphicon-pencil"></span><fmt:message key="edit_order_button" bundle="${rb}"/></button>
             </form>
             </p>
         </div>

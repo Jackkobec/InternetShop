@@ -236,13 +236,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     <div class="row">
 
         <div class="dual-list list-left col-md-5">
-            <h2>Unblocked users</h2>
+            <h2><fmt:message key="unblocked_users" bundle="${rb}"/></h2>
             <div class="well text-right">
                 <div class="row">
                     <div class="col-md-10">
                         <div class="input-group">
                             <span class="input-group-addon glyphicon glyphicon-search"></span>
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="<fmt:message key="search_placeholder" bundle="${rb}"/>" />
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -257,18 +257,18 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 <%--${notBanedUser.email}--%>
                                 <div class="btn-group btn-group-justified">
                                     <form  class="btn btn-outline-info">
-                                    Email: ${notBanedUser.email}<br>
-                                            Type: ${notBanedUser.userType} | Language: ${notBanedUser.language}
+                                        <fmt:message key="email" bundle="${rb}"/>: ${notBanedUser.email}<br>
+                                        <fmt:message key="type" bundle="${rb}"/>: ${notBanedUser.userType} | <fmt:message key="language" bundle="${rb}"/>: ${notBanedUser.language}
                                     </form>
                                     <c:if test="${notBanedUser.getUserType() == 'BANNED'}">
                                         <form action="Controller?command=removeuserfromblocklist" method="post">
                                             <input type="hidden" name="userId" value="${notBanedUser.id}"> </input>
-                                        <button class="btn btn-success" type="submit">Unblock user</button>
+                                        <button class="btn btn-success" type="submit"><fmt:message key="unblock_user_button" bundle="${rb}"/></button>
                                         </form>
                                     </c:if>
                                     <form action="Controller?command=addusertoblocklist" method="post">
                                         <input type="hidden" name="userId" value="${notBanedUser.id}"> </input>
-                                        <button class="btn btn-danger" type="submit">Block user</button>
+                                        <button class="btn btn-danger" type="submit"><fmt:message key="block_user_button" bundle="${rb}"/></button>
                                     </form>
                                 </div>
                         <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
@@ -295,7 +295,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         </div>
 
         <div class="dual-list list-right col-md-5">
-            <h2>Blocked users</h2>
+            <h2><fmt:message key="blocked_users" bundle="${rb}"/></h2>
             <div class="well text-right">
                 <div class="row">
                     <div class="col-md-2">
@@ -305,7 +305,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     </div>
                     <div class="col-md-10">
                         <div class="input-group">
-                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="<fmt:message key="search_placeholder" bundle="${rb}"/>" />
                             <span class="input-group-addon glyphicon glyphicon-search"></span>
                         </div>
                     </div>
@@ -316,18 +316,18 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 <%--${notBanedUser.email}--%>
                             <div class="btn-group btn-group-justified">
                                 <form  class="btn btn-outline-info">
-                                    Email: ${banedUser.email}<br>
-                                    Type: ${banedUser.userType} | Language: ${banedUser.language}
+                                    <fmt:message key="email" bundle="${rb}"/>: ${banedUser.email}<br>
+                                    <fmt:message key="type" bundle="${rb}"/>: ${banedUser.userType} | <fmt:message key="language" bundle="${rb}"/>: ${banedUser.language}
                                 </form>
                                 <c:if test="${banedUser.getUserType() != 'BANNED'}">
                                     <form action="Controller?command=addusertoblocklist" method="post">
                                         <input type="hidden" name="userId" value="${banedUser.id}"> </input>
-                                        <button class="btn btn-danger" type="submit">Block user</button>
+                                        <button class="btn btn-danger" type="submit"><fmt:message key="block_user_button" bundle="${rb}"/></button>
                                     </form>
                                 </c:if>
                                 <form action="Controller?command=removeuserfromblocklist" method="post">
                                     <input type="hidden" name="userId" value="${banedUser.id}"> </input>
-                                    <button class="btn btn-success" type="submit">Unblock user</button>
+                                    <button class="btn btn-success" type="submit"><fmt:message key="unblock_user_button" bundle="${rb}"/></button>
                                 </form>
                             </div>
                                 <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
