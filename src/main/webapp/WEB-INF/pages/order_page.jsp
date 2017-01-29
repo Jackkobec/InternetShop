@@ -657,20 +657,20 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th class="text-center">Price</th>
-                    <th class="text-center">Total</th>
+                    <th><fmt:message key="product" bundle="${rb}"/></th>
+                    <th><fmt:message key="quantity" bundle="${rb}"/></th>
+                    <th class="text-center"><fmt:message key="price" bundle="${rb}"/></th>
+                    <th class="text-center"><fmt:message key="total" bundle="${rb}"/></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <div class="alert alert-warning" role="alert">
-                    <h1>New Order Id: ${currentUserOrder.id}, from: ${currentOrderFormattedDate}</h1>
+                    <h1><fmt:message key="new_order" bundle="${rb}"/> Id: ${currentUserOrder.id}, <fmt:message key="from" bundle="${rb}"/>: ${currentOrderFormattedDate}</h1>
                 </div>
                 <br>
-                <h2>Items list</h2>
+                <h2><fmt:message key="item_list" bundle="${rb}"/></h2>
                 <br>
                 <c:if test="${currentUserCart.size() == 0}">
                 <p><h4>Order is empty</h4><p>
@@ -682,8 +682,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 <a class="thumbnail pull-left" href="Controller?command=showitem&item_id=${item.id}"> <img class="media-object" src="${item.itemSmallPicturePath350x260}" style="width: 72px; height: 72px;"> </a>
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="Controller?command=showitem&item_id=${item.id}">${item.itemName}</a></h4>
-                                    <h5 class="media-heading">Category: <a href="#"><br>${item.itemCategory.categoryName}</a></h5>
-                                    <span>Status: </span><span class="text-success"><strong>${item.itemStatus}</strong></span>
+                                    <h5 class="media-heading"><fmt:message key="category" bundle="${rb}"/>: <a href="#"><br>${item.itemCategory.categoryName}</a></h5>
+                                    <span><fmt:message key="status" bundle="${rb}"/>: </span><span class="text-success"><strong>${item.itemStatus}</strong></span>
                                 </div>
                             </div></td>
 
@@ -698,7 +698,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 <input type="hidden" name="itemForRemoveId" value="${item.id}">
                             <td class="col-sm-1 col-md-1">
                                 <button type="submit" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span> Remove
+                                    <span class="glyphicon glyphicon-remove"></span> <fmt:message key="remove" bundle="${rb}"/>
                                 </button></td>
                         </form>
                     </tr>
@@ -708,21 +708,21 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><h5>Subtotal</h5></td>
+                        <td><h5><fmt:message key="subtotal" bundle="${rb}"/></h5></td>
                         <td class="text-right"><h5><strong>$${currentUserOrder.summaryPrice}</strong></h5></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><h5>Discount</h5></td>
+                        <td><h5><fmt:message key="discount" bundle="${rb}"/></h5></td>
                         <td class="text-right"><h5><strong>$0.00</strong></h5></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><h3>Total</h3></td>
+                        <td><h3><fmt:message key="total" bundle="${rb}"/></h3></td>
                         <td class="text-right"><h3><strong>$${currentUserOrder.summaryPrice}</strong></h3></td>
                     </tr>
                     <tr>
@@ -733,14 +733,14 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <td>
                             <button type="submit" class="btn btn-danger">
                                 <input type="hidden" name="currentUserOrderId" value="${currentUserOrder.id}">
-                                <span class="glyphicon glyphicon-remove-circle"></span> Cancel order
+                                <span class="glyphicon glyphicon-remove-circle"></span> <fmt:message key="cancel_order_button" bundle="${rb}"/>
                             </button></td>
                             </form>
                         <form action="Controller?command=payorder" method="POST">
                             <input type="hidden" name="currentUserOrderId" value="${currentUserOrder.id}">
                         <td>
                             <button type="submit" class="btn btn-success">
-                                Pay order <span class="glyphicon glyphicon-usd"></span>
+                                <fmt:message key="pay_order_button" bundle="${rb}"/> <span class="glyphicon glyphicon-usd"></span>
                             </button></td>
                             </form>
                     </tr>
