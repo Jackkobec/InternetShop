@@ -80,13 +80,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <c:choose>
                     <c:when test="${currentUserCart.size() == 0}">
                         <c:set var="spanClass" value="mycolorspan"/>
+                        <%--<c:set var="cartText" value="Cart"/>--%>
                     </c:when>
                     <c:when test="${currentUserCart.size() > 0}">
                         <c:set var="spanClass" value="mycolorspan-gold"/>
+                        <%--<c:set var="cartText" value="Cart(${currentUserCart.size()})"/>--%>
                         <c:set var="cartText" value="(${currentUserCart.size()})"/>
                     </c:when>
                     <c:otherwise>
                         <c:set var="spanClass" value="mycolorspan"/>
+                        <%--<c:set var="cartText" value="Cart"/>--%>
                     </c:otherwise>
                 </c:choose>
                 <li>
@@ -112,7 +115,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="admin_panel" bundle="${rb}"/></h5>
+                <h5 class="modal-title" id="exampleModalLabel">Admin panel</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -121,17 +124,17 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="gotousermanagementpage">
                     <button type="submit" class="btn btn-warning btn-lg btn-block">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><fmt:message key="user_management" bundle="${rb}"/></button>
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>User Management</button>
                 </form>
                 <br><br>
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="gotoitemmanagementpage">
                     <button type="submit" class="btn btn-success btn-lg btn-block">
-                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><fmt:message key="item_management" bundle="${rb}"/></button>
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Item Management</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="close" bundle="${rb}"/></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -153,7 +156,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel"><fmt:message key="cart" bundle="${rb}"/></h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">Cart</h4>
             </div>
             <div class="modal-body"><%--modal body--%>
                 <%--test shoping cart--%>
@@ -163,17 +166,17 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th><fmt:message key="product" bundle="${rb}"/></th>
-                                    <th><fmt:message key="quantity" bundle="${rb}"/></th>
-                                    <th class="text-center"><fmt:message key="price" bundle="${rb}"/></th>
-                                    <th class="text-center"><fmt:message key="total" bundle="${rb}"/></th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Total</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 <c:if test="${currentUserCart.size() == 0}">
-                                <p><h4><fmt:message key="cart_is_empty" bundle="${rb}"/></h4><p>
+                                <p><h4>Cart is empty</h4><p>
                                     </c:if>
                                     <c:forEach var="item" items="${currentUserCart}">
                                     <tr>
@@ -182,8 +185,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                 <a class="thumbnail pull-left" href="Controller?command=showitem&item_id=${item.id}"> <img class="media-object" src="${item.itemSmallPicturePath350x260}" style="width: 72px; height: 72px;"> </a>
                                                 <div class="media-body">
                                                     <h4 class="media-heading"><a href="Controller?command=showitem&item_id=${item.id}">${item.itemName}</a></h4>
-                                                    <h5 class="media-heading"><fmt:message key="category" bundle="${rb}"/>: <a href="#"><br>${item.itemCategory.categoryName}</a></h5>
-                                                    <span><fmt:message key="status" bundle="${rb}"/>: </span><span class="text-success"><strong>${item.itemStatus}</strong></span>
+                                                    <h5 class="media-heading">Category: <a href="#"><br>${item.itemCategory.categoryName}</a></h5>
+                                                    <span>Status: </span><span class="text-success"><strong>${item.itemStatus}</strong></span>
                                                 </div>
                                             </div></td>
 
@@ -198,7 +201,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <input type="hidden" name="from_page" value="ORDER_PAGE"> </input>
                                             <td class="col-sm-1 col-md-1">
                                                 <button type="submit" class="btn btn-danger">
-                                                    <span class="glyphicon glyphicon-remove"></span> <fmt:message key="remove" bundle="${rb}"/>
+                                                    <span class="glyphicon glyphicon-remove"></span> Remove
                                                 </button></td>
                                         </form>
                                     </tr>
@@ -208,21 +211,21 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><h5><fmt:message key="subtotal" bundle="${rb}"/></h5></td>
+                                        <td><h5>Subtotal</h5></td>
                                         <td class="text-right"><h5><strong>$${summaryCartPrice}</strong></h5></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><h5><fmt:message key="discount" bundle="${rb}"/></h5></td>
+                                        <td><h5>Discount</h5></td>
                                         <td class="text-right"><h5><strong>$0.00</strong></h5></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><h3><fmt:message key="total" bundle="${rb}"/></h3></td>
+                                        <td><h3>Total</h3></td>
                                         <td class="text-right"><h3><strong>$${summaryCartPrice}</strong></h3></td>
                                     </tr>
                                     <tr>
@@ -230,8 +233,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                <span class="glyphicon glyphicon-shopping-cart"></span> <fmt:message key="continue_shopping" bundle="${rb}"/>
+                                            <button type="button" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                             </button></td>
                                         <c:choose>
                                             <c:when test="${currentUserCart.size() == 0}">
@@ -247,7 +250,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <form action="Controller?command=makeorder" method="POST">
                                         <td>
                                             <button type="submit" class="btn btn-success ${isDisable}">
-                                                <fmt:message key="make_order" bundle="${rb}"/> <span class="glyphicon glyphicon-ok"></span>
+                                                Make Order <span class="glyphicon glyphicon-ok"></span>
                                             </button></td>
                                             </form>
                                     </tr>
@@ -261,7 +264,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             </div><%--/modal body--%>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="close" bundle="${rb}"/></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

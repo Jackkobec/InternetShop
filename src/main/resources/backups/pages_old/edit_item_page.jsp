@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Jack
+  Date: 12.01.2017
+  Time: 8:33
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ include file="include.jsp" %>
 <%--
 <%@ include file="include.jsp" %>
@@ -6,7 +13,6 @@
 вы можете заставить его это делать, удалив файл класса главной страницы.--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="/WEB-INF/alertTag.tld" prefix="ctg"%>
 
 <fmt:setLocale value="${selectedLocale}" scope="session"/>
 <fmt:setBundle basename="language" var="rb"/>
@@ -22,11 +28,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <jsp:include page="bootstrap-meta.jsp"/>
 Действие включения используется только в случаях очень частого обновления содержания и тогда,
 когда определить страницу для включения можно не раньше, чем выполнится запрос к главной странице.--%>
-    <title>Internet Shop main page.</title>
+    <title>Item Page</title>
 
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="../../view.components/css/styles.css" rel="stylesheet">
-
+    <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
+    <!-- Добавляем свой стиль -->
+    <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
 
     <style>
         html { height: 100%; }
@@ -41,22 +48,18 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     </style>
 </head>
 
-<body>
 
-<%--Test image--%>
-<%--<div align="center">3<img src="http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg" width="100%" height="100%"></div>--%>
-<%--/Test image--%>
+<body>
 <%--Image--%>
 <div class="jumbotron">
-    <a href="Controller?command=gotomainpage">
     <div class="container text-left my-div">
-        <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        <a href="Controller?command=gotomainpage">
+            <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        </a>
         <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
-    </div></a>
+    </div>
 </div>
 <%--/Image--%>
-
-<%--<%@ include file="3-slide_header_carousel.jsp" %>--%>
 
 <%--Fixed header elements--%>
 <div class="container">
@@ -90,24 +93,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="row"><span class="glyphicon glyphicon-shopping-cart ${spanClass}"></div>
                     <div class="row"><a data-toggle="modal" href="#myModal"></span>${cartText}</a></div>
                 </li>
-
-                <c:if test="${currentUserInSystem.getUserType() == 'ADMIN'}">
-                    <li>
-                        <div class="row"><span class="glyphicon glyphicon-flash mycolorspan"></div>
-                        <div class="row"><a data-toggle="modal" href="#myAdminModal"></span>Admin</a></div>
-                    </li>
-                </c:if>
-
-                <%--Main Page Alert--%>
-                <c:if test="${mainPageAlertFlag}">
-                    <c:if test="${mainPageAlertClass == ''}">
-                        <c:set var="mainPageAlertClass" value="alert alert-warning alert-dismissible"/>
-                        </c:if>
-                    <li2>
-                        <ctg:alertTag alertClass="${mainPageAlertClass}" alertMessage="${mainPageAlertMessage}"/>
-                    </li2>
-                </c:if>
-                <%--/Main Page Alert--%>
             </ul>
         </div>
     </div>
@@ -156,14 +141,14 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             </div></td>
 
                                         <td class="col-sm-1 col-md-1" style="text-align: center">
-                                            <input class="form-control" id="exampleInputEmail12" value="1" type="email">
+                                            <input class="form-control" id="exampleInputEmail1" value="1" type="email">
                                         </td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
 
                                         <form action="Controller?command=removeitemfromcart" method="POST">
                                             <input type="hidden" name="item_id" value="${item.id}"> </input>
-                                            <input type="hidden" name="from_page" value="MAIN_PAGE"> </input>
+                                            <input type="hidden" name="from_page" value="ITEM_PAGE"> </input>
                                             <td class="col-sm-1 col-md-1">
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-remove"></span> Remove
@@ -197,10 +182,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                                            </button></td>
+                                        <form action="Controller?command=makeorder" method="POST">
+                                            <td>
+                                                <button type="submit" class="btn btn-default">
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                                                </button></td>
+                                        </form>
                                         <c:choose>
                                             <c:when test="${currentUserCart.size() == 0}">
                                                 <c:set var="isDisable" value="disabled"/>
@@ -236,120 +223,175 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div><!-- /.modal -->
 
 <%--/test modal--%>
-<%--script for myModal--%>
+
 <script>
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
-<%--/script for myModal--%>
 
 
-<%--Admin Modal--%>
-<!-- Modal -->
-<div class="modal fade" id="myAdminModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                    <form action="Controller?command=gotousermanagementpage" method="post">
-                    <%--<input type="hidden" name="userId" value="${banedUser.id}"> </input>--%>
-                <button type="submit" class="btn btn-warning btn-lg btn-block">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>User Management</button>
-                    </form>
-                <br><br>
-                    <form action="Controller?command=gotoitemmanagementpage" method="post">
-                <button type="submit" class="btn btn-success btn-lg btn-block">
-                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Item Management</button>
-                    </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<%--Item--%>
+<div class="container-fluid">
+    <div class="content-wrapper">
+        <div class="item-container">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="product col-md-3 service-image-left">
+
+                        <center>
+                            <img id="item-display" src="${itemForEdit.itemBigPicturePath800x600}" alt=""></img>
+                        </center>
+                    </div>
+
+                    <div class="container service1-items col-sm-2 col-md-2 pull-left">
+                        <center>
+                            <a id="item-1" class="service1-item">
+                                <img src="${itemForEdit.itemSmallPicturePath350x260}" alt=""></img>
+                            </a>
+                            <a id="item-2" class="service1-item">
+                                <img src="${itemForEdit.itemSmallPicturePath350x260}" alt=""></img>
+                            </a>
+                            <a id="item-3" class="service1-item">
+                                <img src="${itemForEdit.itemSmallPicturePath350x260}" alt=""></img>
+                            </a>
+                        </center>
+                    </div>
+                </div>
+
+                <form action="Controller?command=${formAction}" method="POST">
+                    <input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>
+                <div class="col-md-7">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="alert alert-warning" role="alert">Current Item Id: ${itemForEdit.id}</div>
+                        </div>
+                        <div class="form-group">
+                            <label >Item Name</label>
+                            <input class="form-control " name="itemName" type="text" placeholder="Item Name" value="${itemForEdit.itemName}">
+                        </div>
+                        <div class="form-group">
+                            <label >Small Description</label>
+                            <input class="form-control " name="itemSmallDescription" type="text" placeholder="Small Description" value="${itemForEdit.itemSmallDescription}">
+                        </div>
+                        <div class="form-group">
+                            <label >Full Description</label>
+                            <textarea rows="7" class="form-control" name="itemFullDescription" placeholder="Product Info" >${itemForEdit.itemFullDescription}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label >Product Info</label>
+                            <textarea rows="7" class="form-control" name="itemProductInfo" placeholder="Product Info">${itemForEdit.itemProductInfo}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label >Price</label>
+                            <input class="form-control " name="itemPrice" type="number" placeholder="Price" value="${itemForEdit.itemPrice}">
+                        </div>
+                        <div class="form-group">
+                            <label >Big Picture Path 800x600</label>
+                            <input class="form-control " name="itemBigPicturePath800x600" type="text" placeholder="Big Picture Path 800x600" value="${itemForEdit.itemBigPicturePath800x600}">
+                        </div>
+                        <div class="form-group">
+                            <label >Small Picture Path 350x260</label>
+                            <input class="form-control " name="itemSmallPicturePath350x260" type="text" placeholder="Small Picture Path 350x260" value="${itemForEdit.itemSmallPicturePath350x260}">
+                        </div>
+                        <c:choose>
+                            <c:when test="${itemForEdit.itemRating == 1}">
+                                <c:set var="raitingOne" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 2}">
+                                <c:set var="raitingTwo" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 3}">
+                                <c:set var="raitingThree" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 4}">
+                                <c:set var="raitingFour" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemRating == 5}">
+                                <c:set var="raitingFive" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="raitingFive" value="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="form-group">
+                            <label >Item Rating</label>
+                            <select class="form-control" id="itemRating" name="itemRating">
+                                <option value="1" ${raitingOne}>1</option>
+                                <option value="2" ${raitingTwo}>2</option>
+                                <option value="3" ${raitingThree}>3</option>
+                                <option value="4" ${raitingFour}>4</option>
+                                <option value="5" ${raitingFive}>5</option>
+                            </select>
+                        </div>
+                        <c:choose>
+                        <c:when test="${itemForEdit.itemCategory == 'FOR_SELF_DEFENSE'}">
+                            <c:set var="isOneSelected" value="selected"/>
+                        </c:when>
+                        <c:when test="${itemForEdit.itemCategory == 'FOR_RESPECT'}">
+                            <c:set var="isTwoSelected" value="selected"/>
+                        </c:when>
+                            <c:when test="${itemForEdit.itemCategory == 'ULTIMATE_SOLUTIONS'}">
+                                <c:set var="isThreeSelected" value="selected"/>
+                            </c:when>
+                        <c:otherwise>
+                            <c:set var="isOneSelected" value="selected"/>
+                        </c:otherwise>
+                        </c:choose>
+                        <div class="form-group">
+                            <label >Item Category</label>
+                            <select class="form-control" id="itemCategory" name="itemCategory">
+                                <option value="1" ${isOneSelected}>FOR_SELF_DEFENSE</option>
+                                <option value="2" ${isTwoSelected}>FOR_RESPECT</option>
+                                <option value="3" ${isThreeSelected}>ULTIMATE_SOLUTIONS</option>
+                            </select>
+                        </div>
+                        <c:choose>
+                            <c:when test="${itemForEdit.itemStatus == 'PRESENT'}">
+                                <c:set var="isFirstStatusSelected" value="selected"/>
+                            </c:when>
+                            <c:when test="${itemForEdit.itemStatus == 'NOT_PRESENT'}">
+                                <c:set var="isSecondStatusSelected" value="selected"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="isFirstStatusSelected" value="selected"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="form-group">
+                            <label >Item Status</label>
+                            <select class="form-control" id="itemStatus" name="itemStatus">
+                                <option value="1" ${isFirstStatusSelected}>PRESENT</option>
+                                <option value="2" ${isSecondStatusSelected}>NOT_PRESENT</option>
+                            </select>
+                        </div>
+                        <c:choose>
+                            <c:when test="${formAction == 'updateitem'}">
+                                <c:set var="buttonAddOrUpdate" value="Update item"/>
+                                <c:set var="buttonAddOrUpdateClass" value="btn-warning"/>
+                            </c:when>
+                            <c:when test="${formAction == 'additem'}">
+                                <c:set var="buttonAddOrUpdate" value="Add item "/>
+                                <c:set var="buttonAddOrUpdateClass" value="btn-danger"/>
+                            </c:when>
+                        </c:choose>
+                        <div class="modal-footer ">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="submit" class="btn ${buttonAddOrUpdateClass} btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>${buttonAddOrUpdate}</button>
+
+                            <%--<form action="Controller?command=addnewitem" method="POST">--%>
+                                <%--<input type="hidden" name="item_id" value="${itemForEdit.id}"> </input>--%>
+                            <%--<button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>Add New</button>--%>
+                                <%--</form>--%>
+                            </div>
+                        </div>
+                    </div>
+                </div></form>
             </div>
         </div>
+
     </div>
 </div>
-<%--/Admin Modal--%>
-<%--script for myAdminModal--%>
-<script>
-    $('#myAdminModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    });
-</script>
-<%--/script for myAdminModal--%>
-
-<%--Categories--%>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=1">
-            <div class="panel panel-primary">
-                <div class="panel-heading"><fmt:message key="category.for_self_defense" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/For self-defense.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_self_defense.description" bundle="${rb}"/></div>
-            </div></a>
-        </div>
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=2">
-            <div class="panel panel-danger">
-                <div class="panel-heading"><fmt:message key="category.for_respect" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="../../view.components/images/main_categories/For respect.png?text=IMAGE"
-                                                 class="img-responsive" style="width:100%" alt="Image"></div>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_respect.description" bundle="${rb}"/></div>
-            </div></a>
-        </div>
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=3">
-            <div class="panel panel-success">
-                <div class="panel-heading"><fmt:message key="category.ultimate_solutions" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/Ultimate Solutions.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge">-17%</span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.ultimate_solutions.description" bundle="${rb}"/></div>
-            </div></a>
-        </div>
-    </div>
-</div>
-<%--<br>--%>
-
-<%--<div class="container">--%>
-<%--<div class="row">--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<br><br>--%>
-<%--/Categories--%>
+<%--/Item--%>
 
 
 <%--Slider Products--%>
@@ -373,10 +415,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <div class="carousel carousel-showmanymoveone slide" id="itemslider">
                 <div class="carousel-inner">
 
+                    <%--<c:set var="sixItemCarousel" value="${sessionScope.sixItemCarousel}"/> &lt;%&ndash;не обязательно,
+                     сам подтянет с сессии по имени sixItemCarousel&ndash;%&gt;--%>
+
                     <div class="item active"><%--Обязательно должен быть - это первый элемент карусели--%>
                         <div class="col-xs-12 col-sm-6 col-md-2">
                             <a href="Controller?command=showitem&item_id=${sixItemCarousel.get(0).getId()}"><img src="${sixItemCarousel.get(0).getItemSmallPicturePath350x260()}"
-                                             class="img-responsive center-block"></a>
+                                                                                                                 class="img-responsive center-block"></a>
                             <h4 class="text-center">${sixItemCarousel.get(0).getItemName()}</h4> <%--test name from list--%>
                             <h5 class="text-center">${sixItemCarousel.get(0).getItemPrice()}</h5>
                         </div>
@@ -386,40 +431,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-2">
                                 <a href="Controller?command=showitem&item_id=${item.id}"><img src="${item.itemSmallPicturePath350x260}"
-                                                 class="img-responsive center-block"></a>
+                                                                                              class="img-responsive center-block"></a>
                                 <h4 class="text-center">${item.itemName}</h4>
                                 <h5 class="text-center">${item.itemPrice}</h5>
                             </div>
                         </div>
                     </c:forEach>
-
-
-                    <%--<div class="item">--%>
-                        <%--<div class="col-xs-12 col-sm-6 col-md-2">--%>
-                            <%--<a href="#"><img src="https://s12.postimg.org/41uq0fc4d/item_2_180x200.png"--%>
-                                             <%--class="img-responsive center-block"></a>--%>
-                            <%--<h4 class="text-center">MAYORAL KOŠULJA</h4>--%>
-                            <%--<h5 class="text-center">4000,00 RSD</h5>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-
-                    <%--<div class="item">--%>
-                        <%--<div class="col-xs-12 col-sm-6 col-md-2">--%>
-                            <%--<a href="#"><img src="../../view.components/images/uV4ABsIur2s.png"--%>
-                                             <%--class="img-responsive center-block"></a>--%>
-                            <%--<span class="badge">10%</span>--%>
-                            <%--<h4 class="text-center">PANTALONE TERI 2</h4>--%>
-                            <%--<h5 class="text-center">4000,00 RSD</h5>--%>
-                            <%--<h6 class="text-center">5000,00 RSD</h6>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-
-
-
-
-
 
                 </div>
 
@@ -438,15 +455,30 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
 <%--/Slider Products--%>
 
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script>
+    $('.popover-dismiss').popover({
+        trigger: 'focus'
+    })
+</script>
+
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Добавляем свой скрипт -->
+<script src="../../view.components/js/tether.min.js"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../view.components/js/bootstrap.min.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
-
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>

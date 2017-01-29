@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Jack
+  Date: 15.01.2017
+  Time: 5:33
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ include file="include.jsp" %>
 <%--
 <%@ include file="include.jsp" %>
@@ -6,7 +13,6 @@
 вы можете заставить его это делать, удалив файл класса главной страницы.--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="/WEB-INF/alertTag.tld" prefix="ctg"%>
 
 <fmt:setLocale value="${selectedLocale}" scope="session"/>
 <fmt:setBundle basename="language" var="rb"/>
@@ -22,12 +28,15 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <jsp:include page="bootstrap-meta.jsp"/>
 Действие включения используется только в случаях очень частого обновления содержания и тогда,
 когда определить страницу для включения можно не раньше, чем выполнится запрос к главной странице.--%>
-    <title>Internet Shop main page.</title>
+    <title>Item Page</title>
 
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="../../view.components/css/styles.css" rel="stylesheet">
-
-
+    <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
+    <!-- Добавляем свой стиль -->
+    <link type="text/css" href="view.components/css/user_management_page.css" rel="stylesheet">
+    <!-- Добавляем свой стиль -->
+    <%--Для корзины тоже нужен--%>
+    <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
     <style>
         html { height: 100%; }
         .my-div {
@@ -42,21 +51,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </head>
 
 <body>
-
-<%--Test image--%>
-<%--<div align="center">3<img src="http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg" width="100%" height="100%"></div>--%>
-<%--/Test image--%>
 <%--Image--%>
 <div class="jumbotron">
-    <a href="Controller?command=gotomainpage">
     <div class="container text-left my-div">
-        <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        <a href="Controller?command=gotomainpage">
+            <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        </a>
         <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
-    </div></a>
+    </div>
 </div>
 <%--/Image--%>
-
-<%--<%@ include file="3-slide_header_carousel.jsp" %>--%>
 
 <%--Fixed header elements--%>
 <div class="container">
@@ -90,24 +94,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="row"><span class="glyphicon glyphicon-shopping-cart ${spanClass}"></div>
                     <div class="row"><a data-toggle="modal" href="#myModal"></span>${cartText}</a></div>
                 </li>
-
-                <c:if test="${currentUserInSystem.getUserType() == 'ADMIN'}">
-                    <li>
-                        <div class="row"><span class="glyphicon glyphicon-flash mycolorspan"></div>
-                        <div class="row"><a data-toggle="modal" href="#myAdminModal"></span>Admin</a></div>
-                    </li>
-                </c:if>
-
-                <%--Main Page Alert--%>
-                <c:if test="${mainPageAlertFlag}">
-                    <c:if test="${mainPageAlertClass == ''}">
-                        <c:set var="mainPageAlertClass" value="alert alert-warning alert-dismissible"/>
-                        </c:if>
-                    <li2>
-                        <ctg:alertTag alertClass="${mainPageAlertClass}" alertMessage="${mainPageAlertMessage}"/>
-                    </li2>
-                </c:if>
-                <%--/Main Page Alert--%>
             </ul>
         </div>
     </div>
@@ -163,7 +149,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                                         <form action="Controller?command=removeitemfromcart" method="POST">
                                             <input type="hidden" name="item_id" value="${item.id}"> </input>
-                                            <input type="hidden" name="from_page" value="MAIN_PAGE"> </input>
+                                            <input type="hidden" name="from_page" value="USER_MANAGEMENT_PAGE"> </input>
                                             <td class="col-sm-1 col-md-1">
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-remove"></span> Remove
@@ -198,7 +184,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            <button type="button" class="btn btn-default">
                                                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                             </button></td>
                                         <c:choose>
@@ -236,120 +222,133 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div><!-- /.modal -->
 
 <%--/test modal--%>
-<%--script for myModal--%>
+
 <script>
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
-<%--/script for myModal--%>
 
 
-<%--Admin Modal--%>
-<!-- Modal -->
-<div class="modal fade" id="myAdminModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                    <form action="Controller?command=gotousermanagementpage" method="post">
-                    <%--<input type="hidden" name="userId" value="${banedUser.id}"> </input>--%>
-                <button type="submit" class="btn btn-warning btn-lg btn-block">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>User Management</button>
-                    </form>
-                <br><br>
-                    <form action="Controller?command=gotoitemmanagementpage" method="post">
-                <button type="submit" class="btn btn-success btn-lg btn-block">
-                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Item Management</button>
-                    </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<%--/Admin Modal--%>
-<%--script for myAdminModal--%>
-<script>
-    $('#myAdminModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    });
-</script>
-<%--/script for myAdminModal--%>
-
-<%--Categories--%>
+<%--dual list--%>
 <div class="container">
+    <br />
     <div class="row">
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=1">
-            <div class="panel panel-primary">
-                <div class="panel-heading"><fmt:message key="category.for_self_defense" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/For self-defense.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_self_defense.description" bundle="${rb}"/></div>
-            </div></a>
+
+        <div class="dual-list list-left col-md-5">
+            <h2>Unblocked users</h2>
+            <div class="well text-right">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <c:forEach var="notBanedUser" items="${notBannedUsers}">
+                        <li class="list-group-item">
+                                <%--${notBanedUser.email}--%>
+                                <div class="btn-group btn-group-justified">
+                                    <form  class="btn btn-outline-info">
+                                    Email: ${notBanedUser.email}<br>
+                                            Type: ${notBanedUser.userType} | Language: ${notBanedUser.language}
+                                    </form>
+                                    <c:if test="${notBanedUser.getUserType() == 'BANNED'}">
+                                        <form action="Controller?command=removeuserfromblocklist" method="post">
+                                            <input type="hidden" name="userId" value="${notBanedUser.id}"> </input>
+                                        <button class="btn btn-success" type="submit">Unblock user</button>
+                                        </form>
+                                    </c:if>
+                                    <form action="Controller?command=addusertoblocklist" method="post">
+                                        <input type="hidden" name="userId" value="${notBanedUser.id}"> </input>
+                                        <button class="btn btn-danger" type="submit">Block user</button>
+                                    </form>
+                                </div>
+                        <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
+                        <%--<button type="button" class="btn btn-danger">Block user</button>--%>
+                    </li>
+                     </c:forEach>
+                    <%--<li class="list-group-item">bootstrap-duallist <a href="https://github.com/bbilginn/bootstrap-duallist" target="_blank">github</a></li>--%>
+                    <%--<li class="list-group-item">Dapibus ac facilisis in</li>--%>
+                    <%--<li class="list-group-item">Morbi leo risus</li>--%>
+                    <%--<li class="list-group-item">Porta ac consectetur ac</li>--%>
+                    <%--<li class="list-group-item">Vestibulum at eros</li>--%>
+                </ul>
+            </div>
         </div>
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=2">
-            <div class="panel panel-danger">
-                <div class="panel-heading"><fmt:message key="category.for_respect" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="../../view.components/images/main_categories/For respect.png?text=IMAGE"
-                                                 class="img-responsive" style="width:100%" alt="Image"></div>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_respect.description" bundle="${rb}"/></div>
-            </div></a>
+
+        <div class="list-arrows col-md-1 text-center">
+            <button class="btn btn-default btn-sm move-left">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+
+            <button class="btn btn-default btn-sm move-right">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
         </div>
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=3">
-            <div class="panel panel-success">
-                <div class="panel-heading"><fmt:message key="category.ultimate_solutions" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/Ultimate Solutions.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge">-17%</span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.ultimate_solutions.description" bundle="${rb}"/></div>
-            </div></a>
+
+        <div class="dual-list list-right col-md-5">
+            <h2>Blocked users</h2>
+            <div class="well text-right">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <c:forEach var="banedUser" items="${bannedUsers}">
+                        <li class="list-group-item">
+                                <%--${notBanedUser.email}--%>
+                            <div class="btn-group btn-group-justified">
+                                <form  class="btn btn-outline-info">
+                                    Email: ${banedUser.email}<br>
+                                    Type: ${banedUser.userType} | Language: ${banedUser.language}
+                                </form>
+                                <c:if test="${banedUser.getUserType() != 'BANNED'}">
+                                    <form action="Controller?command=addusertoblocklist" method="post">
+                                        <input type="hidden" name="userId" value="${banedUser.id}"> </input>
+                                        <button class="btn btn-danger" type="submit">Block user</button>
+                                    </form>
+                                </c:if>
+                                <form action="Controller?command=removeuserfromblocklist" method="post">
+                                    <input type="hidden" name="userId" value="${banedUser.id}"> </input>
+                                    <button class="btn btn-success" type="submit">Unblock user</button>
+                                </form>
+                            </div>
+                                <%--<button type="button" class="btn btn-success">Unblock user</button>--%>
+                                <%--<button type="button" class="btn btn-danger">Block user</button>--%>
+                        </li>
+                    </c:forEach>
+                    <%--<li class="list-group-item">Cras justo odio</li>--%>
+                    <%--<li class="list-group-item">Dapibus ac facilisis in</li>--%>
+                    <%--<li class="list-group-item">Morbi leo risus</li>--%>
+                    <%--<li class="list-group-item">Porta ac consectetur ac</li>--%>
+                    <%--<li class="list-group-item">Vestibulum at eros</li>--%>
+                </ul>
+            </div>
         </div>
+
     </div>
 </div>
-<%--<br>--%>
+<%--/dual list--%>
 
-<%--<div class="container">--%>
-<%--<div class="row">--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<br><br>--%>
-<%--/Categories--%>
+
+
 
 
 <%--Slider Products--%>
@@ -373,10 +372,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <div class="carousel carousel-showmanymoveone slide" id="itemslider">
                 <div class="carousel-inner">
 
+                    <%--<c:set var="sixItemCarousel" value="${sessionScope.sixItemCarousel}"/> &lt;%&ndash;не обязательно,
+                     сам подтянет с сессии по имени sixItemCarousel&ndash;%&gt;--%>
+
                     <div class="item active"><%--Обязательно должен быть - это первый элемент карусели--%>
                         <div class="col-xs-12 col-sm-6 col-md-2">
                             <a href="Controller?command=showitem&item_id=${sixItemCarousel.get(0).getId()}"><img src="${sixItemCarousel.get(0).getItemSmallPicturePath350x260()}"
-                                             class="img-responsive center-block"></a>
+                                                                                                                 class="img-responsive center-block"></a>
                             <h4 class="text-center">${sixItemCarousel.get(0).getItemName()}</h4> <%--test name from list--%>
                             <h5 class="text-center">${sixItemCarousel.get(0).getItemPrice()}</h5>
                         </div>
@@ -386,40 +388,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-2">
                                 <a href="Controller?command=showitem&item_id=${item.id}"><img src="${item.itemSmallPicturePath350x260}"
-                                                 class="img-responsive center-block"></a>
+                                                                                              class="img-responsive center-block"></a>
                                 <h4 class="text-center">${item.itemName}</h4>
                                 <h5 class="text-center">${item.itemPrice}</h5>
                             </div>
                         </div>
                     </c:forEach>
-
-
-                    <%--<div class="item">--%>
-                        <%--<div class="col-xs-12 col-sm-6 col-md-2">--%>
-                            <%--<a href="#"><img src="https://s12.postimg.org/41uq0fc4d/item_2_180x200.png"--%>
-                                             <%--class="img-responsive center-block"></a>--%>
-                            <%--<h4 class="text-center">MAYORAL KOŠULJA</h4>--%>
-                            <%--<h5 class="text-center">4000,00 RSD</h5>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-
-                    <%--<div class="item">--%>
-                        <%--<div class="col-xs-12 col-sm-6 col-md-2">--%>
-                            <%--<a href="#"><img src="../../view.components/images/uV4ABsIur2s.png"--%>
-                                             <%--class="img-responsive center-block"></a>--%>
-                            <%--<span class="badge">10%</span>--%>
-                            <%--<h4 class="text-center">PANTALONE TERI 2</h4>--%>
-                            <%--<h5 class="text-center">4000,00 RSD</h5>--%>
-                            <%--<h6 class="text-center">5000,00 RSD</h6>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-
-
-
-
-
 
                 </div>
 
@@ -438,15 +412,22 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
 <%--/Slider Products--%>
 
+
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Добавляем свой скрипт -->
+<script src="../../view.components/js/tether.min.js"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../view.components/js/bootstrap.min.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
-
+<!-- Добавляем свой скрипт -->
+<script src="../../view.components/js/for_user_management_page.js"></script>
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>

@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Jack
+  Date: 15.01.2017
+  Time: 5:33
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ include file="include.jsp" %>
 <%--
 <%@ include file="include.jsp" %>
@@ -6,7 +13,6 @@
 вы можете заставить его это делать, удалив файл класса главной страницы.--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="/WEB-INF/alertTag.tld" prefix="ctg"%>
 
 <fmt:setLocale value="${selectedLocale}" scope="session"/>
 <fmt:setBundle basename="language" var="rb"/>
@@ -22,11 +28,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 <jsp:include page="bootstrap-meta.jsp"/>
 Действие включения используется только в случаях очень частого обновления содержания и тогда,
 когда определить страницу для включения можно не раньше, чем выполнится запрос к главной странице.--%>
-    <title>Internet Shop main page.</title>
+    <title>Item Page</title>
 
     <!-- Добавляем свой стиль -->
-    <link type="text/css" href="../../view.components/css/styles.css" rel="stylesheet">
-
+    <link type="text/css" href="view.components/css/styles.css" rel="stylesheet">
+    <!-- Добавляем свой стиль -->
+    <%--Для корзины тоже нужен--%>
+    <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
+    <!-- Добавляем свой стиль -->
+    <%--for payment--%>
+    <link type="text/css" href="view.components/css/payment_page.css" rel="stylesheet">
 
     <style>
         html { height: 100%; }
@@ -42,21 +53,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </head>
 
 <body>
-
-<%--Test image--%>
-<%--<div align="center">3<img src="http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg" width="100%" height="100%"></div>--%>
-<%--/Test image--%>
 <%--Image--%>
 <div class="jumbotron">
-    <a href="Controller?command=gotomainpage">
     <div class="container text-left my-div">
-        <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        <a href="Controller?command=gotomainpage">
+            <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+        </a>
         <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
-    </div></a>
+    </div>
 </div>
 <%--/Image--%>
-
-<%--<%@ include file="3-slide_header_carousel.jsp" %>--%>
 
 <%--Fixed header elements--%>
 <div class="container">
@@ -90,24 +96,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="row"><span class="glyphicon glyphicon-shopping-cart ${spanClass}"></div>
                     <div class="row"><a data-toggle="modal" href="#myModal"></span>${cartText}</a></div>
                 </li>
-
-                <c:if test="${currentUserInSystem.getUserType() == 'ADMIN'}">
-                    <li>
-                        <div class="row"><span class="glyphicon glyphicon-flash mycolorspan"></div>
-                        <div class="row"><a data-toggle="modal" href="#myAdminModal"></span>Admin</a></div>
-                    </li>
-                </c:if>
-
-                <%--Main Page Alert--%>
-                <c:if test="${mainPageAlertFlag}">
-                    <c:if test="${mainPageAlertClass == ''}">
-                        <c:set var="mainPageAlertClass" value="alert alert-warning alert-dismissible"/>
-                        </c:if>
-                    <li2>
-                        <ctg:alertTag alertClass="${mainPageAlertClass}" alertMessage="${mainPageAlertMessage}"/>
-                    </li2>
-                </c:if>
-                <%--/Main Page Alert--%>
             </ul>
         </div>
     </div>
@@ -163,7 +151,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                                         <form action="Controller?command=removeitemfromcart" method="POST">
                                             <input type="hidden" name="item_id" value="${item.id}"> </input>
-                                            <input type="hidden" name="from_page" value="MAIN_PAGE"> </input>
+                                            <input type="hidden" name="from_page" value="PAYMENT_PAGE"> </input>
                                             <td class="col-sm-1 col-md-1">
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-remove"></span> Remove
@@ -198,7 +186,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            <button type="button" class="btn btn-default">
                                                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                             </button></td>
                                         <c:choose>
@@ -236,120 +224,184 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div><!-- /.modal -->
 
 <%--/test modal--%>
-<%--script for myModal--%>
+
 <script>
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
-<%--/script for myModal--%>
 
 
-<%--Admin Modal--%>
-<!-- Modal -->
-<div class="modal fade" id="myAdminModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                    <form action="Controller?command=gotousermanagementpage" method="post">
-                    <%--<input type="hidden" name="userId" value="${banedUser.id}"> </input>--%>
-                <button type="submit" class="btn btn-warning btn-lg btn-block">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>User Management</button>
-                    </form>
-                <br><br>
-                    <form action="Controller?command=gotoitemmanagementpage" method="post">
-                <button type="submit" class="btn btn-success btn-lg btn-block">
-                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>Item Management</button>
-                    </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<%--/Admin Modal--%>
-<%--script for myAdminModal--%>
-<script>
-    $('#myAdminModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    });
-</script>
-<%--/script for myAdminModal--%>
 
-<%--Categories--%>
+<%--payment--%>
+
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015 William Hilton
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<!-- Vendor libraries -->
+<%--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">--%>
+<%--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>--%>
+<%--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>--%>
+
+<!-- If you're using Stripe for payments -->
+<%--<script type="text/javascript" src="https://js.stripe.com/v2/"></script>--%>
+
 <div class="container">
     <div class="row">
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=1">
-            <div class="panel panel-primary">
-                <div class="panel-heading"><fmt:message key="category.for_self_defense" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/For self-defense.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_self_defense.description" bundle="${rb}"/></div>
-            </div></a>
+        <!-- You can make it whatever width you want. I'm making it full width
+             on <= small devices and 4/12 page width on >= medium devices -->
+        <div class="col-xs-12 col-md-4">
+
+
+            <!-- CREDIT CARD FORM STARTS HERE -->
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading display-table" >
+                    <div class="row display-tr" >
+                        <h3 class="panel-title display-td" >Payment Details</h3>
+                        <div class="display-td" >
+                            <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="cardNumber">CARD NUMBER</label>
+                                    <div class="input-group">
+                                        <input
+                                                type="tel"
+                                                class="form-control"
+                                                name="cardNumber"
+                                                placeholder="Valid Card Number"
+                                                autocomplete="cc-number"
+                                                required autofocus
+                                        />
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7 col-md-7">
+                                <div class="form-group">
+                                    <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                    <input
+                                            type="tel"
+                                            class="form-control"
+                                            name="cardExpiry"
+                                            placeholder="MM / YY"
+                                            autocomplete="cc-exp"
+                                            required
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-xs-5 col-md-5 pull-right">
+                                <div class="form-group">
+                                    <label for="cardCVC">CV CODE</label>
+                                    <input
+                                            type="tel"
+                                            class="form-control"
+                                            name="cardCVC"
+                                            placeholder="CVC"
+                                            autocomplete="cc-csc"
+                                            required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="couponCode">COUPON CODE</label>
+                                    <input type="text" class="form-control" name="couponCode" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <%--<div class="col-xs-12">--%>
+                                <%--<button class="subscribe btn btn-success btn-lg btn-block" type="button">Start Subscription</button>--%>
+                            <%--</div>--%>
+                                <form action="Controller?command=confirmpayment" method="POST">
+                                    <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
+                            <div class="col-xs-6">
+                                <button class="btn btn-success btn-lg btn-block" type="submit">Pay order</button>
+                            </div>
+                                    </form>
+                                <form action="Controller?command=editorder" method="POST">
+                                    <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
+                                <div class="col-xs-6">
+                                    <button class="btn btn-danger btn-lg btn-block" type="submit">Cancel payment</button>
+                                </div>
+                                    </form>
+                        </div>
+                        <div class="row" style="display:none;">
+                            <div class="col-xs-12">
+                                <p class="payment-errors"></p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <!-- CREDIT CARD FORM ENDS HERE -->
+
+
         </div>
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=2">
-            <div class="panel panel-danger">
-                <div class="panel-heading"><fmt:message key="category.for_respect" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="../../view.components/images/main_categories/For respect.png?text=IMAGE"
-                                                 class="img-responsive" style="width:100%" alt="Image"></div>
-                <span class="badge"></span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.for_respect.description" bundle="${rb}"/></div>
-            </div></a>
+
+        <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
+            <p><h1>Payment details:</h1>
+
+            <div class="alert alert-warning" role="alert">
+                <h1>Order Id: ${currentUserOrderForPayment.id}, from: ${currentOrderForPaymentFormattedDate}</h1>
+            </div>
+
+            <p><h2>You pay for ${currentUserOrderForPayment.itemList.size()} items:</h2>
+            <ul>
+                <c:forEach var="item" items="${currentUserOrderForPayment.itemList}">
+                <li><h4 class="media-heading"><a href="Controller?command=showitem&item_id=${item.id}">${item.itemName}</a>
+                       <span class="text-success"><strong>${item.itemStatus}</strong></span>    <strong>$${item.itemPrice}</strong></h4>
+                </li>
+                </c:forEach>
+            </ul>
+            <p><h2>Summary price: ${currentUserOrderForPayment.summaryPrice}$</h2>
+            </p>
+            <p>Be sure to replace the dummy API key with a valid Stripe API key.</p>
+
+            <p>
+            <form action="Controller?command=editorder" method="POST">
+                <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
+                <button type="submit" class="btn btn-warning btn-lg">Edit order</button>
+            </form>
+            </p>
         </div>
-        <div class="col-sm-4">
-            <a href="Controller?command=gotocategory&category_id=3">
-            <div class="panel panel-success">
-                <div class="panel-heading"><fmt:message key="category.ultimate_solutions" bundle="${rb}"/></div>
-                <div class="panel-body"><img src="view.components/images/main_categories/Ultimate Solutions.png?text=IMAGE" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
-                <span class="badge">-17%</span><%--Скидочный кружек--%>
-                <div class="panel-footer"><fmt:message key="category.ultimate_solutions.description" bundle="${rb}"/></div>
-            </div></a>
-        </div>
+
     </div>
 </div>
-<%--<br>--%>
 
-<%--<div class="container">--%>
-<%--<div class="row">--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="col-sm-4">--%>
-<%--<div class="panel panel-primary">--%>
-<%--<div class="panel-heading">BLACK FRIDAY DEAL</div>--%>
-<%--<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"--%>
-<%--style="width:100%" alt="Image"></div>--%>
-<%--<div class="panel-footer">Buy 50 mobiles and get a gift card</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<br><br>--%>
-<%--/Categories--%>
+<%--/payment--%>
+
+
+
+
 
 
 <%--Slider Products--%>
@@ -373,10 +425,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <div class="carousel carousel-showmanymoveone slide" id="itemslider">
                 <div class="carousel-inner">
 
+                    <%--<c:set var="sixItemCarousel" value="${sessionScope.sixItemCarousel}"/> &lt;%&ndash;не обязательно,
+                     сам подтянет с сессии по имени sixItemCarousel&ndash;%&gt;--%>
+
                     <div class="item active"><%--Обязательно должен быть - это первый элемент карусели--%>
                         <div class="col-xs-12 col-sm-6 col-md-2">
                             <a href="Controller?command=showitem&item_id=${sixItemCarousel.get(0).getId()}"><img src="${sixItemCarousel.get(0).getItemSmallPicturePath350x260()}"
-                                             class="img-responsive center-block"></a>
+                                                                                                                 class="img-responsive center-block"></a>
                             <h4 class="text-center">${sixItemCarousel.get(0).getItemName()}</h4> <%--test name from list--%>
                             <h5 class="text-center">${sixItemCarousel.get(0).getItemPrice()}</h5>
                         </div>
@@ -386,40 +441,12 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         <div class="item">
                             <div class="col-xs-12 col-sm-6 col-md-2">
                                 <a href="Controller?command=showitem&item_id=${item.id}"><img src="${item.itemSmallPicturePath350x260}"
-                                                 class="img-responsive center-block"></a>
+                                                                                              class="img-responsive center-block"></a>
                                 <h4 class="text-center">${item.itemName}</h4>
                                 <h5 class="text-center">${item.itemPrice}</h5>
                             </div>
                         </div>
                     </c:forEach>
-
-
-                    <%--<div class="item">--%>
-                        <%--<div class="col-xs-12 col-sm-6 col-md-2">--%>
-                            <%--<a href="#"><img src="https://s12.postimg.org/41uq0fc4d/item_2_180x200.png"--%>
-                                             <%--class="img-responsive center-block"></a>--%>
-                            <%--<h4 class="text-center">MAYORAL KOŠULJA</h4>--%>
-                            <%--<h5 class="text-center">4000,00 RSD</h5>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-
-                    <%--<div class="item">--%>
-                        <%--<div class="col-xs-12 col-sm-6 col-md-2">--%>
-                            <%--<a href="#"><img src="../../view.components/images/uV4ABsIur2s.png"--%>
-                                             <%--class="img-responsive center-block"></a>--%>
-                            <%--<span class="badge">10%</span>--%>
-                            <%--<h4 class="text-center">PANTALONE TERI 2</h4>--%>
-                            <%--<h5 class="text-center">4000,00 RSD</h5>--%>
-                            <%--<h6 class="text-center">5000,00 RSD</h6>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-
-
-
-
-
 
                 </div>
 
@@ -438,15 +465,22 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
 <%--/Slider Products--%>
 
+
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Добавляем свой скрипт -->
+<script src="../../view.components/js/tether.min.js"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../view.components/js/bootstrap.min.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/formain_fixed_header_elements.js"></script>
 <!-- Добавляем свой скрипт -->
 <script src="../../view.components/js/for_slider_products.js"></script>
-
+<!-- Добавляем свой скрипт -->
+<%--<script src="../../view.components/js/forpayment.js"></script>--%>
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>
