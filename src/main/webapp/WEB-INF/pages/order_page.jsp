@@ -510,13 +510,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <form role="form" action="Controller" method="post">
                                                 <input type="hidden" name="command" value="userupdate">
                                                 <fieldset>
-                                                    <h2><fmt:message key="login.form.sign_in.message" bundle="${rb}"/></h2>
+                                                    <h2><fmt:message key="user_info_title" bundle="${rb}"/></h2>
                                                     <hr class="colorgraph">
-                                                    <label for="filter"><fmt:message key="login.form.language_selector" bundle="${rb}"/></label>
+                                                    <label for="filter"><fmt:message key="name_label" bundle="${rb}"/></label>
                                                     <div class="form-group has-feedback ${emailValidationFeedback}">
                                                         <!-- default <div class="form-group"> -->
                                                         <input type="text" name="name" id="name" class="form-control input-lg"
-                                                               placeholder="name"
+                                                               placeholder="<fmt:message key="name_placeholder" bundle="${rb}"/>"
                                                                value="${currentUserInSystem.name}"><%--заполнение формы из request--%>
                                                         <%--<span class="glyphicon glyphicon-ok form-control-feedback"></span><!-- test icon  -->--%>
                                                         <span class="glyphicon ${emailGlyphiconType} form-control-feedback"></span><!-- test icon  -->
@@ -539,7 +539,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                         <div class="col-xs-6 col-sm-6 col-md-6">
                                                             <%--<input type="submit" class="btn btn-lg btn-success btn-block" value="Sign In"><!-- default  -->--%>
                                                             <input type="submit" class="btn btn-lg btn-success btn-block ${notification}"
-                                                                   value="Update Info">
+                                                                   value="<fmt:message key="update_user_info" bundle="${rb}"/>">
                                                         </div>
 
                                                         <%--<div class="notification notification-error logged-out"><!-- notification test-->--%>
@@ -551,10 +551,10 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                         </div><!-- /notification test-->
 
 
-                                                        <div class="col-xs-6 col-sm-6 col-md-6">
-                                                            <a href="Controller?command=register" class="btn btn-lg btn-primary btn-block">
-                                                                <fmt:message key="login.form.register.button" bundle="${rb}"/></a>
-                                                        </div>
+                                                        <%--<div class="col-xs-6 col-sm-6 col-md-6">--%>
+                                                            <%--<a href="Controller?command=register" class="btn btn-lg btn-primary btn-block">--%>
+                                                                <%--<fmt:message key="login.form.register.button" bundle="${rb}"/></a>--%>
+                                                        <%--</div>--%>
                                                     </div>
                                                 </fieldset>
                                             </form>
@@ -574,22 +574,22 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <form role="form" action="Controller" method="post">
                                                 <input type="hidden" name="command" value="changeuserpassword">
                                                 <fieldset>
-                                                    <h2><fmt:message key="login.form.sign_in.message" bundle="${rb}"/></h2>
+                                                    <h2><fmt:message key="change_password_title" bundle="${rb}"/></h2>
                                                     <hr class="colorgraph">
-                                                    <label for="filter"><fmt:message key="login.form.language_selector" bundle="${rb}"/></label>
+                                                    <label for="filter"><fmt:message key="current_password_label" bundle="${rb}"/></label>
                                                     <div class="form-group has-feedback ${passwordValidationFeedback}">
                                                         <input type="password" name="password" id="password" class="form-control input-lg"
                                                                placeholder="<fmt:message key="login.form.password.placeholder" bundle="${rb}"/>"
-                                                               value="<%=(request.getParameter("password")!=null)?request.getParameter("password"):""%>"><%--заполнение формы из request--%>
+                                                               value="">
                                                         <span class="glyphicon ${passwordGlyphiconType} form-control-feedback"></span>
                                                         <!-- test icon  -->
                                                     </div>
 
-                                                    <label for="filter"><fmt:message key="login.form.language_selector" bundle="${rb}"/></label>
+                                                    <label for="filter"><fmt:message key="new_password_label" bundle="${rb}"/></label>
                                                     <div class="form-group has-feedback ${passwordValidationFeedback}">
                                                         <input type="password" name="newPassword" id="newPassword" class="form-control input-lg"
                                                                placeholder="<fmt:message key="login.form.password.placeholder" bundle="${rb}"/>"
-                                                               value="<%=(request.getParameter("password")!=null)?request.getParameter("password"):""%>"><%--заполнение формы из request--%>
+                                                               value="">
                                                         <span class="glyphicon ${passwordGlyphiconType} form-control-feedback"></span>
                                                         <!-- test icon  -->
                                                     </div>
@@ -599,7 +599,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                         <div class="col-xs-6 col-sm-6 col-md-6">
                                                             <%--<input type="submit" class="btn btn-lg btn-success btn-block" value="Sign In"><!-- default  -->--%>
                                                             <input type="submit" class="btn btn-lg btn-success btn-block ${notification}"
-                                                                   value="Change Password">
+                                                                   value="<fmt:message key="change_password_button" bundle="${rb}"/>">
                                                         </div>
 
                                                         <%--<div class="notification notification-error logged-out"><!-- notification test-->--%>
@@ -610,11 +610,10 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                             You logged out successfully!
                                                         </div><!-- /notification test-->
 
-
-                                                        <div class="col-xs-6 col-sm-6 col-md-6">
-                                                            <a href="Controller?command=register" class="btn btn-lg btn-primary btn-block">
-                                                                <fmt:message key="login.form.register.button" bundle="${rb}"/></a>
-                                                        </div>
+                                                        <%--<div class="col-xs-6 col-sm-6 col-md-6">--%>
+                                                            <%--<a href="Controller?command=register" class="btn btn-lg btn-primary btn-block">--%>
+                                                                <%--<fmt:message key="login.form.register.button" bundle="${rb}"/></a>--%>
+                                                        <%--</div>--%>
                                                     </div>
                                                 </fieldset>
                                             </form>
@@ -632,7 +631,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             </div><%--/body--%>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="close" bundle="${rb}"/></button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

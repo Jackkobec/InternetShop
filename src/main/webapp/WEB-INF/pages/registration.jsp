@@ -68,7 +68,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                 <div class="form-group">
                     <input type="text" name="name" id="name" class="form-control input-lg"
-                           placeholder="Name" tabindex="3">
+                           placeholder="<fmt:message key="name_placeholder" bundle="${rb}"/>" tabindex="3">
                 </div>
 
                 <div class="form-group"> <!-- тест выпадающего списка -->
