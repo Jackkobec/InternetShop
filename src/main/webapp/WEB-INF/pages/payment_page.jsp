@@ -277,7 +277,7 @@ THE SOFTWARE.
             <div class="panel panel-default credit-card-box">
                 <div class="panel-heading display-table" >
                     <div class="row display-tr" >
-                        <h3 class="panel-title display-td" >Payment Details</h3>
+                        <h3 class="panel-title display-td" ><fmt:message key="payment_details" bundle="${rb}"/></h3>
                         <div class="display-td" >
                             <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
                         </div>
@@ -287,7 +287,7 @@ THE SOFTWARE.
                     <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <label for="cardNumber">CARD NUMBER</label>
+                                    <label for="cardNumber"><fmt:message key="card_number" bundle="${rb}"/></label>
                                     <div class="input-group">
                                         <input
                                                 type="tel"
@@ -305,7 +305,7 @@ THE SOFTWARE.
                         <div class="row">
                             <div class="col-xs-7 col-md-7">
                                 <div class="form-group">
-                                    <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                    <label for="cardExpiry"><span class="hidden-xs"><fmt:message key="expiration" bundle="${rb}"/></span><span class="visible-xs-inline">EXP</span> <fmt:message key="date" bundle="${rb}"/></label>
                                     <input
                                             type="tel"
                                             class="form-control"
@@ -318,7 +318,7 @@ THE SOFTWARE.
                             </div>
                             <div class="col-xs-5 col-md-5 pull-right">
                                 <div class="form-group">
-                                    <label for="cardCVC">CV CODE</label>
+                                    <label for="cardCVC"><fmt:message key="cv_code" bundle="${rb}"/></label>
                                     <input
                                             type="tel"
                                             class="form-control"
@@ -333,7 +333,7 @@ THE SOFTWARE.
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <label for="couponCode">COUPON CODE</label>
+                                    <label for="couponCode"><fmt:message key="coupon_code" bundle="${rb}"/></label>
                                     <input type="text" class="form-control" name="couponCode" />
                                 </div>
                             </div>
@@ -345,13 +345,13 @@ THE SOFTWARE.
                                 <form action="Controller?command=confirmpayment" method="POST">
                                     <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
                             <div class="col-xs-6">
-                                <button class="btn btn-success btn-lg btn-block" type="submit">Pay order</button>
+                                <button class="btn btn-success btn-lg btn-block" type="submit"><fmt:message key="pay_order_button" bundle="${rb}"/></button>
                             </div>
                                     </form>
                                 <form action="Controller?command=editorder" method="POST">
                                     <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
                                 <div class="col-xs-6">
-                                    <button class="btn btn-danger btn-lg btn-block" type="submit">Cancel payment</button>
+                                    <button class="btn btn-danger btn-lg btn-block" type="submit"><fmt:message key="cancel_payment_button" bundle="${rb}"/></button>
                                 </div>
                                     </form>
                         </div>
@@ -368,13 +368,13 @@ THE SOFTWARE.
         </div>
 
         <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
-            <p><h1>Payment details:</h1>
+            <p><h1><fmt:message key="payment_details" bundle="${rb}"/>:</h1>
 
             <div class="alert alert-warning" role="alert">
-                <h1>Order Id: ${currentUserOrderForPayment.id}, from: ${currentOrderForPaymentFormattedDate}</h1>
+                <h1><fmt:message key="order" bundle="${rb}"/> Id: ${currentUserOrderForPayment.id}, <fmt:message key="from" bundle="${rb}"/>: ${currentOrderForPaymentFormattedDate}</h1>
             </div>
 
-            <p><h2>You pay for ${currentUserOrderForPayment.itemList.size()} items:</h2>
+            <p><h2><fmt:message key="you_pay_for" bundle="${rb}"/> ${currentUserOrderForPayment.itemList.size()} <fmt:message key="items" bundle="${rb}"/>:</h2>
             <ul>
                 <c:forEach var="item" items="${currentUserOrderForPayment.itemList}">
                 <li><h4 class="media-heading"><a href="Controller?command=showitem&item_id=${item.id}">${item.itemName}</a>
@@ -382,14 +382,15 @@ THE SOFTWARE.
                 </li>
                 </c:forEach>
             </ul>
-            <p><h2>Summary price: ${currentUserOrderForPayment.summaryPrice}$</h2>
+            <p><h2><fmt:message key="summary_price" bundle="${rb}"/>: ${currentUserOrderForPayment.summaryPrice}$</h2>
             </p>
-            <p>Be sure to replace the dummy API key with a valid Stripe API key.</p>
+            <%--<p>Be sure to replace the dummy API key with a valid Stripe API key.</p>--%>
 
             <p>
-            <form action="Controller?command=editorder" method="POST">
+            <form action="Controller" method="POST">
+                <input type="hidden" name="command" value="editorder">
                 <input type="hidden" name="currentUserOrderForPaymentId" value="${currentUserOrderForPayment.id}">
-                <button type="submit" class="btn btn-warning btn-lg">Edit order</button>
+                <button type="submit" class="btn btn-warning btn-lg"><fmt:message key="edit_order_button" bundle="${rb}"/></button>
             </form>
             </p>
         </div>
