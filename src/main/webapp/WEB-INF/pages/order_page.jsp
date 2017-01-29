@@ -276,7 +276,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel2">User Profile</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel2"><fmt:message key="user_profile" bundle="${rb}"/></h4>
             </div>
             <div class="modal-body"><%--body--%>
 
@@ -297,17 +297,17 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
                         <div class="btn-group" role="group">
                             <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                <div class="hidden-xs">My Orders</div>
+                                <div class="hidden-xs"><fmt:message key="my_orders" bundle="${rb}"/></div>
                             </button>
                         </div>
                         <div class="btn-group" role="group">
                             <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                <div class="hidden-xs">User Info</div>
+                                <div class="hidden-xs"><fmt:message key="user_info" bundle="${rb}"/></div>
                             </button>
                         </div>
                         <div class="btn-group" role="group">
                             <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                <div class="hidden-xs">Change Password</div>
+                                <div class="hidden-xs"><fmt:message key="change_password" bundle="${rb}"/></div>
                             </button>
                         </div>
                     </div>
@@ -315,13 +315,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                     <div class="well">
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="tab1">
-                                <h2>Order list</h2>
+                                <h2><fmt:message key="order_list" bundle="${rb}"/></h2>
                                 <form action="Controller" method="POST">
                                     <input type="hidden" name="command" value="removeallnotpaidorders"> </input>
                                     <input type="hidden" name="from_page" value="ORDER_PAGE"> </input>
                                     <td class="col-sm-1 col-md-1">
                                         <button type="submit" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove All Not Paid Orders
+                                            <span class="glyphicon glyphicon-remove"></span> <fmt:message key="remove_all_not_paid_orders" bundle="${rb}"/>
                                         </button></td>
                                 </form>
                                 <%--TEST ORDER LIST--%>
@@ -336,13 +336,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                     <thead>
 
                                                     <th><input type="checkbox" id="checkall" /></th>
-                                                    <th>Order Id</th>
-                                                    <th>Order Date and Time</th>
-                                                    <th>Items count</th>
-                                                    <th>Summary price</th>
-                                                    <th>Order status</th>
+                                                    <th><fmt:message key="order_id" bundle="${rb}"/></th>
+                                                    <th><fmt:message key="order_date_and_time" bundle="${rb}"/></th>
+                                                    <th><fmt:message key="items_count" bundle="${rb}"/></th>
+                                                    <th><fmt:message key="summary_price" bundle="${rb}"/></th>
+                                                    <th><fmt:message key="order_status" bundle="${rb}"/></th>
 
-                                                    <th>Actions</th>
+                                                    <th><fmt:message key="actions" bundle="${rb}"/></th>
                                                     <%--<th>Delete</th>--%>
                                                     </thead>
                                                     <tbody>

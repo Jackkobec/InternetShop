@@ -2,6 +2,7 @@ package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
+import com.gmail.jackkobec.internetshop.persistence.model.ItemCategory;
 import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IClientService;
 import org.apache.log4j.LogManager;
@@ -20,6 +21,7 @@ public class GoCategoryCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(GoCategoryCommand.class);
 
     private static final String CATEGORY_ID = "category_id";
+    private static final String CURRENT_CATEGORY_NAME = "currentCategoryName";
     private static final String CURRENT_CATEGORY_ITEM_LIST = "currentCategoryItemList";
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
@@ -40,7 +42,10 @@ public class GoCategoryCommand implements ICommand {
 
         final Integer categoryId = Integer.valueOf(request.getParameter(CATEGORY_ID));
 
+        String categoryNameBundle = ItemCategory.getItemCategoryResourceBundleByID(categoryId);
         List<Item> currentCategoryItemList = iClientService.getItemsByCategoryId(categoryId);
+
+        request.setAttribute(CURRENT_CATEGORY_NAME, categoryNameBundle);
         request.setAttribute(CURRENT_CATEGORY_ITEM_LIST, currentCategoryItemList);
         LOGGER.info("GoCategoryCommand, categoryId: " + categoryId);
 
