@@ -256,31 +256,31 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 </c:otherwise>
             </c:choose>
             <div class="form-group">
-               <h2>Select Item Category</h2>
+               <h2><fmt:message key="select_category" bundle="${rb}"/></h2>
                 <select class="form-control" id="itemCategoryId" name="itemCategoryId">
-                    <option value="1" ${isOneSelected}>FOR_SELF_DEFENSE</option>
-                    <option value="2" ${isTwoSelected}>FOR_RESPECT</option>
-                    <option value="3" ${isThreeSelected}>ULTIMATE_SOLUTIONS</option>
+                    <option value="1" ${isOneSelected}><fmt:message key="category.for_self_defense" bundle="${rb}"/></option>
+                    <option value="2" ${isTwoSelected}><fmt:message key="category.for_respect" bundle="${rb}"/></option>
+                    <option value="3" ${isThreeSelected}><fmt:message key="category.ultimate_solutions" bundle="${rb}"/></option>
                 </select>
             </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-th-list"></span>Show items</button>
+                    <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-th-list"></span><fmt:message key="show_items_button" bundle="${rb}"/></button>
                 </div>
             </form>
             <%--/category choose--%>
 
             <%--add new item--%>
-            <h2>Add new Item</h2>
+            <h2><fmt:message key="add_new_item" bundle="${rb}"/></h2>
             <form action="Controller?command=edititem" method="POST">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span>Add new item</button>
+                <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span><fmt:message key="add_new_item" bundle="${rb}"/></button>
             </div>
                 </form>
             <%--/add new item--%>
 
             <br>
 
-            <h4>Category items.</h4>
+            <h4><fmt:message key="category_items" bundle="${rb}"/>.</h4>
             <div class="table-responsive">
                 <table id="mytable" class="table table-bordred table-striped">
 
@@ -288,16 +288,16 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 
                     <th><input type="checkbox" id="checkall" /></th>
                     <th>Id</th>
-                    <th>Item Name</th>
-                    <th>Small Description</th>
-                    <th>Full Description</th>
-                    <th>Price</th>
-                    <th>Rating</th>
-                    <th>Category</th>
-                    <th>Status</th>
+                    <th><fmt:message key="item_name" bundle="${rb}"/></th>
+                    <th><fmt:message key="small_description" bundle="${rb}"/></th>
+                    <th><fmt:message key="full_description" bundle="${rb}"/></th>
+                    <th><fmt:message key="price" bundle="${rb}"/></th>
+                    <th><fmt:message key="rating" bundle="${rb}"/></th>
+                    <th><fmt:message key="category" bundle="${rb}"/></th>
+                    <th><fmt:message key="status" bundle="${rb}"/></th>
 
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th><fmt:message key="edit" bundle="${rb}"/></th>
+                    <th><fmt:message key="delete" bundle="${rb}"/></th>
                     </thead>
                     <tbody>
 
@@ -393,7 +393,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                    <h4 class="modal-title custom_align" id="Heading">Select Edit Model</h4>
+                                    <h4 class="modal-title custom_align" id="Heading"><fmt:message key="select_edit_mode" bundle="${rb}"/></h4>
                                 </div>
                                 <div class="modal-body">
                                         <%----%>
@@ -403,13 +403,13 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                 <input type="hidden" name="item_id" id="itemForUpdate" value="">
                                                 <input type="hidden" name="itemEditMode" value="updateitem">
                                                 <button type="submit" class="btn btn-warning btn-lg">
-                                                    <span class="glyphicon glyphicon-ok-sign"></span>Update</button>
+                                                    <span class="glyphicon glyphicon-ok-sign"></span><fmt:message key="update" bundle="${rb}"/></button>
                                             </form>
                                         </div>
                                         <div class="col-xs-8 col-sm-9 col-md-8">
                                             <br>
                                             <h4 class="modal-title custom_align">
-                                                By clicking <strong class="label label-primary">Update</strong>, update current item mode.
+                                                <fmt:message key="by_click" bundle="${rb}"/> <strong class="label label-primary"><fmt:message key="update" bundle="${rb}"/></strong>, <fmt:message key="update_description" bundle="${rb}"/>
                                                 </h4>
                                         </div>
                                     </div>
@@ -421,20 +421,20 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                     <form action="Controller?command=edititem" method="POST">
                                                         <input type="hidden" name="item_id" id="itemForCloneId" value="">
                                                         <input type="hidden" name="itemEditMode" value="additem">
-                                                        <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span>New like this</button>
+                                                        <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span><fmt:message key="new_like_this" bundle="${rb}"/></button>
                                                     </form>
                                                 </div>
                                                 <div class="col-xs-8 col-sm-9 col-md-8">
                                                     <br>
                                                     <h4 class="modal-title custom_align">
-                                                        By clicking <strong class="label label-primary">New like this</strong>, copy current item mode.
+                                                        <fmt:message key="by_click" bundle="${rb}"/> <strong class="label label-primary"><fmt:message key="new_like_this" bundle="${rb}"/></strong>, <fmt:message key="new_like_this_description" bundle="${rb}"/>
                                                     </h4>
                                                 </div>
                                             </div>
                                             <%----%>
                                 </div>
                                 <div class="modal-footer ">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="close" bundle="${rb}"/></button>
                                 </div>
                             </div>
                             <!-- /.modal-content -->
@@ -451,26 +451,26 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                     <%----%>
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                                            <h4 class="modal-title custom_align">Delete item?</h4>
+                                            <h4 class="modal-title custom_align"><fmt:message key="delete_item" bundle="${rb}"/>?</h4>
                                         </div>
                                         <div class="modal-body">
                                 <div class="row">
                                     <div class="col-xs-4 col-sm-3 col-md-4">
                                         <form action="Controller?command=deleteitem" method="POST">
                                             <input type="text" name="for_delete_item_id" id="itemForDeleteId" value="">
-                                            <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span>Delete item</button>
+                                            <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span><fmt:message key="delete_item" bundle="${rb}"/></button>
                                         </form>
                                     </div>
                                     <div class="col-xs-8 col-sm-9 col-md-8">
                                         <br>
                                         <h4 class="modal-title custom_align">
-                                            By clicking <strong class="label label-primary">Delete item</strong>, delete item from database.
+                                            <fmt:message key="by_click" bundle="${rb}"/> <strong class="label label-primary"><fmt:message key="delete_item" bundle="${rb}"/></strong>, <fmt:message key="delete_item_description" bundle="${rb}"/>
                                         </h4>
                                     </div>
                                 </div>
                                             </div>
                                         <div class="modal-footer ">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="close" bundle="${rb}"/></button>
                                         </div>
                                     <%----%>
                             </div>
