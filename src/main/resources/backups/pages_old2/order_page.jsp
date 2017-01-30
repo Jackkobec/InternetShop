@@ -62,7 +62,6 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div>
 <%--/Image--%>
 
-<%--GLOBAL BLOCK. USER MENU: Admin, Cart, User Profile, Log Out.--%>
 <%--Fixed header elements--%>
 <div class="container">
     <div class="row">
@@ -70,7 +69,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <ul>
                 <li>
                     <div class="row"><span class="glyphicon glyphicon-off mycolorspan-red"></div>
-                    <div class="row"><a data-toggle="modal" href="#myModalLogOut"></span><fmt:message key="logout" bundle="${rb}"/></a></div>
+                    <div class="row"><a href="Controller?command=userlogout"></span><fmt:message key="logout" bundle="${rb}"/></a></div>
                 </li>
                 <li2>
                     <div class="row"><span class="glyphicon glyphicon-user mycolorspan"></div>
@@ -639,68 +638,19 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div><!-- /.modal -->
 <%--/TEST MODAL USER PROFILE--%>
 
-<%--TEST MODAL LOGOUT--%>
-<div class="modal fade" id="myModalLogOut" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <%----%>
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align"><fmt:message key="logout" bundle="${rb}"/>?</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-4 col-sm-3 col-md-4">
-                        <form action="Controller" method="POST">
-                            <input type="hidden" name="command" id="command" value="userlogout">
-                            <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-off"></span><fmt:message key="logout" bundle="${rb}"/></button>
-                        </form>
-                    </div>
-                    <div class="col-xs-8 col-sm-9 col-md-8">
-                        <br>
-                        <h4 class="modal-title custom_align">
-                            <fmt:message key="by_click" bundle="${rb}"/> <strong class="label label-primary"><fmt:message key="logout" bundle="${rb}"/></strong>, <fmt:message key="logout_description" bundle="${rb}"/>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="close" bundle="${rb}"/></button>
-            </div>
-            <%----%>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<%--/TEST MODAL LOGOUT--%>
-
-<%--script for myModal--%>
 <script>
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
-<%--/script for myModalUserProfile--%>
 
-<%--script for myModalUserProfile--%>
 <script>
     $('#myModalUserProfile').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
-<%--/script for myModalUserProfile--%>
 
-<%--script for myModalLogOut--%>
-<script>
-    $('#myModalLogOut').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    });
-</script>
-<%--/script for myModalLogOut--%>
-
-<%--ORDER FORM--%>
+<%--test shoping cart--%>
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -799,7 +749,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         </div>
     </div>
 </div>
-<%--/ORDER FORM--%>
+<%--/test shoping cart--%>
 
 
 <%--Slider Products--%>

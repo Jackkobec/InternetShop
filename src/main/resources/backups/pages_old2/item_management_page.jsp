@@ -419,7 +419,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                             <div class="row">
                                                 <div class="col-xs-4 col-sm-3 col-md-4">
                                                     <form action="Controller?command=edititem" method="POST">
-                                                        <input type="hidden" name="item_id" id="itemForCloneId" value=""><%--Поле value пустое т.к. оно сетится через java script смотри описание выше--%>
+                                                        <input type="hidden" name="item_id" id="itemForCloneId" value="">
                                                         <input type="hidden" name="itemEditMode" value="additem">
                                                         <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok-sign"></span><fmt:message key="new_like_this" bundle="${rb}"/></button>
                                                     </form>
@@ -457,7 +457,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                 <div class="row">
                                     <div class="col-xs-4 col-sm-3 col-md-4">
                                         <form action="Controller?command=deleteitem" method="POST">
-                                            <input type="text" name="for_delete_item_id" id="itemForDeleteId" value=""><%--Поле value пустое т.к. оно сетится через java script смотри описание выше--%>
+                                            <input type="text" name="for_delete_item_id" id="itemForDeleteId" value="">
                                             <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span><fmt:message key="delete_item" bundle="${rb}"/></button>
                                         </form>
                                     </div>
