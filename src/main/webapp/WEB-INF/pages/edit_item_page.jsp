@@ -264,35 +264,35 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                 <div class="col-md-7">
                     <div class="modal-body">
                         <div class="form-group">
-                            <div class="alert alert-warning" role="alert">Current Item Id: ${itemForEdit.id}</div>
+                            <div class="alert alert-warning" role="alert"><fmt:message key="current_item" bundle="${rb}"/> Id: ${itemForEdit.id}</div>
                         </div>
                         <div class="form-group">
-                            <label >Item Name</label>
-                            <input class="form-control " name="itemName" type="text" placeholder="Item Name" value="${itemForEdit.itemName}">
+                            <label ><fmt:message key="item_name_label" bundle="${rb}"/></label>
+                            <input class="form-control " name="itemName" type="text" placeholder="<fmt:message key="item_name_label" bundle="${rb}"/>" value="${itemForEdit.itemName}">
                         </div>
                         <div class="form-group">
-                            <label >Small Description</label>
-                            <input class="form-control " name="itemSmallDescription" type="text" placeholder="Small Description" value="${itemForEdit.itemSmallDescription}">
+                            <label ><fmt:message key="small_description_label" bundle="${rb}"/></label>
+                            <input class="form-control " name="itemSmallDescription" type="text" placeholder="<fmt:message key="small_description_label" bundle="${rb}"/>" value="${itemForEdit.itemSmallDescription}">
                         </div>
                         <div class="form-group">
-                            <label >Full Description</label>
-                            <textarea rows="7" class="form-control" name="itemFullDescription" placeholder="Product Info" >${itemForEdit.itemFullDescription}</textarea>
+                            <label ><fmt:message key="full_description_label" bundle="${rb}"/></label>
+                            <textarea rows="7" class="form-control" name="itemFullDescription" placeholder="<fmt:message key="full_description_label" bundle="${rb}"/>" >${itemForEdit.itemFullDescription}</textarea>
                         </div>
                         <div class="form-group">
-                            <label >Product Info</label>
-                            <textarea rows="7" class="form-control" name="itemProductInfo" placeholder="Product Info">${itemForEdit.itemProductInfo}</textarea>
+                            <label ><fmt:message key="product_info_label" bundle="${rb}"/></label>
+                            <textarea rows="7" class="form-control" name="itemProductInfo" placeholder="<fmt:message key="product_info_label" bundle="${rb}"/>">${itemForEdit.itemProductInfo}</textarea>
                         </div>
                         <div class="form-group">
-                            <label >Price</label>
-                            <input class="form-control " name="itemPrice" type="number" placeholder="Price" value="${itemForEdit.itemPrice}">
+                            <label ><fmt:message key="price_label" bundle="${rb}"/></label>
+                            <input class="form-control " name="itemPrice" type="number" placeholder="<fmt:message key="price_label" bundle="${rb}"/>" value="${itemForEdit.itemPrice}">
                         </div>
                         <div class="form-group">
-                            <label >Big Picture Path 800x600</label>
-                            <input class="form-control " name="itemBigPicturePath800x600" type="text" placeholder="Big Picture Path 800x600" value="${itemForEdit.itemBigPicturePath800x600}">
+                            <label ><fmt:message key="big_picture_path_label" bundle="${rb}"/></label>
+                            <input class="form-control " name="itemBigPicturePath800x600" type="text" placeholder="<fmt:message key="big_picture_path_label" bundle="${rb}"/>" value="${itemForEdit.itemBigPicturePath800x600}">
                         </div>
                         <div class="form-group">
-                            <label >Small Picture Path 350x260</label>
-                            <input class="form-control " name="itemSmallPicturePath350x260" type="text" placeholder="Small Picture Path 350x260" value="${itemForEdit.itemSmallPicturePath350x260}">
+                            <label ><fmt:message key="small_picture_path_label" bundle="${rb}"/></label>
+                            <input class="form-control " name="itemSmallPicturePath350x260" type="text" placeholder="<fmt:message key="small_picture_path_label" bundle="${rb}"/>" value="${itemForEdit.itemSmallPicturePath350x260}">
                         </div>
                         <c:choose>
                             <c:when test="${itemForEdit.itemRating == 1}">
@@ -315,7 +315,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             </c:otherwise>
                         </c:choose>
                         <div class="form-group">
-                            <label >Item Rating</label>
+                            <label ><fmt:message key="item_rating_label" bundle="${rb}"/></label>
                             <select class="form-control" id="itemRating" name="itemRating">
                                 <option value="1" ${raitingOne}>1</option>
                                 <option value="2" ${raitingTwo}>2</option>
@@ -339,11 +339,11 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                         </c:otherwise>
                         </c:choose>
                         <div class="form-group">
-                            <label >Item Category</label>
+                            <label ><fmt:message key="item_category_label" bundle="${rb}"/></label>
                             <select class="form-control" id="itemCategory" name="itemCategory">
-                                <option value="1" ${isOneSelected}>FOR_SELF_DEFENSE</option>
-                                <option value="2" ${isTwoSelected}>FOR_RESPECT</option>
-                                <option value="3" ${isThreeSelected}>ULTIMATE_SOLUTIONS</option>
+                                <option value="1" ${isOneSelected}><fmt:message key="category.for_self_defense" bundle="${rb}"/></option>
+                                <option value="2" ${isTwoSelected}><fmt:message key="category.for_respect" bundle="${rb}"/></option>
+                                <option value="3" ${isThreeSelected}><fmt:message key="category.ultimate_solutions" bundle="${rb}"/></option>
                             </select>
                         </div>
                         <c:choose>
@@ -358,7 +358,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             </c:otherwise>
                         </c:choose>
                         <div class="form-group">
-                            <label >Item Status</label>
+                            <label ><fmt:message key="item_status_label" bundle="${rb}"/></label>
                             <select class="form-control" id="itemStatus" name="itemStatus">
                                 <option value="1" ${isFirstStatusSelected}>PRESENT</option>
                                 <option value="2" ${isSecondStatusSelected}>NOT_PRESENT</option>
