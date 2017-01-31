@@ -80,6 +80,7 @@ public class ControllerHelper {
     public ICommand getCommand(HttpServletRequest request) {
 
         ICommand command = commands.get(request.getParameter("command"));
+
         if (command == null) {
             command = new NoCommand();
         }

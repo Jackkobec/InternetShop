@@ -2,6 +2,7 @@ package com.gmail.jackkobec.internetshop.commands;
 
 import com.gmail.jackkobec.internetshop.controller.PageManager;
 import com.gmail.jackkobec.internetshop.persistence.model.Item;
+import com.gmail.jackkobec.internetshop.persistence.model.Order;
 import com.gmail.jackkobec.internetshop.persistence.model.User;
 import com.gmail.jackkobec.internetshop.service.ClientServiceImpl;
 import com.gmail.jackkobec.internetshop.service.IClientService;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.gmail.jackkobec.internetshop.controller.PageManager.*;
+
 /**
  * <p>RemoveItemFromCartCommand class execute command for remove item by id from cart.
  */
@@ -29,6 +32,11 @@ public class RemoveItemFromCartCommand implements ICommand {
     private static final String SUMMARY_CART_PRICE = "summaryCartPrice";
     private static final String CURRENT_USER_CART = "currentUserCart";
     private static final String ERROR_INFO = "errorInfo";
+
+    private static final String CURRENT_USER_ORDER_ID = "currentUserOrderId";
+    private static final String DATE_AND_TIME_FORMAT_PATTERN = "Date %1$td.%1$tm.%1$ty Time %1$tH:%1$tM:%1$tS";
+    private static final String CURRENT_ORDER_FORMATTED_DATE = "currentOrderFormattedDate";
+    private static final String CURRENT_USER_ORDER = "currentUserOrder";
 
     IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
@@ -75,6 +83,35 @@ public class RemoveItemFromCartCommand implements ICommand {
 
             session.setAttribute(SUMMARY_CART_PRICE, summaryCartPrice);
             session.setAttribute(CURRENT_USER_CART, currentUserCart);
+
+            if (fromPage.equals(ORDER_PAGE)) {
+
+                final Integer currentUserOrderId = Integer.valueOf(request.getParameter(CURRENT_USER_ORDER_ID));
+                Order order = iClientService.getOrderById(currentUserOrderId);
+                List<Item> itemsInOrder = iClientService.getItemsFromOrderByOrderId(order.getId());
+                order.setItemList(itemsInOrder);
+
+                String currentOrderFormattedDate = String.format(
+                        DATE_AND_TIME_FORMAT_PATTERN, order.getOrderDateAndTime());
+
+                request.setAttribute(CURRENT_ORDER_FORMATTED_DATE, currentOrderFormattedDate);
+                request.setAttribute(CURRENT_USER_ORDER, order);
+            }
+
+            if (fromPage.equals(EDIT_ITEM_PAGE)) {
+
+                new EditItemCommand().executeCommand(request, response);
+            }
+
+            if (fromPage.equals(CHOSEN_CATEGORY_PAGE)) {
+
+                new GoCategoryCommand().executeCommand(request, response);
+            }
+
+            if (fromPage.equals(PAYMENT_PAGE)) {
+
+                new PayOrderCommand().executeCommand(request, response);
+            }
 
             return PageManager.getPageManager().getPage(fromPage);
         } else {

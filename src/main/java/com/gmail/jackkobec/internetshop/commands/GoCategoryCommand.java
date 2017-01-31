@@ -45,6 +45,7 @@ public class GoCategoryCommand implements ICommand {
         String categoryNameBundle = ItemCategory.getItemCategoryResourceBundleByID(categoryId);
         List<Item> currentCategoryItemList = iClientService.getItemsByCategoryId(categoryId);
 
+        request.setAttribute(CATEGORY_ID, categoryId);
         request.setAttribute(CURRENT_CATEGORY_NAME, categoryNameBundle);
         request.setAttribute(CURRENT_CATEGORY_ITEM_LIST, currentCategoryItemList);
         LOGGER.info("GoCategoryCommand, categoryId: " + categoryId);

@@ -37,31 +37,24 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
     <link type="text/css" href="view.components/css/item_page.css" rel="stylesheet">
     <!-- Добавляем свой стиль user profile -->
     <link type="text/css" href="view.components/css/user_profile.css" rel="stylesheet">
-    <style>
-        html { height: 100%; }
-        .my-div {
-            margin: 0; /* Убираем отступы */
-            /*height: 43%;*/
-            height: 57%;
-            width: 100%; /* Высота страницы */
-            background: url(http://www.sunhome.ru/i/wallpapers/67/terminator-2-oboi.1920x1080.jpg); /* Параметры фона */
-            background-size: auto; /* Фон занимает всю доступную площадь */
-        }
-    </style>
+
+    <!-- Добавляем свой стиль header picture style -->
+    <link type="text/css" href="view.components/css/header_style.css" rel="stylesheet">
 </head>
 
 <body>
-<%--Image--%>
-<div class="jumbotron">
-    <div class="container text-left my-div">
-        <a href="Controller?command=gotomainpage">
-            <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
-        </a>
-        <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
-    </div>
-</div>
-<%--/Image--%>
 
+<%--Header Image--%>
+<div class="jumbotron">
+    <a href="Controller?command=gotomainpage">
+        <div class="container text-left my-div">
+            <h1><fmt:message key="head.big_text" bundle="${rb}"/></h1>
+            <h2><fmt:message key="head.small_text" bundle="${rb}"/></h2>
+        </div></a>
+</div>
+<%--/Header Image--%>
+
+<%--GLOBAL BLOCK. USER MENU: Admin, Cart, User Profile, Log Out.--%>
 <%--Fixed header elements--%>
 <div class="container">
     <div class="row">
@@ -69,7 +62,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
             <ul>
                 <li>
                     <div class="row"><span class="glyphicon glyphicon-off mycolorspan-red"></div>
-                    <div class="row"><a href="Controller?command=userlogout"></span><fmt:message key="logout" bundle="${rb}"/></a></div>
+                    <div class="row"><a data-toggle="modal" href="#myModalLogOut"></span><fmt:message key="logout" bundle="${rb}"/></a></div>
                 </li>
                 <li2>
                     <div class="row"><span class="glyphicon glyphicon-user mycolorspan"></div>
@@ -193,9 +186,10 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
                                         <td class="col-sm-1 col-md-1 text-center"><strong>$${item.itemPrice}</strong></td>
 
-                                        <form action="Controller?command=removeitemfromcart" method="POST">
-                                            <input type="hidden" name="item_id" value="${item.id}"> </input>
-                                            <input type="hidden" name="from_page" value="ORDER_PAGE"> </input>
+                                        <form action="Controller" method="POST">
+                                            <input type="hidden" name="command" value="removeitemfromcart">
+                                            <input type="hidden" name="item_id" value="${item.id}">
+                                            <input type="hidden" name="from_page" value="ORDER_PAGE">
                                             <td class="col-sm-1 col-md-1">
                                                 <button type="submit" class="btn btn-danger">
                                                     <span class="glyphicon glyphicon-remove"></span> <fmt:message key="remove" bundle="${rb}"/>
@@ -244,7 +238,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                                                 <c:set var="isDisable" value=""/>
                                             </c:otherwise>
                                         </c:choose>
-                                        <form action="Controller?command=makeorder" method="POST">
+                                        <form action="Controller" method="POST">
+                                            <input type="hidden" name="command" value="makeorder"><%--command as hiden parameter--%>
                                         <td>
                                             <button type="submit" class="btn btn-success ${isDisable}">
                                                 <fmt:message key="make_order" bundle="${rb}"/> <span class="glyphicon glyphicon-ok"></span>
@@ -317,8 +312,8 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
                             <div class="tab-pane fade in active" id="tab1">
                                 <h2><fmt:message key="order_list" bundle="${rb}"/></h2>
                                 <form action="Controller" method="POST">
-                                    <input type="hidden" name="command" value="removeallnotpaidorders"> </input>
-                                    <input type="hidden" name="from_page" value="ORDER_PAGE"> </input>
+                                    <input type="hidden" name="command" value="removeallnotpaidorders">
+                                    <input type="hidden" name="from_page" value="ORDER_PAGE">
                                     <td class="col-sm-1 col-md-1">
                                         <button type="submit" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove"></span> <fmt:message key="remove_all_not_paid_orders" bundle="${rb}"/>
@@ -638,19 +633,69 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
 </div><!-- /.modal -->
 <%--/TEST MODAL USER PROFILE--%>
 
+<%--TEST MODAL LOGOUT--%>
+<div class="modal fade" id="myModalLogOut" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <%----%>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align"><fmt:message key="logout" bundle="${rb}"/>?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-4">
+                        <form action="Controller" method="POST">
+                            <input type="hidden" name="command" id="command" value="userlogout">
+                            <button type="submit" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-off"></span><fmt:message key="logout" bundle="${rb}"/></button>
+                        </form>
+                    </div>
+                    <div class="col-xs-8 col-sm-9 col-md-8">
+                        <br>
+                        <h4 class="modal-title custom_align">
+                            <fmt:message key="by_click" bundle="${rb}"/> <strong class="label label-primary"><fmt:message key="logout" bundle="${rb}"/></strong>, <fmt:message key="logout_description" bundle="${rb}"/>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="close" bundle="${rb}"/></button>
+            </div>
+            <%----%>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<%--/TEST MODAL LOGOUT--%>
+
+<%--script for myModal--%>
 <script>
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
+<%--/script for myModalUserProfile--%>
 
+<%--script for myModalUserProfile--%>
 <script>
     $('#myModalUserProfile').on('shown.bs.modal', function () {
         $('#myInput').focus()
     });
 </script>
+<%--/script for myModalUserProfile--%>
 
-<%--test shoping cart--%>
+<%--script for myModalLogOut--%>
+<script>
+    $('#myModalLogOut').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    });
+</script>
+<%--/script for myModalLogOut--%>
+<%--/GLOBAL BLOCK. USER MENU: Admin, Cart, User Profile, Log Out.--%>
+
+<%--ORDER FORM--%>
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -749,7 +794,7 @@ In the Java: request.setAttribute("selectedLocale", "en_EN");
         </div>
     </div>
 </div>
-<%--/test shoping cart--%>
+<%--/ORDER FORM--%>
 
 
 <%--Slider Products--%>

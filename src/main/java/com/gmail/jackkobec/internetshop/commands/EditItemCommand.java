@@ -18,7 +18,7 @@ import java.io.IOException;
 public class EditItemCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(EditItemCommand.class);
 
-    private static final String ITEM_ID = "item_id";
+    private static final String ITEM_FOR_EDIT_ID = "item_for_edit_id";
     private static final String ITEM_EDIT_MODE = "itemEditMode";
 
     private static final String ITEM_FOR_EDIT = "itemForEdit";
@@ -40,16 +40,17 @@ public class EditItemCommand implements ICommand {
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String itemForEditParameter = request.getParameter(ITEM_ID);
+        String itemForEditParameter = request.getParameter(ITEM_FOR_EDIT_ID);
         String itemEditModeParameter = request.getParameter(ITEM_EDIT_MODE);
 
         if (itemForEditParameter != null && itemEditModeParameter != null) {
 
-            final Integer itemId = Integer.valueOf(request.getParameter(ITEM_ID));
+            final Integer itemId = Integer.valueOf(request.getParameter(ITEM_FOR_EDIT_ID));
             final String itemEditMode = request.getParameter(ITEM_EDIT_MODE);
 
             Item itemForEdit = iClientService.getItemById(itemId);
 
+            request.setAttribute(ITEM_EDIT_MODE, itemEditMode);
             request.setAttribute(ITEM_FOR_EDIT, itemForEdit);
             request.setAttribute(FORM_ACTION, itemEditMode);
             LOGGER.info("Item edit mode: " + itemEditMode);
