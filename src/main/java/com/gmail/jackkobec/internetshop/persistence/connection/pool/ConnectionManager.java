@@ -71,7 +71,7 @@ public class ConnectionManager {
             return connectionManager;
 
         } catch (NamingException e) {
-            LOGGER.error("Cannot create InitialContext", e);
+            LOGGER.error("Can't create InitialContext", e);
 
             return null;
         }
@@ -110,7 +110,7 @@ public class ConnectionManager {
         try (InputStream inputStream = new FileInputStream(new File(PATH_TO_DATA_BASE_PROPERTIES))) {
             properties.load(inputStream);
         } catch (IOException e) {
-            LOGGER.warn("Cannot load database.properties from path: " + PATH_TO_DATA_BASE_PROPERTIES, e);
+            LOGGER.error("Cannot load database.properties from path: " + PATH_TO_DATA_BASE_PROPERTIES, e);
         }
 
         return properties;

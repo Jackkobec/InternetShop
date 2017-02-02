@@ -1,0 +1,9 @@
+html { height: 100%; }
+.my-div {
+    margin: 0; /* Убираем отступы */
+    /*height: 43%;*/
+    height: 57%;
+    width: 100%; /* Высота страницы */
+    background: url(/view.components/images/terminator-2-oboi.1920x1080.jpg); /* Параметры фона */
+    background-size: auto; /* Фон занимает всю доступную площадь */
+}

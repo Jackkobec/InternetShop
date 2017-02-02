@@ -46,7 +46,7 @@ public class ValidationFeedbackManager {
     /**
      * @return ValidationFeedbackManager instance.
      */
-    public static ValidationFeedbackManager getValidationFeedbackManager() {
+    public static synchronized ValidationFeedbackManager getValidationFeedbackManager() {
 
         return (validationFeedbackManager == null)
                 ? validationFeedbackManager = new ValidationFeedbackManager()

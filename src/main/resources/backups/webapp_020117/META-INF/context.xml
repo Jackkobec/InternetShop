@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context antiJARLocking="true" path="/">
+    <!--
+    name="jdbc/TestDB"   -  any name for our JNDI will need for call this Resource
+    type="javax.sql.DataSource"   - for DataSource
+    url="jdbc:mysql://localhost:3306/internet_shop?characterEncoding=utf-8" - url for our data base
+    -->
+    <!-- maxActive: Maximum number of database connections in pool. Make sure you
+         configure your mysqld max_connections large enough to handle
+         all of your db connections. Set to -1 for no limit.
+         -->
+
+    <!-- maxIdle: Maximum number of idle database connections to retain in pool.
+         Set to -1 for no limit.  See also the DBCP documentation on this
+         and the minEvictableIdleTimeMillis configuration parameter.
+         -->
+
+    <!-- maxWait: Maximum time to wait for a database connection to become available
+         in ms, in this example 10 seconds. An Exception is thrown if
+         this timeout is exceeded.  Set to -1 to wait indefinitely.
+         -->
+
+    <!-- username and password: MySQL username and password for database connections  -->
+
+    <!-- driverClassName: Class name for the old mm.mysql JDBC driver is
+         org.gjt.mm.mysql.Driver - we recommend using Connector/J though.
+         Class name for the official MySQL Connector/J driver is com.mysql.jdbc.Driver.
+         -->
+
+    <Resource
+            name="jdbc/TestDB"
+            author="Container"
+            type="javax.sql.DataSource"
+            maxActive="1220"
+            maxIdle="120"
+            maxWait="100000"
+            username="root"
+            password="root"
+            driverClassName="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/internet_shop?characterEncoding=utf-8"
+    />
+    <!--Code below may will need for correct work with JNDI-->
+    <!--<ResourceLink name="jdbc/TestDB"-->
+    <!--global="jdbc/TestDB"-->
+    <!--type="javax.sql.DataSource" />-->
+</Context>

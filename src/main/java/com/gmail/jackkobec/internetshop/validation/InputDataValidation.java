@@ -20,7 +20,7 @@ public class InputDataValidation implements Validation {
     /**
      * @return InputDataValidation instance.
      */
-    public static Validation getInputDataValidation() {
+    public static synchronized Validation getInputDataValidation() {
 
         return (inputDataValidation == null)
                 ? inputDataValidation = new InputDataValidation()
@@ -72,6 +72,7 @@ public class InputDataValidation implements Validation {
         if (email.isEmpty() || email.equals(null)) {
             return false;
         }
+
         Pattern rule = Pattern.compile(EMAIL_REGEX_PATTERN);
 
         return rule.matcher(email).matches();
