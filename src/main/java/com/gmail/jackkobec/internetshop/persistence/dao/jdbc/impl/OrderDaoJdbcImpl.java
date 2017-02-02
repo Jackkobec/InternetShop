@@ -3,7 +3,6 @@ package com.gmail.jackkobec.internetshop.persistence.dao.jdbc.impl;
 import com.gmail.jackkobec.internetshop.persistence.connection.pool.ConnectionManager;
 import com.gmail.jackkobec.internetshop.persistence.dao.OrderDao;
 import com.gmail.jackkobec.internetshop.persistence.model.Order;
-import com.gmail.jackkobec.internetshop.persistence.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -12,10 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jack on 28.12.2016.
+ * <p>OrderDaoJdbcImpl class for implements Order - actions methods with JDBC.
  */
 public class OrderDaoJdbcImpl implements OrderDao {
     public static final Logger LOGGER = LogManager.getLogger(OrderDaoJdbcImpl.class);
+
+    private static final String INSERT_ORDER_QUERY = "INSERT INTO orders (userId, orderDateAndTime, summaryPrice, orderStatus) VALUES(?, ?, ?, ?)";
+    private static final String UPDATE_ORDER_BY_ID_QUERY = "UPDATE orders SET userId = ?, orderDateAndTime = ?, summaryPrice = ?, orderStatus = ? WHERE orders.id = ";
+    private static final String GET_ORDER_BY_ID_QUERY = "SELECT * FROM orders WHERE orders.id = ";
+    private static final String ADD_NEW_ORDER_QUERY = "INSERT INTO orders (userId, orderDateAndTime, summaryPrice, orderStatus) VALUES(?, ?, ?, ?)";
+    private static final String ADD_ITEM_TO_THE_ORDER_QUERY_BY_ORDER_AND_USER_ID = "INSERT INTO order_item (order_id, item_id) VALUES(?, ?)";
+    private static final String DELETE_ITEM_FROM_ORDER_QUERY_BY_ITEM_AND_ORDER_ID = "DELETE FROM order_item WHERE order_item.order_id = ? AND order_item.item_id = ? LIMIT 1";
+
+    private static final String DELETE_ORDER_BY_ID_QUERY = "DELETE FROM orders WHERE orders.id = ";
+    private static final String DELETE_ITEMS_IN_ORDER_BY_ORDER_ID_QUERY = "DELETE FROM order_item WHERE order_item.order_id = ";
+
+    private static final String GET_ALL_USER_ORDERS_QUERY_BY_USER_ID = "SELECT * FROM orders WHERE orders.userId = ";
+    private static final String DELETE_ALL_NOT_PAID_ORDERS_BY_USER_ID_QUERY = "DELETE FROM orders WHERE orders.orderStatus = 1 AND orders.userId = ";
 
     private static OrderDaoJdbcImpl orderDaoJdbcImpl;
     private ConnectionManager connectionManager;
@@ -35,11 +47,21 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 : orderDaoJdbcImpl;
     }
 
+    /**
+     * Method for get connection.
+     *
+     * @return Connection
+     */
     private Connection getConnection() {
 
         return connectionManager.getConnection();
     }
 
+    /**
+     * Method for close connection.
+     *
+     * @param connection
+     */
     private void closeConnection(Connection connection) {
 
         try {
@@ -50,24 +72,34 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Method for add new Order.
+     *
+     * @param entity
+     * @return
+     */
     @Override
     public Integer addNewEntity(Order entity) {
 
-        String sqlQuery = "INSERT INTO orders (userId, orderDateAndTime, summaryPrice, orderStatus) VALUES(?, ?, ?, ?)";
-
-        return executeQueryInPreparedStatement(entity, sqlQuery);
+        return executeQueryInPreparedStatement(entity, INSERT_ORDER_QUERY);
     }
 
+    /**
+     * Method for update Order.
+     *
+     * @param entity
+     * @return
+     */
     @Override
     public Integer updateEntityInfo(Order entity) {
 
-        String sqlQuery = "UPDATE orders SET userId = ?, orderDateAndTime = ?, summaryPrice = ?, orderStatus = ? WHERE orders.id = " + entity.getId();
+        String sqlQuery = UPDATE_ORDER_BY_ID_QUERY + entity.getId();
 
         return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
     @Override
-    public boolean deleteEntityById(Integer id) {
+    public boolean deleteEntityById(final Integer id) {
         return false;
     }
 
@@ -76,44 +108,69 @@ public class OrderDaoJdbcImpl implements OrderDao {
         return null;
     }
 
+    /**
+     * Method for get Order be id.
+     *
+     * @param id
+     * @return
+     */
     @Override
-    public Order getOneByID(Integer id) {
+    public Order getOneByID(final Integer id) {
 
-        String sqlQuery = "SELECT * FROM orders WHERE orders.id = " + id;
+        String sqlQuery = GET_ORDER_BY_ID_QUERY + id;
 
         return getOrderBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Method for add new Order.
+     *
+     * @param entity
+     * @return
+     */
     @Override
     public Integer addNewOrder(Order entity) {
 
-        String sqlQuery = "INSERT INTO orders (userId, orderDateAndTime, summaryPrice, orderStatus) VALUES(?, ?, ?, ?)";
-
-        return executeQueryInPreparedStatement(entity, sqlQuery);
+        return executeQueryInPreparedStatement(entity, ADD_NEW_ORDER_QUERY);
     }
 
+    /**
+     * Method for add item to the order.
+     *
+     * @param orderId
+     * @param itemId
+     * @return
+     */
     @Override
-    public boolean addItemToOrder(Integer orderId, Integer itemId) {
+    public boolean addItemToOrder(final Integer orderId, final Integer itemId) {
 
-        String sqlQuery = "INSERT INTO order_item (order_id, item_id) VALUES(?, ?)";
-
-        return executeQueryInPreparedStatementForOrder(orderId, itemId, sqlQuery);
+        return executeQueryInPreparedStatementForOrder(orderId, itemId, ADD_ITEM_TO_THE_ORDER_QUERY_BY_ORDER_AND_USER_ID);
     }
 
+    /**
+     * Method for remove item from order.
+     *
+     * @param orderId
+     * @param itemId
+     * @return
+     */
     @Override
-    public boolean removeItemFromOrder(Integer orderId, Integer itemId) {
+    public boolean removeItemFromOrder(final Integer orderId, final Integer itemId) {
 
-        String sqlQuery = "DELETE FROM order_item WHERE order_item.order_id = ? AND order_item.item_id = ? LIMIT 1";
-
-        return executeQueryInPreparedStatementForOrder(orderId, itemId, sqlQuery);
+        return executeQueryInPreparedStatementForOrder(orderId, itemId, DELETE_ITEM_FROM_ORDER_QUERY_BY_ITEM_AND_ORDER_ID);
     }
 
+    /**
+     * Method for cancel and delete order and remove all his items.
+     *
+     * @param orderId
+     * @return
+     */
     @Override
-    public boolean cancelOrder(Integer orderId) {
+    public boolean cancelOrder(final Integer orderId) {
 
-        String sqlQuery = "DELETE FROM orders WHERE orders.id = " + orderId;
-        String sqlQuery2 = "DELETE FROM order_item WHERE order_item.order_id = " + orderId;
-
+        String sqlQuery = DELETE_ORDER_BY_ID_QUERY + orderId;
+        String sqlQuery2 = DELETE_ITEMS_IN_ORDER_BY_ORDER_ID_QUERY + orderId;
 
         connection = getConnection();
 
@@ -139,22 +196,39 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Method for get all user orders.
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public List<Order> getAllUserOrders(final Integer userId) {
 
-        String sqlQuery = "SELECT * FROM orders WHERE orders.userId = " + userId;
+        String sqlQuery = GET_ALL_USER_ORDERS_QUERY_BY_USER_ID + userId;
 
         return getListOfOrdersBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Method for remove all not paid orders by user id.
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public boolean removeAllNotPaidOrders(final Integer userId) {
 
-        String sqlQuery = "DELETE FROM orders WHERE orders.orderStatus = 1 AND orders.userId = " + userId;
+        String sqlQuery = DELETE_ALL_NOT_PAID_ORDERS_BY_USER_ID_QUERY + userId;
 
         return executeSimpleQueryInThePreparedStatement(sqlQuery);
     }
 
+    /**
+     * Method for start transaction.
+     *
+     * @param connection
+     */
     private void startTransaction(Connection connection) {
 
         try {
@@ -165,6 +239,11 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Method for commit transaction.
+     *
+     * @param connection
+     */
     private void commitTransaction(Connection connection) {
 
         try {
@@ -174,6 +253,11 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Method for rollback transaction.
+     *
+     * @param connection
+     */
     private void rollbackTransaction(Connection connection) {
 
         try {
@@ -183,6 +267,13 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Query executor for Order queries.
+     *
+     * @param entity
+     * @param sqlQuery
+     * @return
+     */
     private Integer executeQueryInPreparedStatement(Order entity, String sqlQuery) {
 
         if (sqlQuery == null || entity == null) {
@@ -215,6 +306,12 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Method for build Order from resultSet.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private Order getOrderBySqlQuery(String sqlQuery) {
 
         connection = getConnection();
@@ -243,6 +340,12 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Method for build Order list from resultSet.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private List<Order> getListOfOrdersBySqlQuery(String sqlQuery) {
 
         connection = getConnection();
@@ -274,6 +377,14 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Method for execute query for order_item table.
+     *
+     * @param orderId
+     * @param itemId
+     * @param sqlQuery
+     * @return
+     */
     private boolean executeQueryInPreparedStatementForOrder(Integer orderId, Integer itemId, String sqlQuery) {
 
         connection = getConnection();
@@ -293,6 +404,12 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
+    /**
+     * Simple query executor.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private boolean executeSimpleQueryInThePreparedStatement(String sqlQuery) {
 
         connection = getConnection();

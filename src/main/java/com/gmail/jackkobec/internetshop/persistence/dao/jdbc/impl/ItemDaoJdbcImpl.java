@@ -115,7 +115,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
      * @return
      */
     @Override
-    public boolean deleteEntityById(Integer id) {
+    public boolean deleteEntityById(final Integer id) {
 
         String sqlQuery = DELETE_USER_BY_ID_QUERY + id;
 
@@ -128,7 +128,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
     }
 
     @Override
-    public Item getOneByID(Integer id) {
+    public Item getOneByID(final Integer id) {
         return null;
     }
 
@@ -206,7 +206,7 @@ public class ItemDaoJdbcImpl implements ItemDao {
      * @return
      */
     @Override
-    public boolean removeItemFromCart(Integer itemId, Integer userId) {
+    public boolean removeItemFromCart(final Integer itemId, final Integer userId) {
 
         return executeQueryInPreparedStatementForCart(itemId, userId, REMOVE_ONE_ITEM_FROM_CART_QUERY_BY_ITEM_AND_USER_ID);
     }
