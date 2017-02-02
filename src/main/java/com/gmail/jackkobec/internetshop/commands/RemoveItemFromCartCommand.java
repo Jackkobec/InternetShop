@@ -87,6 +87,7 @@ public class RemoveItemFromCartCommand implements ICommand {
             if (fromPage.equals(ORDER_PAGE)) {
 
                 final Integer currentUserOrderId = Integer.valueOf(request.getParameter(CURRENT_USER_ORDER_ID));
+
                 Order order = iClientService.getOrderById(currentUserOrderId);
                 List<Item> itemsInOrder = iClientService.getItemsFromOrderByOrderId(order.getId());
                 order.setItemList(itemsInOrder);

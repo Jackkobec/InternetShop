@@ -14,10 +14,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jack on 28.12.2016.
+ * <p>ItemDaoJdbcImpl class for implements Item - actions methods with JDBC.
  */
 public class ItemDaoJdbcImpl implements ItemDao {
     public static final Logger LOGGER = LogManager.getLogger(ItemDaoJdbcImpl.class);
+
+    private static final String INSERT_USER_QUERY = "INSERT INTO item (itemName, itemSmallDescription, itemFullDescription, itemProductInfo, itemPrice, " +
+            "itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_USER_BY_ID_QUERY = "UPDATE item SET item.itemName = ?, item.itemSmallDescription = ?, item.itemFullDescription = ?, item.itemProductInfo = ?, " +
+            "item.itemPrice = ?, item.itemBigPicturePath800x600 = ?, item.itemSmallPicturePath350x260 = ?, item.itemRating = ?, item.itemCategory = ?, " +
+            "item.itemStatus = ? WHERE item.id = ";
+    private static final String DELETE_USER_BY_ID_QUERY = "DELETE FROM item WHERE item.id = ";
+    private static final String GET_ITEMS_BY_CATEGORY_ID_QUERY = "SELECT * FROM item WHERE item.itemCategory = ";
+    private static final String INIT_SIX_ITEM_CAROUSEL_QUERY = "SELECT * FROM six_item_carousel LEFT JOIN item ON six_item_carousel.item_id = item.id";
+    private static final String INIT_USER_CART_QUERY = "SELECT * FROM item " +
+            "LEFT JOIN cart ON item.id = cart.item_id " +
+            "LEFT JOIN user ON cart.user_id = user.id " +
+            "WHERE user.id = ";
+    private static final String GET_ITEM_BY_ID_QUERY = "SELECT * FROM item WHERE item.id = ";
+    private static final String ADD_ITEM_TO_THE_CART_QUERY_BY_ITEM_AND_USER_ID = "INSERT INTO cart (item_id, user_id) VALUES (?, ?)";
+    private static final String REMOVE_ONE_ITEM_FROM_CART_QUERY_BY_ITEM_AND_USER_ID = "DELETE FROM cart WHERE cart.item_id = ? AND cart.user_id = ? LIMIT 1";
+    private static final String GET_ITEMS_FROM_ORDER_BY_ORDER_ID = "SELECT * FROM item " +
+            "LEFT JOIN order_item ON item.id = order_item.item_id " +
+            "WHERE order_item.order_id = ";
+    private static final String DELETE_ALL_ITEMS_FROM_CART_BY_USER_ID_QUERY = "DELETE FROM cart WHERE cart.user_id = ";
 
     private static ItemDaoJdbcImpl itemDaoJdbc;
     private ConnectionManager connectionManager;
@@ -37,11 +57,21 @@ public class ItemDaoJdbcImpl implements ItemDao {
                 : itemDaoJdbc;
     }
 
+    /**
+     * Method for get connection.
+     *
+     * @return Connection
+     */
     private Connection getConnection() {
 
         return connectionManager.getConnection();
     }
 
+    /**
+     * Method for close connection.
+     *
+     * @param connection
+     */
     private void closeConnection(Connection connection) {
 
         try {
@@ -52,29 +82,42 @@ public class ItemDaoJdbcImpl implements ItemDao {
         }
     }
 
+    /**
+     * Method for add new Item.
+     *
+     * @param entity
+     * @return
+     */
     @Override
     public Integer addNewEntity(Item entity) {
 
-        String sqlQuery = "INSERT INTO item (itemName, itemSmallDescription, itemFullDescription, itemProductInfo, itemPrice, " +
-                "itemBigPicturePath800x600, itemSmallPicturePath350x260, itemRating, itemCategory, itemStatus) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        return executeQueryInPreparedStatement(entity, sqlQuery);
+        return executeQueryInPreparedStatement(entity, INSERT_USER_QUERY);
     }
 
+    /**
+     * Method for update Item.
+     *
+     * @param entity
+     * @return
+     */
     @Override
     public Integer updateEntityInfo(Item entity) {
 
-        String sqlQuery = "UPDATE item SET item.itemName = ?, item.itemSmallDescription = ?, item.itemFullDescription = ?, item.itemProductInfo = ?, " +
-                "item.itemPrice = ?, item.itemBigPicturePath800x600 = ?, item.itemSmallPicturePath350x260 = ?, item.itemRating = ?, item.itemCategory = ?, " +
-                "item.itemStatus = ? WHERE item.id = " + entity.getId();
+        String sqlQuery = UPDATE_USER_BY_ID_QUERY + entity.getId();
 
         return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
+    /**
+     * Method for delete Item by id.
+     *
+     * @param id
+     * @return
+     */
     @Override
     public boolean deleteEntityById(Integer id) {
 
-        String sqlQuery = "DELETE FROM item WHERE item.id = " + id;
+        String sqlQuery = DELETE_USER_BY_ID_QUERY + id;
 
         return executeSimpleQueryInThePreparedStatement(sqlQuery);
     }
@@ -89,75 +132,121 @@ public class ItemDaoJdbcImpl implements ItemDao {
         return null;
     }
 
+    /**
+     * Method for get Items for category by id.
+     *
+     * @param categoryId
+     * @return
+     */
     @Override
     public List<Item> getItemsByCategoryId(final Integer categoryId) {
 
-        String sqlQuery = "SELECT * FROM item WHERE item.itemCategory = " + categoryId;
+        String sqlQuery = GET_ITEMS_BY_CATEGORY_ID_QUERY + categoryId;
 
         return getListOfItemBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Method for init top six items carousel.
+     *
+     * @return
+     */
     @Override
     public List<Item> initSixItemCarousel() {
 
-        String sqlQuery = "SELECT * FROM six_item_carousel LEFT JOIN item ON six_item_carousel.item_id = item.id";
-
-        return getListOfItemBySqlQuery(sqlQuery);
+        return getListOfItemBySqlQuery(INIT_SIX_ITEM_CAROUSEL_QUERY);
     }
 
+    /**
+     * Method for init user cart.
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public List<Item> initUserCart(final Integer userId) {
 
-        String sqlQuery = "SELECT * FROM item " +
-                "LEFT JOIN cart ON item.id = cart.item_id " +
-                "LEFT JOIN user ON cart.user_id = user.id " +
-                "WHERE user.id = " + userId;
+        String sqlQuery = INIT_USER_CART_QUERY + userId;
 
         return getListOfItemBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Method for get item by id.
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Item getItemById(final Integer id) {
 
-        String sqlQuery = "SELECT * FROM item WHERE item.id = " + id;
+        String sqlQuery = GET_ITEM_BY_ID_QUERY + id;
 
         return getItemBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Method for add item to the cart.
+     *
+     * @param itemId
+     * @param userId
+     * @return
+     */
     @Override
     public boolean addItemToCart(final Integer itemId, final Integer userId) {
 
-        String sqlQuery = "INSERT INTO cart (item_id, user_id) VALUES (?, ?)";
-
-        return executeQueryInPreparedStatementForCart(itemId, userId, sqlQuery);
+        return executeQueryInPreparedStatementForCart(itemId, userId, ADD_ITEM_TO_THE_CART_QUERY_BY_ITEM_AND_USER_ID);
     }
 
+    /**
+     * Method for remove item from the cart.
+     *
+     * @param itemId
+     * @param userId
+     * @return
+     */
     @Override
     public boolean removeItemFromCart(Integer itemId, Integer userId) {
 
-        String sqlQuery = "DELETE FROM cart WHERE cart.item_id = ? AND cart.user_id = ? LIMIT 1";
-
-        return executeQueryInPreparedStatementForCart(itemId, userId, sqlQuery);
+        return executeQueryInPreparedStatementForCart(itemId, userId, REMOVE_ONE_ITEM_FROM_CART_QUERY_BY_ITEM_AND_USER_ID);
     }
 
+    /**
+     * Get items in order by id.
+     *
+     * @param orderId
+     * @return
+     */
     @Override
     public List<Item> getItemsFromOrderByOrderId(final Integer orderId) {
 
-        String sqlQuery = "SELECT * FROM item " +
-                "LEFT JOIN order_item ON item.id = order_item.item_id " +
-                "WHERE order_item.order_id = " + orderId;
+        String sqlQuery = GET_ITEMS_FROM_ORDER_BY_ORDER_ID + orderId;
 
         return getListOfItemBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Remove all items from order by id.
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public boolean removeAllItemsFromUserCart(final Integer userId) {
 
-        String sqlQuery = "DELETE FROM cart WHERE cart.user_id = " + userId;
+        String sqlQuery = DELETE_ALL_ITEMS_FROM_CART_BY_USER_ID_QUERY + userId;
 
         return executeSimpleQueryInThePreparedStatement(sqlQuery);
     }
 
+    /**
+     * Query executor for cart.
+     *
+     * @param itemId
+     * @param userId
+     * @param sqlQuery
+     * @return
+     */
     private boolean executeQueryInPreparedStatementForCart(final Integer itemId, final Integer userId, String sqlQuery) {
 
         connection = getConnection();
@@ -177,6 +266,12 @@ public class ItemDaoJdbcImpl implements ItemDao {
         }
     }
 
+    /**
+     * Query executor for simples queries.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private boolean executeSimpleQueryInThePreparedStatement(String sqlQuery) {
 
         connection = getConnection();
@@ -194,6 +289,13 @@ public class ItemDaoJdbcImpl implements ItemDao {
         }
     }
 
+    /**
+     * Query executor for Item queries.
+     *
+     * @param entity
+     * @param sqlQuery
+     * @return
+     */
     private Integer executeQueryInPreparedStatement(Item entity, String sqlQuery) {
 
         if (null == sqlQuery || entity == null) {
@@ -231,6 +333,12 @@ public class ItemDaoJdbcImpl implements ItemDao {
         }
     }
 
+    /**
+     * Method for build Item from resultSet.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private Item getItemBySqlQuery(String sqlQuery) {
 
         connection = getConnection();
@@ -266,6 +374,12 @@ public class ItemDaoJdbcImpl implements ItemDao {
 
     }
 
+    /**
+     * Method for build Item list from resultSet.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private List<Item> getListOfItemBySqlQuery(String sqlQuery) {
 
         connection = getConnection();

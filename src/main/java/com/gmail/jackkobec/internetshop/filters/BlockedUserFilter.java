@@ -15,7 +15,7 @@ import java.io.IOException;
 import static com.gmail.jackkobec.internetshop.persistence.model.UserType.BANNED;
 
 /**
- * Created by Jack on 08.01.2017.
+ * <p>BlockedUserFilter class for filter blocked during session users.
  */
 @WebFilter(urlPatterns = {"/*"})
 public class BlockedUserFilter implements Filter {

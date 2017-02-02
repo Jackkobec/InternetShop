@@ -12,6 +12,9 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * <p>PageRedirectSecurityFilter class for deny direct use pages.
+ */
 @WebFilter(urlPatterns = {"/jsp/*"},
         initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp")})
 public class PageRedirectSecurityFilter implements Filter {

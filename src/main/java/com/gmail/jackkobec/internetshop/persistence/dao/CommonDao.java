@@ -3,7 +3,9 @@ package com.gmail.jackkobec.internetshop.persistence.dao;
 import java.util.List;
 
 /**
- * Created by Jack on 28.12.2016.
+ * <p>CommonDao interface for declare common methods.
+ * E - Entity class,
+ * K - Primary kay class.
  */
 public interface CommonDao<E, K> {
 
@@ -16,5 +18,4 @@ public interface CommonDao<E, K> {
     List<E> getAll();
 
     E getOneByID(K id);
-
 }

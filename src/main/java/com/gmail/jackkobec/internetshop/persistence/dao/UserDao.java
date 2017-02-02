@@ -5,7 +5,7 @@ import com.gmail.jackkobec.internetshop.persistence.model.User;
 import java.util.List;
 
 /**
- * Created by Jack on 28.12.2016.
+ * <p>UserDao interface for declare User - actions methods.
  */
 public interface UserDao extends CommonDao<User, Integer> {
 

@@ -21,6 +21,8 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     public static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
+    private static final String ERROR_INFO = "errorInfo";
+
     private ControllerHelper controllerHelper = ControllerHelper.getControllerHelper();
 
     public Controller() {
@@ -45,18 +47,17 @@ public class Controller extends HttpServlet {
             page = command.executeCommand(request, response);
 
         } catch (ServletException e) {
-            request.setAttribute("errorInfo", "ServletException");
-            LOGGER.error(e.getMessage());
+            request.setAttribute(ERROR_INFO, "ServletException!");
+            LOGGER.error("ServletException " + e.getMessage());
             page = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
         } catch (IOException e) {
-            request.setAttribute("errorInfo", "IOException");
-            LOGGER.error(e.getMessage());
+            request.setAttribute(ERROR_INFO, "IOException!");
+            LOGGER.error("IOException " + e.getMessage());
             page = PageManager.getPageManager().getPage(PageManager.ERROR_PAGE);
         }
 
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
 
-//        response.sendRedirect("/index_old.jsp");
         requestDispatcher.forward(request, response);
     }
 
@@ -71,6 +72,7 @@ public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 
@@ -85,6 +87,7 @@ public class Controller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 }

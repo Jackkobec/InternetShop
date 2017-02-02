@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Jack on 26.01.2017.
+ * <p>EditOrderCommand class execute command for return to the edit order form.
  */
 public class EditOrderCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(EditOrderCommand.class);
@@ -28,6 +28,15 @@ public class EditOrderCommand implements ICommand {
 
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
 
+    /**
+     * Method execute command for return to the edit order form.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

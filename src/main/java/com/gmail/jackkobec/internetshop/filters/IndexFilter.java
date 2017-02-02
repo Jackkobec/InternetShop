@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Jack on 08.01.2017.
+ * <p>IndexFilter for forward to the main page if user already log in and  close page.
  */
 @WebFilter(urlPatterns = {"/index.jsp"})
 public class IndexFilter implements Filter {
@@ -27,7 +27,7 @@ public class IndexFilter implements Filter {
 
         Object currentUserInSystemAttribute = null;
 
-        if(session != null){
+        if (session != null) {
             currentUserInSystemAttribute = session.getAttribute("currentUserInSystem");
         }
 

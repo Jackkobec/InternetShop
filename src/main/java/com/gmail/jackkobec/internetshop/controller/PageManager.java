@@ -48,7 +48,7 @@ public class PageManager {
     /**
      * @return PageManager instance.
      */
-    public static PageManager getPageManager() {
+    public static synchronized PageManager getPageManager() {
         //worked with init in the constructor
         LOGGER.info("getPageManager");
         return (pageManager == null)

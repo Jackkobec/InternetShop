@@ -4,7 +4,7 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * <p>EncodingFilter class for use  utf-8 encoding in the jsp pages.
+ * <p>EncodingFilter class for use utf-8 encoding in the jsp pages.
  * Created by Jack on 03.01.2017.
  */
 public class EncodingFilter implements Filter {
@@ -26,6 +26,5 @@ public class EncodingFilter implements Filter {
     }
 
     public void destroy() {
-        // nothing todo
     }
 }

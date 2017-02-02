@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Jack on 08.01.2017.
+ * <p>BlockedUserCookieFilter class for filter blocked users by cookie.
  */
 @WebFilter(urlPatterns = {"/*"})
 public class BlockedUserCookieFilter implements Filter {

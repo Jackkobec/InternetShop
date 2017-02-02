@@ -56,7 +56,7 @@ public class ConnectionManager {
      *
      * @return ConnectionManager instance.
      */
-    public static ConnectionManager getConnectionManagerFromJNDI() {
+    public static synchronized ConnectionManager getConnectionManagerFromJNDI() {
 
         try {
             //for correct work with JNDI
@@ -82,7 +82,7 @@ public class ConnectionManager {
      *
      * @return ConnectionManager instance.
      */
-    public static ConnectionManager getConnectionManagerFromPropertiesFile() {
+    public static synchronized ConnectionManager getConnectionManagerFromPropertiesFile() {
 
         ConnectionManager connectionManager = new ConnectionManager();
         MysqlDataSource mySqlDataSource = new MysqlDataSource();

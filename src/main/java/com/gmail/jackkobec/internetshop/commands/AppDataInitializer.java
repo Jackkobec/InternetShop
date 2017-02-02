@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by Jack on 21.01.2017.
+ * <p>AppDataInitializer class for init some components.
  */
 public class AppDataInitializer {
 
@@ -36,12 +36,23 @@ public class AppDataInitializer {
                 : appDataInitializer;
     }
 
+    /**
+     * Method for init top item carousel.
+     *
+     * @param session
+     */
     public void initItemCarousel(HttpSession session) {
 
         List<Item> carouselItems = iClientService.initSixItemCarousel();
         session.setAttribute(SIX_ITEM_CAROUSEL, carouselItems);
     }
 
+    /**
+     * Method for init user cart.
+     *
+     * @param session
+     * @param userId
+     */
     public void initUserCart(HttpSession session, final Integer userId) {
 
         List<Item> currentUserCart = iClientService.initUserCart(userId);
@@ -55,7 +66,13 @@ public class AppDataInitializer {
         session.setAttribute(SUMMARY_CART_PRICE, summaryCartPrice);
     }
 
-    public void initUserOrders(HttpSession session, final Integer userId){
+    /**
+     * Method for init user orders.
+     *
+     * @param session
+     * @param userId
+     */
+    public void initUserOrders(HttpSession session, final Integer userId) {
 
         List<Order> userOrders = iClientService.getAllUserOrders(userId);
 

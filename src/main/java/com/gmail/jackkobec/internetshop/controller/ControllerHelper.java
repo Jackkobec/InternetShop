@@ -25,7 +25,6 @@ public class ControllerHelper {
     private ControllerHelper() {
         commands.put("userlogin", new UserLoginCommand());
         commands.put("register", new RegisterCommand());
-        commands.put("find", new UserInfoCommand());
         commands.put("gotocategory", new GoCategoryCommand());
         commands.put("gotomainpage", new GoToMainPageCommand());
         commands.put("showitem", new ShowItemCommand());
@@ -54,7 +53,6 @@ public class ControllerHelper {
         commands.put("userlogout", new UserLogOutCommand());
         commands.put("userupdate", new UserUpdateCommand());
         commands.put("changeuserpassword", new ChangeUserPassword());
-
     }
 
     /**
@@ -62,7 +60,7 @@ public class ControllerHelper {
      *
      * @return ControllerHelper instance.
      */
-    public static ControllerHelper getControllerHelper() {
+    public static synchronized ControllerHelper getControllerHelper() {
 
         if (controllerHelper == null) {
             controllerHelper = new ControllerHelper();

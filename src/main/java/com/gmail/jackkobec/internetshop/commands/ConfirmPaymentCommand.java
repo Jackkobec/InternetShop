@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by Jack on 26.01.2017.
+ * <p>ConfirmPaymentCommand class for confirm order payment.
  */
 public class ConfirmPaymentCommand implements ICommand {
     public static final Logger LOGGER = LogManager.getLogger(ConfirmPaymentCommand.class);
@@ -43,6 +43,15 @@ public class ConfirmPaymentCommand implements ICommand {
     private IClientService iClientService = ClientServiceImpl.getClientServiceImpl();
     private AppDataInitializer appDataInitializer = AppDataInitializer.getAppDataInitializer();
 
+    /**
+     * Method execute command for confirm order payment.
+     *
+     * @param request
+     * @param response
+     * @return page for Controller
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -68,7 +77,7 @@ public class ConfirmPaymentCommand implements ICommand {
             appDataInitializer.initUserOrders(session, currentUserInSystem.getId());
 
             //clean cart
-            if(iClientService.removeAllItemsFromUserCart(currentUserInSystem.getId())){
+            if (iClientService.removeAllItemsFromUserCart(currentUserInSystem.getId())) {
 
                 currentUserCart.removeAll(currentUserCart);
                 BigDecimal summaryCartPrice = new BigDecimal(0.00);

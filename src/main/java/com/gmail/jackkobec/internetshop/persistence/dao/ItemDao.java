@@ -5,7 +5,7 @@ import com.gmail.jackkobec.internetshop.persistence.model.Item;
 import java.util.List;
 
 /**
- * Created by Jack on 28.12.2016.
+ * <p>ItemDao interface for declare Item - actions methods.
  */
 public interface ItemDao extends CommonDao<Item, Integer> {
 

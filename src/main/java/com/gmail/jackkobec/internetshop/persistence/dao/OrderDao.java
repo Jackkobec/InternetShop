@@ -5,7 +5,7 @@ import com.gmail.jackkobec.internetshop.persistence.model.Order;
 import java.util.List;
 
 /**
- * Created by Jack on 28.12.2016.
+ * <p>OrderDao interface for declare Order - actions methods.
  */
 public interface OrderDao extends CommonDao<Order, Integer> {
 
