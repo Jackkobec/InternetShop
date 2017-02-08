@@ -14,10 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jack on 28.12.2016.
+ * <p>UserDaoJdbcImpl class for implements User - actions methods with JDBC.
  */
 public class UserDaoJdbcImpl implements UserDao {
     public static final Logger LOGGER = LogManager.getLogger(UserDaoJdbcImpl.class);
+
+    private static final String ADD_NEW_USER_QUERY = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE_USER_BY_ID_QUERY = "UPDATE user SET user.email = ?, user.password = ?, user.name = ?, user.language = ? WHERE user.id = ";
+    private static final String GET_ALL_USER_QUERY = "SELECT * FROM user";
+    private static final String GET_USER_BY_EMAIL_QUERY = "SELECT * FROM user WHERE user.email = ";
+    private static final String GET_ALL_NOT_BANNED_USERS_QUERY = "SELECT * FROM user WHERE user.userType != 3";
+    private static final String GET_ALL_BANNED_USERS_QUERY = "SELECT * FROM user WHERE user.userType = 3";
+    private static final String ADD_USER_TO_THE_BLOCK_LIST_BY_ID_QUERY = "UPDATE user SET user.userType = 3 WHERE user.id = ";
+    private static final String REMOVE_USER_FROM_THE_BLOCK_LIST_BY_ID_QUERY = "UPDATE user SET user.userType = 1 WHERE user.id = ";
 
     private static UserDaoJdbcImpl userDaoJdbc;
     private ConnectionManager connectionManager;
@@ -38,11 +47,21 @@ public class UserDaoJdbcImpl implements UserDao {
                 : userDaoJdbc;
     }
 
+    /**
+     * Method for get connection.
+     *
+     * @return Connection
+     */
     private Connection getConnection() {
 
         return connectionManager.getConnection();
     }
 
+    /**
+     * Method for close connection.
+     *
+     * @param connection
+     */
     private void closeConnection(Connection connection) {
 
         try {
@@ -53,63 +72,83 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
-
+    /**
+     * Method for add new User.
+     *
+     * @param entity
+     * @return
+     */
     @Override
     public Integer addNewEntity(User entity) {
 
         String sqlQuery;
 
         if (entity != null) {
-            sqlQuery = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
+            sqlQuery = ADD_NEW_USER_QUERY;
         } else return null;
 
         return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
-
+    /**
+     * Method for update User.
+     *
+     * @param entity
+     * @return
+     */
     @Override
     public Integer updateEntityInfo(User entity) {
 
         String sqlQuery;
 
         if (entity != null) {
-            sqlQuery = "UPDATE user SET user.email = ?, user.password = ?, user.name = ?, user.language = ? WHERE user.id = " + entity.getId();
+            sqlQuery = UPDATE_USER_BY_ID_QUERY + entity.getId();
         } else return null;
 
         return executeQueryInPreparedStatement(entity, sqlQuery);
     }
 
     @Override
-    public boolean deleteEntityById(Integer id) {
+    public boolean deleteEntityById(final Integer id) {
         return false;
     }
 
+    /**
+     * Method for get all Users.
+     *
+     * @return
+     */
     @Override
     public List<User> getAll() {
 
-        String sqlQuery = "SELECT * FROM user";
-
-        return getListOfUsersBySqlQuery(sqlQuery);
+        return getListOfUsersBySqlQuery(GET_ALL_USER_QUERY);
     }
 
     @Override
-    public User getOneByID(Integer id) {
+    public User getOneByID(final Integer id) {
         return null;
     }
 
-
+    /**
+     * Method for get User by email.
+     *
+     * @param email
+     * @return
+     */
     @Override
     public User findByEmail(String email) {
 
-        String sqlQuery;
-
-        if (!email.isEmpty() || email != null) {
-            sqlQuery = "SELECT * FROM user WHERE user.email = " + "'" + email + "'";
-        } else throw new NullPointerException("Передано значение null");
+        String sqlQuery = GET_USER_BY_EMAIL_QUERY + "'" + email + "'";
 
         return getUserBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Method for get User by email and Password.
+     *
+     * @param email
+     * @return
+     */
     @Override
     public User findByEmailAndPassword(String email, String password) {
 
@@ -122,49 +161,74 @@ public class UserDaoJdbcImpl implements UserDao {
         return getUserBySqlQuery(sqlQuery);
     }
 
+    /**
+     * Method for get all not banned users.
+     *
+     * @return
+     */
     @Override
     public List<User> getAllNotBannedUsers() {
 
-        String sqlQuery = "SELECT * FROM user WHERE user.userType != 3";
-
-        return getListOfUsersBySqlQuery(sqlQuery);
+        return getListOfUsersBySqlQuery(GET_ALL_NOT_BANNED_USERS_QUERY);
     }
 
+    /**
+     * Method for get all banned users.
+     *
+     * @return
+     */
     @Override
     public List<User> getAllBannedUsers() {
 
-        String sqlQuery = "SELECT * FROM user WHERE user.userType = 3";
-
-        return getListOfUsersBySqlQuery(sqlQuery);
+        return getListOfUsersBySqlQuery(GET_ALL_BANNED_USERS_QUERY);
     }
 
+    /**
+     * Method for add user to the block list.
+     *
+     * @param id
+     * @return
+     */
     @Override
-    public boolean addUserToBlockListById(Integer id) {
+    public boolean addUserToBlockListById(final Integer id) {
 
-        String sqlQuery = "UPDATE user SET user.userType = 3 WHERE user.id = " + id;
+        String sqlQuery = ADD_USER_TO_THE_BLOCK_LIST_BY_ID_QUERY + id;
 
         return executeSimpleQueryInThePreparedStatement(sqlQuery);
     }
 
+    /**
+     * Method for remove user from the block list.
+     *
+     * @param id
+     * @return
+     */
     @Override
-    public boolean removeUserFromBlockListById(Integer id) {
+    public boolean removeUserFromBlockListById(final Integer id) {
 
-        String sqlQuery = "UPDATE user SET user.userType = 1 WHERE user.id = " + id;
+        String sqlQuery = REMOVE_USER_FROM_THE_BLOCK_LIST_BY_ID_QUERY + id;
 
         return executeSimpleQueryInThePreparedStatement(sqlQuery);
     }
 
+    /**
+     * Method for add new user.
+     *
+     * @param user
+     * @return
+     */
     @Override
     public Integer addUser(User user) {
-        String sqlQuery;
 
-        if (user != null) {
-            sqlQuery = "INSERT INTO user(email, password, name, language) VALUES (?, ?, ?, ?)";
-        } else return null;
-
-        return executeQueryInPreparedStatement(user, sqlQuery);
+        return executeQueryInPreparedStatement(user, ADD_NEW_USER_QUERY);
     }
 
+    /**
+     * Simple query executor.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private boolean executeSimpleQueryInThePreparedStatement(String sqlQuery) {
 
         connection = getConnection();
@@ -182,6 +246,12 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
+    /**
+     * Method for build User from resultSet.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private User getUserBySqlQuery(String sqlQuery) {
 
         if (null == sqlQuery) {
@@ -212,6 +282,12 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
+    /**
+     * Method for build User list from resultSet.
+     *
+     * @param sqlQuery
+     * @return
+     */
     private List<User> getListOfUsersBySqlQuery(String sqlQuery) {
 
         connection = getConnection();
@@ -244,6 +320,13 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
+    /**
+     * Method for execute queries.
+     *
+     * @param entity
+     * @param sqlQuery
+     * @return
+     */
     private Integer executeQueryInPreparedStatement(User entity, String sqlQuery) {
 
         if (sqlQuery == null || entity == null) {
